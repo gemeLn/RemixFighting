@@ -1,0 +1,18 @@
+/Character Name
+Penguin
+/Sheet Width
+800
+/Sheet Height
+800
+/Sheet Div X
+160
+/Sheet Div Y
+160
+/Speed
+11
+/Health
+100
+/Character width
+110
+/Character Height
+140
