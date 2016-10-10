@@ -25,8 +25,7 @@ public class MoveSet {
 	public MoveSet(String name) {
 		name = name.toLowerCase();
 		String basePath = "src/res/characters/";
-		System.out.println(name);
-		lines = FileUtils.readLinesFromFile(basePath + name + "Moveset.txt");
+		lines = new FileUtils().readLinesFromFile(basePath + name + "Moveset.txt");
 
 		for (int i = 1; i <= 6; i++) {
 			switch (i) {
@@ -53,18 +52,16 @@ public class MoveSet {
 			}
 
 		}
-		System.out.println(jab.length);
-		for(int i=0;i<jab.length;i++){
-			System.out.print(jab[i]+",");
-			
-		}
-		jabh = new Hitbox(jab[damage], jab[hitx], jab[hity], jab[hitw], jab[hith], 1, 700,null);
+		
+		jabh = new Hitbox(jab[damage], jab[hitx], jab[hity], jab[hitw], jab[hith], 1, 7000,null);
 		punchh = new Hitbox(punch[damage], punch[hitx], punch[hity], punch[hitw], punch[hith], 1, punch[lag],null);
 		kickh = new Hitbox(kick[damage], kick[hitx], kick[hity], kick[hitw], kick[hith], 1, kick[lag],null);
 		slideh = new Hitbox(slide[damage], slide[hitx], slide[hity], slide[hitw], slide[hith], 1, slide[lag],null);
 		
+		
 	}
 	public void updatePlayer(Entity e){
+		System.out.println("Set hbox to:"+e);
 		jabh.setE(e);
 		punchh.setE(e);
 		kickh.setE(e);

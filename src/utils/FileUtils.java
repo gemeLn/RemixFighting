@@ -8,7 +8,7 @@ import java.util.List;
 
 public class FileUtils {
 
-	public static List<String> readLinesFromFile(String file) {
+	public List<String> readLinesFromFile(String file) {
 		List<String> lines = new ArrayList<String>();
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(file));

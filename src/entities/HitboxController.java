@@ -31,9 +31,9 @@ public class HitboxController {
 				if (now > hit.duration + hit.timeStarted) {
 					removeThese.add(hit);
 				} else if (hit.intersects(hurt)) {
-					
+
 					hurt.getEntity().changeHealth(-1 * hit.dmg);
-					System.out.println("Player 1 H: "+hurt.getEntity().health);
+					System.out.println("Player 1 H: " + hurt.getEntity().health);
 					removeThese.add(hit);
 				}
 
@@ -47,9 +47,9 @@ public class HitboxController {
 				if (now > hit.duration + hit.timeStarted) {
 					removeThese.add(hit);
 				} else if (hit.intersects(hurt)) {
-					
+
 					hurt.getEntity().changeHealth(-1 * hit.dmg);
-					System.out.println("Player 2 H: "+hurt.getEntity().health);
+					System.out.println("Player 2 H: " + hurt.getEntity().health);
 					removeThese.add(hit);
 				}
 
@@ -62,7 +62,7 @@ public class HitboxController {
 	public void addHitbox(Hitbox b, int i) {
 		if (i == 1) {
 			p1hitboxes.add(b);
-		} else {
+		} else if (i == 2) {
 			p2hitboxes.add(b);
 		}
 
@@ -71,7 +71,7 @@ public class HitboxController {
 	public void removehurtbox(Hitbox b, int i) {
 		if (i == 1)
 			p1hitboxes.remove(b);
-		else {
+		else if (i == 2) {
 			p2hitboxes.remove(b);
 		}
 	}
@@ -79,7 +79,7 @@ public class HitboxController {
 	public void addhurtbox(Hurtbox b, int i) {
 		if (i == 1)
 			p1hurtboxes.add(b);
-		else {
+		else if (i == 2) {
 			p2hurtboxes.add(b);
 		}
 	}
@@ -87,7 +87,7 @@ public class HitboxController {
 	public void removehurtbox(Hurtbox b, int i) {
 		if (i == 1)
 			p1hurtboxes.remove(b);
-		else {
+		else if (i == 2) {
 			p2hurtboxes.remove(b);
 		}
 	}
@@ -95,8 +95,10 @@ public class HitboxController {
 	public ArrayList<Hitbox> getHitboxes(int i) {
 		if (i == 1)
 			return p1hitboxes;
-		else {
+		else if (i == 2) {
 			return p2hitboxes;
+		} else {
+			return null;
 		}
 
 	}
@@ -104,8 +106,10 @@ public class HitboxController {
 	public ArrayList<Hurtbox> getHurtboxes(int i) {
 		if (i == 1)
 			return p1hurtboxes;
-		else {
+		else if (i == 2) {
 			return p2hurtboxes;
+		} else {
+			return null;
 		}
 	}
 }

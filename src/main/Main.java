@@ -3,6 +3,8 @@ package main;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,35 +54,34 @@ public class Main {
 		public void keyPressed(KeyEvent e) {
 			// TODO Auto-generated method stub
 			int in = e.getKeyCode();
-			long now = System.currentTimeMillis();
 			if (in == KeyMap.p1Up) {
 				if (moveQueue.p1Empty()) {
 					moveQueue.addP1("Jump");
 				}
-				
+
 			} else if (in == KeyMap.p1Right) {
 				p1.setDir(1);
 				p1.setXvel(p1.moveSpeed);
 				walk = true;
-				
+
 			} else if (in == KeyMap.p1Left) {
 				p1.setDir(-1);
 				p1.setXvel(-p1.moveSpeed);
 			} else if (in == KeyMap.p1Kick) {
-					for (int i = 0; i < 5; i++) {
-						p1.setT(i, 2);
-						p1.setX(p1.getX() + 15 * p1.dir);
-						pause(50);
-					}
+				for (int i = 0; i < 5; i++) {
+					p1.setT(i, 2);
+					p1.setX(p1.getX() + 15 * p1.dir);
 					pause(50);
-					for (int i = 4; i >= 0; i--) {
-						p1.setT(i, 2);
-						pause(50);
-					
+				}
+				pause(50);
+				for (int i = 4; i >= 0; i--) {
+					p1.setT(i, 2);
+					pause(50);
+
 				}
 			} else if (in == KeyMap.p1Jab) {
-					if (moveQueue.p1Empty() || moveQueue.see(0).equals("Jump"))
-						moveQueue.addP1("Jab");
+				if (moveQueue.p1Empty() || moveQueue.see(0).equals("Jump"))
+					moveQueue.addP1("Jab");
 			}
 		}
 
@@ -142,13 +143,12 @@ public class Main {
 	}
 
 	private void loadCharacters() {
+		FileUtils filer = new FileUtils();
 		String basePath = "src/res/characters/";
-		for (String line : FileUtils.readLinesFromFile(basePath + "characters.txt")) {
+		for (String line : filer.readLinesFromFile(basePath + "characters.txt")) {
 			characters.add(new GameCharacter(basePath + line + ".txt"));
 		}
 	}
-
-	
 
 	private void bufferInit() {
 		new Thread(new Runnable() {
@@ -168,17 +168,17 @@ public class Main {
 					} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
 						e1.printStackTrace();
 					}
-					
-					Hitbox add = moves1.jabh;
+					Hitbox add = moves1.jabh.reset();
+					System.out.println(add.e);
 					hbc.addHitbox(add, 1);
-					
+
 					for (int i = 0; i < 5; i++) {
 						p1.setT(i, 0);
 						p1.setX(p1.getX() + 5);
 						pause(30);
 
 					}
-					
+
 					pause(50);
 					for (int i = 4; i >= 0; i--) {
 						p1.setT(i, 0);
@@ -188,8 +188,8 @@ public class Main {
 					moveQueue.p1Remove();
 					continue;
 				}
-				
-				if (moveQueue.see(0).equals("Jump")){
+
+				if (moveQueue.see(0).equals("Jump")) {
 					p1.jump(9);
 					for (int i = 2; i >= 0; i--) {
 						p1.setT(i, 1);
@@ -201,12 +201,12 @@ public class Main {
 					}
 					moveQueue.p1Remove();
 					pause(50);
-					p1.setT(0,0);
+					p1.setT(0, 0);
 					continue;
-					
+
 				}
 			}
-			
+
 			else if (!(moveQueue.isEmpty(1))) {
 				System.out.println(moveQueue.see(1));
 				if (moveQueue.see(1).equals("Jab")) {
@@ -215,17 +215,14 @@ public class Main {
 					} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
 						e1.printStackTrace();
 					}
-					
-					Hitbox add = moves1.jabh;
-					hbc.addHitbox(add, 2);
-					
+
 					for (int i = 0; i < 5; i++) {
 						p2.setT(i, 0);
 						p2.setX(p2.getX() + 5);
 						pause(30);
 
 					}
-					
+
 					pause(50);
 					for (int i = 4; i >= 0; i--) {
 						p2.setT(i, 0);
@@ -235,8 +232,8 @@ public class Main {
 					moveQueue.p2Remove();
 					continue;
 				}
-				
-				if (moveQueue.see(1).equals("Jump")){
+
+				if (moveQueue.see(1).equals("Jump")) {
 					p2.jump(9);
 					for (int i = 2; i >= 0; i--) {
 						p2.setT(i, 1);
@@ -248,15 +245,15 @@ public class Main {
 					}
 					moveQueue.p2Remove();
 					pause(50);
-					p2.setT(0,0);
+					p2.setT(0, 0);
 					continue;
-					
+
 				}
 			}
 			pause(15);
 		}
 	}
-	
+
 	private void loop() throws InterruptedException {
 
 		long timeNow = System.currentTimeMillis();
@@ -267,6 +264,14 @@ public class Main {
 
 		Window window = new Window("Game", 960, 540);
 		window.addKeyListener(new InputHandler());
+		window.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				super.mousePressed(e);
+				System.out.println(e.getX() + " , " + e.getY());
+			}
+		});
 		window.show();
 		Screen screen = window.getScreen();
 		Gravity g = new Gravity();
@@ -275,18 +280,23 @@ public class Main {
 		// printCharacters();
 		p1 = new Player(0, 50, 0, characters.get(0));
 		moves1 = p1.moveSet;
+		System.out.println(moves1);
+		// System.out.println("player 1"+p1);
 		moves1.updatePlayer(p1);
-		p2 = new Player(1, 250, 0, characters.get(0));
-		moves2 = p1.moveSet;
+
+		p2 = new Player(1, 250, 0, new GameCharacter("src/res/characters/penguin.txt"));
+		moves2 = p2.moveSet;
+		System.out.println(moves2);
+		// System.out.println("Player 2"+p2);
 		moves2.updatePlayer(p2);
+
 		hb1 = new Hurtbox(p1);
 		hb2 = new Hurtbox(p2);
 		hbc.addhurtbox(hb1, 1);
 		hbc.addhurtbox(hb2, 2);
-		hbc.addHitbox(new Hitbox(10, 300, 300, 50, 50, 0, 5000,p1), 1);
+		// hbc.addHitbox(new Hitbox(10, 10, -100, 50, 50, 0, 5000,p1), 1);
 		moveQueue = new MoveQueue();
 		bufferInit();
-		System.out.println(p1.health);
 		g.addEntity(p1);
 		g.addEntity(p2);
 
@@ -311,8 +321,6 @@ public class Main {
 				currentTick++;
 
 			}
-
-			
 
 		}
 	}
