@@ -2,7 +2,7 @@
 /Damge . lag . frames . framedelay . hitx . hity . hitw . hith
 /jab 
 2
-300
+800
 5
 45
 100

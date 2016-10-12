@@ -53,7 +53,7 @@ public class MoveSet {
 
 		}
 		
-		jabh = new Hitbox(jab[damage], jab[hitx], jab[hity], jab[hitw], jab[hith], 1, jab[lag],null);
+		jabh = new Hitbox(jab[damage], jab[hitx], jab[hity], jab[hitw], jab[hith], 1, 7000,null);
 		punchh = new Hitbox(punch[damage], punch[hitx], punch[hity], punch[hitw], punch[hith], 1, punch[lag],null);
 		kickh = new Hitbox(kick[damage], kick[hitx], kick[hity], kick[hitw], kick[hith], 1, kick[lag],null);
 		slideh = new Hitbox(slide[damage], slide[hitx], slide[hity], slide[hitw], slide[hith], 1, slide[lag],null);
