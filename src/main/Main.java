@@ -213,7 +213,7 @@ public class Main {
 						sp.play("/res/sfx/punch.wav");
 					} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
 						e1.printStackTrace();
-					}			
+					}
 
 					for (int i = 0; i < 5; i++) {
 						p2.setT(i, 0);

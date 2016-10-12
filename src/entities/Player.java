@@ -60,7 +60,6 @@ public class Player extends Entity {
 		if (x < 0) {
 			x = 0;
 		}
-		
 		if (x > 960 - w) {
 			x = 960 - w;
 		}
