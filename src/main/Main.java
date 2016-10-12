@@ -169,7 +169,6 @@ public class Main {
 						e1.printStackTrace();
 					}
 					Hitbox add = moves1.jabh.reset();
-					System.out.println(add.e);
 					hbc.addHitbox(add, 1);
 
 					for (int i = 0; i < 5; i++) {

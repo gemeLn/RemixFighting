@@ -46,7 +46,6 @@ public class Hitbox extends Rectangle {
 	}
 
 	public void update() {
-		System.out.println(e);
 		x = e.x + xdif;
 		y = e.y + ydif;
 	}
