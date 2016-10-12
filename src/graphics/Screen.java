@@ -91,7 +91,7 @@ public class Screen {
 			pixels[x + width + (y + height) * this.width] = color;
 	}
 
-	public void fillRect(int x, int y, int width, int height, int color) {
+	public void fillRectBlend(int x, int y, int width, int height, int color) {
 		for (int yy = y; yy < y + height; yy++) {
 			for (int xx = x; xx < x + width; xx++) {
 				if (xx < 0 || yy < 0 || xx >= this.width || yy >= this.height)
@@ -107,6 +107,23 @@ public class Screen {
 			}
 		}
 	}
+	
+	public void fillRect(int x, int y, int width, int height, int color) {
+		for (int yy = y; yy < y + height; yy++) {
+			for (int xx = x; xx < x + width; xx++) {
+				if (xx < 0 || yy < 0 || xx >= this.width || yy >= this.height)
+					continue;
+				int pixel = color;
+
+				if (pixels[xx + yy * this.width] == 0) {
+					pixels[xx + yy * this.width] = pixel;
+					continue;
+				}
+				pixels[xx + yy * this.width] = color;
+			}
+		}
+	}
+
 
 	private int blend(int baseColor, int topColor) {
 		float br = ((baseColor & 0xff0000) >> 16) / 255.0f;
