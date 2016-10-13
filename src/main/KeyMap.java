@@ -5,20 +5,22 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class KeyMap {
-	public static int p1Up = KeyEvent.VK_UP;
-	public static int p1Down = KeyEvent.VK_DOWN;
-	public static int p1Left = KeyEvent.VK_LEFT;
-	public static int p1Right = KeyEvent.VK_RIGHT;
-	public static int p1Jab = KeyEvent.VK_M;
-	public static int p1Special = KeyEvent.VK_COMMA;
-	public static int p1Kick = KeyEvent.VK_PERIOD;
+	
+	public static int p1Up = KeyEvent.VK_W;
+	public static int p1Down = KeyEvent.VK_S;
+	public static int p1Left = KeyEvent.VK_A;
+	public static int p1Right = KeyEvent.VK_D;
+	public static int p1Jab = KeyEvent.VK_E;
+	public static int p1Special = KeyEvent.VK_R;
+	
+	public static int p2Up = KeyEvent.VK_UP;
+	public static int p2Down = KeyEvent.VK_DOWN;
+	public static int p2Left = KeyEvent.VK_LEFT;
+	public static int p2Right = KeyEvent.VK_RIGHT;
+	public static int p2Jab = KeyEvent.VK_M;
+	public static int p2Special = KeyEvent.VK_COMMA;
+	public static int p2Kick = KeyEvent.VK_PERIOD;
 
-	public static int p2Up = KeyEvent.VK_W;
-	public static int p2Down = KeyEvent.VK_S;
-	public static int p2Left = KeyEvent.VK_A;
-	public static int p2Right = KeyEvent.VK_D;
-	public static int p2Jab = KeyEvent.VK_E;
-	public static int p2Special = KeyEvent.VK_R;
 
 	// private static int[] p1Keys = new int[] { p1Up, p1Down, p1Left, p1Right,
 	// p1BasicAttack };

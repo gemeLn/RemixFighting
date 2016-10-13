@@ -1,8 +1,7 @@
 package main;
 
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
@@ -31,14 +30,19 @@ public class Main {
 	}
 
 	static long currentTick;
+	
+	static boolean isGameOn;
+	
 	Player p1;
 	Player p2;
 	MoveSet moves1;
 	MoveSet moves2;
+	CountDown countDown;
 	Hurtbox hb1;
 	Hurtbox hb2;
 	MoveQueue moveQueue;
 	Boolean walk;
+	Font f = new Font("Comic Sans MS", Font.BOLD, 24);
 	Texture bg = new Texture("/res/sprites/stage1.png", 960, 540);
 	SoundPlayer sp = new SoundPlayer();
 	long tick;
@@ -49,61 +53,6 @@ public class Main {
 	SpriteSheet snowSheet = new SpriteSheet(snow, 960, 540);
 	public int snowY = 0;
 	HitboxController hbc = new HitboxController();
-	KeyListener mainListen = new KeyAdapter() {
-		@Override
-		public void keyPressed(KeyEvent e) {
-			// TODO Auto-generated method stub
-			int in = e.getKeyCode();
-			if (in == KeyMap.p1Up) {
-				if (moveQueue.p1Empty()) {
-					moveQueue.addP1("Jump");
-				}
-
-			} else if (in == KeyMap.p1Right) {
-				p1.setDir(1);
-				p1.setXvel(p1.moveSpeed);
-				walk = true;
-
-			} else if (in == KeyMap.p1Left) {
-				p1.setDir(-1);
-				p1.setXvel(-p1.moveSpeed);
-			} else if (in == KeyMap.p1Kick) {
-				for (int i = 0; i < 5; i++) {
-					p1.setT(i, 2);
-					p1.setX(p1.getX() + 15 * p1.dir);
-					pause(50);
-				}
-				pause(50);
-				for (int i = 4; i >= 0; i--) {
-					p1.setT(i, 2);
-					pause(50);
-
-				}
-			} else if (in == KeyMap.p1Jab) {
-				if (moveQueue.p1Empty() || moveQueue.see(0).equals("Jump"))
-					moveQueue.addP1("Jab");
-			}
-		}
-
-		@Override
-		public void keyReleased(KeyEvent e) {
-			// TODO Auto-generated method stub
-			int in = e.getKeyCode();
-			if (in == KeyMap.p1Left) {
-				if (p1.getDir() < 0) {
-					p1.setXvel(0);
-				}
-
-			}
-			if (in == KeyMap.p1Right) {
-				if (p1.getDir() > 0) {
-					p1.setXvel(0);
-				}
-			}
-
-		}
-
-	};
 
 	public void pause(int time) {
 		try {
@@ -113,10 +62,27 @@ public class Main {
 			e1.printStackTrace();
 		}
 	}
+	
+	private void renderPlayerAssets(Screen screen){
+		
+		//Render the health bars
+		screen.fillRect(40, 45, 300, 30, 0xFF0000);
+		screen.fillRect(620, 45, 300, 30, 0xFF0000);
+		screen.fillRect(40, 45, 3*p1.health, 30, 0xe5e500);
+		screen.fillRect(620, 45, 3*p2.health, 30, 0xe5e500);
+		
+		//Render the player names
+		screen.drawString(p1.name, 50, 68, f, Color.black);
+		screen.drawString(p2.name, 630, 68, f, Color.black);
+		
+		
+	}
 
 	private void render(Screen screen) {
-		screen.drawTexture(0, 0, bg);
-		screen.drawString(p1.name, 40, 45);
+		if (timepass / 60 >= 14)
+			timepass = 0;
+		screen.drawTexture(0, 0, snowSheet.getTexture(timepass / 60, 0));
+		timepass++;
 		for (Hurtbox h : hbc.getHurtboxes(1)) {
 			screen.drawRect(h.x, h.y, h.width, h.height, 0x0000FF);
 		}
@@ -129,15 +95,20 @@ public class Main {
 		for (Hitbox hit : hbc.getHitboxes(2)) {
 			screen.drawRect(hit.x, hit.y, hit.width, hit.height, 0xff0000);
 		}
-		if (timepass / 60 >= 14)
-			timepass = 0;
-		screen.drawTexture(0, 0, snowSheet.getTexture(timepass / 60, 0));
-		timepass++;
 
+		screen.drawTexture(0, 0, bg);
+		renderPlayerAssets(screen);
+		
 		// screen.drawTexture(25, 25, p1.getHealthPx);
 		screen.drawTexture(p1.getX(), p1.getY(), p1.getTexture());
 		screen.drawTexture(p2.getX(), p2.getY(), p2.getTexture());
-
+		
+		
+		
+		if (countDown.countDown(screen, 430, 50) == 1){
+			isGameOn = false;
+		}
+		
 		tick++;
 
 	}
@@ -153,13 +124,70 @@ public class Main {
 	private void bufferInit() {
 		new Thread(new Runnable() {
 			public void run() {
-				buffer();
+				bufferP1();
 			}
-		}, "Buffer Thread").start();
+		}, "Buffer Thread P1").start();
+		
+		new Thread(new Runnable() {
+			public void run() {
+				bufferP2();
+			}
+		}, "Buffer Thread P2").start();
+	}
+	
+	private void bufferP2() {
+		while (isGameOn) {
+			if (!(moveQueue.isEmpty(1))) {
+				System.out.println(moveQueue.see(1));
+				if (moveQueue.see(1).equals("Jab")) {
+					try {
+						sp.play("/res/sfx/punch.wav");
+					} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
+						e1.printStackTrace();
+					}			
+					
+					for (int i = 0; i < 5; i++) {
+						p2.setT(i, 0);
+						p2.setX(p2.getX() + 5);
+						pause(30);
+
+					}
+					Hitbox add = moves2.jabh.reset();
+					hbc.addHitbox(add, 2);
+
+					pause(50);
+					for (int i = 4; i >= 0; i--) {
+						p2.setT(i, 0);
+						p2.setX(p2.getX() - 5);
+						pause(40);
+					}
+					moveQueue.p2Remove();
+					continue;
+				}
+
+				if (moveQueue.see(1).equals("Jump")) {
+					p2.jump(9);
+					for (int i = 2; i >= 0; i--) {
+						p2.setT(i, 1);
+						pause(40);
+					}
+					for (int i = 0; i < 5; i++) {
+						p2.setT(i, 1);
+						pause(30);
+					}
+					moveQueue.p2Remove();
+					pause(50);
+					p2.setT(0, 0);
+					continue;
+
+				}
+			}
+			pause(15);
+		}
 	}
 
-	private void buffer() {
-		while (true) {
+	private void bufferP1() {
+		while (isGameOn) {
 			if (!(moveQueue.isEmpty(0))) {
 				System.out.println(moveQueue.see(0));
 				if (moveQueue.see(0).equals("Jab")) {
@@ -168,8 +196,11 @@ public class Main {
 					} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
 						e1.printStackTrace();
 					}
+<<<<<<< Updated upstream
+=======
 					Hitbox add = moves1.jabh.reset();
 					hbc.addHitbox(add, 1);
+>>>>>>> Stashed changes
 
 					for (int i = 0; i < 5; i++) {
 						p1.setT(i, 0);
@@ -205,50 +236,6 @@ public class Main {
 
 				}
 			}
-
-			else if (!(moveQueue.isEmpty(1))) {
-				System.out.println(moveQueue.see(1));
-				if (moveQueue.see(1).equals("Jab")) {
-					try {
-						sp.play("/res/sfx/punch.wav");
-					} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
-						e1.printStackTrace();
-					}
-
-					for (int i = 0; i < 5; i++) {
-						p2.setT(i, 0);
-						p2.setX(p2.getX() + 5);
-						pause(30);
-
-					}
-
-					pause(50);
-					for (int i = 4; i >= 0; i--) {
-						p2.setT(i, 0);
-						p2.setX(p2.getX() - 5);
-						pause(40);
-					}
-					moveQueue.p2Remove();
-					continue;
-				}
-
-				if (moveQueue.see(1).equals("Jump")) {
-					p2.jump(9);
-					for (int i = 2; i >= 0; i--) {
-						p2.setT(i, 1);
-						pause(40);
-					}
-					for (int i = 0; i < 5; i++) {
-						p2.setT(i, 1);
-						pause(30);
-					}
-					moveQueue.p2Remove();
-					pause(50);
-					p2.setT(0, 0);
-					continue;
-
-				}
-			}
 			pause(15);
 		}
 	}
@@ -260,6 +247,8 @@ public class Main {
 		double fps = 1000.0 / 60.0;
 		int lag = 0;
 		KeyMap.init();
+		
+		countDown = new CountDown();
 
 		Window window = new Window("Game", 960, 540);
 		window.addKeyListener(new InputHandler());
@@ -295,11 +284,15 @@ public class Main {
 		hbc.addhurtbox(hb2, 2);
 		// hbc.addHitbox(new Hitbox(10, 10, -100, 50, 50, 0, 5000,p1), 1);
 		moveQueue = new MoveQueue();
-		bufferInit();
 		g.addEntity(p1);
 		g.addEntity(p2);
+		
+		countDown.countDownInit(120);
+		
+		isGameOn = true;
+		bufferInit();
 
-		while (true) {
+		while (isGameOn) {
 
 			timeNow = System.currentTimeMillis();
 

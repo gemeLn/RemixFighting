@@ -24,7 +24,6 @@ public class Player extends Entity {
 	public SpriteSheet sheet;
 	public MoveSet moveSet;
 	public MoveQueue moveQueue; 
-	private Texture healthPx = new Texture("/res/sprites/RedPixel.png", 300, 25);
 	
 	private Jab jab;
 	

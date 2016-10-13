@@ -132,6 +132,10 @@ public class Entity {
 
 	public void changeHealth(int i) {
 		health+=i;
+		if(health<=0){
+			System.out.println("DEIDED");
+			
+		}
 		
 	}
 }
