@@ -68,13 +68,16 @@ public class Main {
 		//Render the health bars
 		screen.fillRect(40, 45, 300, 30, 0xFF0000);
 		screen.fillRect(620, 45, 300, 30, 0xFF0000);
-		screen.fillRect(40, 45, 3*p1.health, 30, 0xe5e500);
-		screen.fillRect(620, 45, 3*p2.health, 30, 0xe5e500);
+		screen.fillRect(40, 45, 3*p1.health, 30, 0x0000FF);
+		screen.fillRect(620, 45, 3*p2.health, 30, 0x0000FF);
 		
 		//Render the player names
 		screen.drawString(p1.name, 50, 68, f, Color.black);
 		screen.drawString(p2.name, 630, 68, f, Color.black);
 		
+		//Render the player labels
+		screen.drawString("p1", p1.x+35, p1.y+10, f, Color.black);
+		screen.drawString("p2", p2.x+35, p2.y+10, f, Color.black);
 		
 	}
 
@@ -83,6 +86,7 @@ public class Main {
 			timepass = 0;
 		screen.drawTexture(0, 0, snowSheet.getTexture(timepass / 60, 0));
 		timepass++;
+		screen.drawTexture(0, 0, bg);
 		for (Hurtbox h : hbc.getHurtboxes(1)) {
 			screen.drawRect(h.x, h.y, h.width, h.height, 0x0000FF);
 		}
@@ -96,7 +100,6 @@ public class Main {
 			screen.drawRect(hit.x, hit.y, hit.width, hit.height, 0xff0000);
 		}
 
-		screen.drawTexture(0, 0, bg);
 		renderPlayerAssets(screen);
 		
 		// screen.drawTexture(25, 25, p1.getHealthPx);
@@ -196,11 +199,8 @@ public class Main {
 					} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
 						e1.printStackTrace();
 					}
-<<<<<<< Updated upstream
-=======
 					Hitbox add = moves1.jabh.reset();
 					hbc.addHitbox(add, 1);
->>>>>>> Stashed changes
 
 					for (int i = 0; i < 5; i++) {
 						p1.setT(i, 0);
@@ -287,7 +287,7 @@ public class Main {
 		g.addEntity(p1);
 		g.addEntity(p2);
 		
-		countDown.countDownInit(120);
+		countDown.countDownInit(240);
 		
 		isGameOn = true;
 		bufferInit();

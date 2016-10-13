@@ -2,11 +2,7 @@
 /Damge . lag . frames . framedelay . hitx . hity . hitw . hith
 /jab 
 2
-<<<<<<< Updated upstream
-800
-=======
 250
->>>>>>> Stashed changes
 5
 45
 100

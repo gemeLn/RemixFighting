@@ -24,7 +24,7 @@ public class CountDown {
 	}
 
 	public int countDown(Screen screen, int x, int y) {
-		screen.fillRect(x-10, y-35,100,40, 0xFFFFFF);
+		screen.fillRect(x-10, y-35,115,40, 0xFFFFFF);
 		timeNow = System.currentTimeMillis();
 		if (timeNow - secound >= timeLastTick) {
 			if (time <= 0 && minute >= 1) {
@@ -47,7 +47,7 @@ public class CountDown {
 		else if (time < 10)
 			screen.drawString("" + time, x+30, y, f, Color.black);
 		else 
-			screen.drawString("" + time, x+20, y, f, Color.black);
+			screen.drawString("" + time, x+30, y, f, Color.black);
 		return -1;
 	}
 }

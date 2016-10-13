@@ -75,19 +75,21 @@ public class Player extends Entity {
 	 */
 	
 	private void handleInput(){
-		if (InputHandler.isKeyPressed(keys.get("up"))) {
-			if (moveQueue.isEmpty(playerID)){
-				moveQueue.add(playerID,"Jump");
-			}
-			
-		}
-		else if (InputHandler.isKeyPressed(keys.get("right"))) {
+		if (InputHandler.isKeyPressed(keys.get("right"))) {
 			setDir(1);
 			setXvel(moveSpeed);			
 		} 
 		else if (InputHandler.isKeyPressed(keys.get("left"))) {
 			setDir(-1);
 			setXvel(-moveSpeed);
+		}else {
+			setXvel(0);
+		}
+		if (InputHandler.isKeyPressed(keys.get("up"))) {
+			if (moveQueue.isEmpty(playerID)){
+				moveQueue.add(playerID,"Jump");
+			}
+			
 		}
 		/*} else if (in == KeyMap.p1Kick) {
 				for (int i = 0; i < 5; i++) {
@@ -112,9 +114,6 @@ public class Player extends Entity {
 		
 
 		
-		else if(!InputHandler.isKeyPressed(keys.get("left"))||!InputHandler.isKeyPressed(keys.get("right"))) {
-			setXvel(0);
-		}
 		
 	}
 	
