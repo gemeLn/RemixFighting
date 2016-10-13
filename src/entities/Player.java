@@ -2,7 +2,7 @@ package entities;
 
 import java.util.Map;
 
-import entities.move.Jab;
+import entities.move.Animations;
 import graphics.SpriteSheet;
 import graphics.Texture;
 import main.InputHandler;
@@ -25,7 +25,7 @@ public class Player extends Entity {
 	public MoveSet moveSet;
 	public MoveQueue moveQueue; 
 	
-	private Jab jab;
+	private Animations jab;
 	
 	private Map<String, Integer> keys;
 
@@ -51,7 +51,7 @@ public class Player extends Entity {
 		keys = KeyMap.getKeyMapping(playerID);
 		
 		moveQueue = new MoveQueue();
-		jab = new Jab();
+		
 		// TODO Auto-generated constructor stub
 	}
 
@@ -106,8 +106,7 @@ public class Player extends Entity {
 		} 
 		*/
 		else if (InputHandler.isKeyPressed(keys.get("jab"))) {
-				if (moveQueue.isEmpty(playerID) || moveQueue.see(playerID).equals("Jump")){
-					jab.preform();
+				if (moveQueue.isEmpty(playerID)){
 					moveQueue.add(playerID,"Jab");
 				}
 		}

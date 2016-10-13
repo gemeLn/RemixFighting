@@ -16,6 +16,7 @@ import entities.Hitbox;
 import entities.HitboxController;
 import entities.Hurtbox;
 import entities.Player;
+import entities.move.Animations;
 import graphics.Screen;
 import graphics.SpriteSheet;
 import graphics.Texture;
@@ -30,9 +31,9 @@ public class Main {
 	}
 
 	static long currentTick;
-	
+
 	static boolean isGameOn;
-	
+
 	Player p1;
 	Player p2;
 	MoveSet moves1;
@@ -42,9 +43,9 @@ public class Main {
 	Hurtbox hb2;
 	MoveQueue moveQueue;
 	Boolean walk;
+	Animations anim;
 	Font f = new Font("Comic Sans MS", Font.BOLD, 24);
 	Texture bg = new Texture("/res/sprites/stage1.png", 960, 540);
-	SoundPlayer sp = new SoundPlayer();
 	long tick;
 	private List<GameCharacter> characters = new ArrayList<GameCharacter>();
 	Texture healthPx = new Texture("/res/sprites/RedPixel.png", 350, 25);
@@ -62,23 +63,23 @@ public class Main {
 			e1.printStackTrace();
 		}
 	}
-	
-	private void renderPlayerAssets(Screen screen){
-		
-		//Render the health bars
+
+	private void renderPlayerAssets(Screen screen) {
+
+		// Render the health bars
 		screen.fillRect(40, 45, 300, 30, 0xFF0000);
 		screen.fillRect(620, 45, 300, 30, 0xFF0000);
-		screen.fillRect(40, 45, 3*p1.health, 30, 0x0000FF);
-		screen.fillRect(620, 45, 3*p2.health, 30, 0x0000FF);
-		
-		//Render the player names
+		screen.fillRect(40, 45, 3 * p1.health, 30, 0x0000FF);
+		screen.fillRect(620, 45, 3 * p2.health, 30, 0x0000FF);
+
+		// Render the player names
 		screen.drawString(p1.name, 50, 68, f, Color.black);
 		screen.drawString(p2.name, 630, 68, f, Color.black);
-		
-		//Render the player labels
-		screen.drawString("p1", p1.x+35, p1.y+10, f, Color.black);
-		screen.drawString("p2", p2.x+35, p2.y+10, f, Color.black);
-		
+
+		// Render the player labels
+		screen.drawString("p1", p1.x + 35, p1.y + 10, f, Color.black);
+		screen.drawString("p2", p2.x + 35, p2.y + 10, f, Color.black);
+
 	}
 
 	private void render(Screen screen) {
@@ -101,17 +102,15 @@ public class Main {
 		}
 
 		renderPlayerAssets(screen);
-		
+
 		// screen.drawTexture(25, 25, p1.getHealthPx);
 		screen.drawTexture(p1.getX(), p1.getY(), p1.getTexture());
 		screen.drawTexture(p2.getX(), p2.getY(), p2.getTexture());
-		
-		
-		
-		if (countDown.countDown(screen, 430, 50) == 1){
+
+		if (countDown.countDown(screen, 430, 50) == 1) {
 			isGameOn = false;
 		}
-		
+
 		tick++;
 
 	}
@@ -130,45 +129,28 @@ public class Main {
 				bufferP1();
 			}
 		}, "Buffer Thread P1").start();
-		
+
 		new Thread(new Runnable() {
 			public void run() {
 				bufferP2();
 			}
 		}, "Buffer Thread P2").start();
 	}
-	
+
 	private void bufferP2() {
 		while (isGameOn) {
 			if (!(moveQueue.isEmpty(1))) {
 				System.out.println(moveQueue.see(1));
 				if (moveQueue.see(1).equals("Jab")) {
 					try {
-						sp.play("/res/sfx/punch.wav");
-					} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
-						e1.printStackTrace();
-					}			
-					
-					for (int i = 0; i < 5; i++) {
-						p2.setT(i, 0);
-						p2.setX(p2.getX() + 5);
-						pause(30);
-
+						anim.exec("jab", 1);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
-					Hitbox add = moves2.jabh.reset();
-					hbc.addHitbox(add, 2);
-
-					pause(50);
-					for (int i = 4; i >= 0; i--) {
-						p2.setT(i, 0);
-						p2.setX(p2.getX() - 5);
-						pause(40);
-					}
-					moveQueue.p2Remove();
-					continue;
 				}
 
-				if (moveQueue.see(1).equals("Jump")) {
+				else if (moveQueue.see(1).equals("Jump")) {
 					p2.jump(9);
 					for (int i = 2; i >= 0; i--) {
 						p2.setT(i, 1);
@@ -195,31 +177,14 @@ public class Main {
 				System.out.println(moveQueue.see(0));
 				if (moveQueue.see(0).equals("Jab")) {
 					try {
-						sp.play("/res/sfx/punch.wav");
-					} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
-						e1.printStackTrace();
+						anim.exec("jab", 0);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
-					Hitbox add = moves1.jabh.reset();
-					hbc.addHitbox(add, 1);
-
-					for (int i = 0; i < 5; i++) {
-						p1.setT(i, 0);
-						p1.setX(p1.getX() + 5);
-						pause(30);
-
-					}
-
-					pause(50);
-					for (int i = 4; i >= 0; i--) {
-						p1.setT(i, 0);
-						p1.setX(p1.getX() - 5);
-						pause(40);
-					}
-					moveQueue.p1Remove();
-					continue;
 				}
 
-				if (moveQueue.see(0).equals("Jump")) {
+				else if (moveQueue.see(0).equals("Jump")) {
 					p1.jump(9);
 					for (int i = 2; i >= 0; i--) {
 						p1.setT(i, 1);
@@ -247,7 +212,7 @@ public class Main {
 		double fps = 1000.0 / 60.0;
 		int lag = 0;
 		KeyMap.init();
-		
+
 		countDown = new CountDown();
 
 		Window window = new Window("Game", 960, 540);
@@ -266,6 +231,7 @@ public class Main {
 		loadCharacters();
 
 		// printCharacters();
+		hbc = new HitboxController();
 		p1 = new Player(0, 50, 0, characters.get(0));
 		moves1 = p1.moveSet;
 		System.out.println(moves1);
@@ -275,20 +241,19 @@ public class Main {
 		p2 = new Player(1, 250, 0, new GameCharacter("src/res/characters/penguin.txt"));
 		moves2 = p2.moveSet;
 		System.out.println(moves2);
-		// System.out.println("Player 2"+p2);
 		moves2.updatePlayer(p2);
-
+		moveQueue = new MoveQueue();
+		anim = new Animations(p1, p2, moves1, moves2, hbc, moveQueue);
 		hb1 = new Hurtbox(p1);
 		hb2 = new Hurtbox(p2);
 		hbc.addhurtbox(hb1, 1);
 		hbc.addhurtbox(hb2, 2);
-		// hbc.addHitbox(new Hitbox(10, 10, -100, 50, 50, 0, 5000,p1), 1);
-		moveQueue = new MoveQueue();
+
 		g.addEntity(p1);
 		g.addEntity(p2);
-		
+
 		countDown.countDownInit(240);
-		
+
 		isGameOn = true;
 		bufferInit();
 

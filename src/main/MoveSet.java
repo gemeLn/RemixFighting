@@ -77,7 +77,22 @@ public class MoveSet {
 		return ret;
 
 	}
-
+	public Hitbox retriveHitbox(String s){
+		switch (s){
+		case "jab":
+			return jabh;
+		case "kick":
+			return kickh;
+		case "punch":
+			return punchh;
+		case "slide":
+			return kickh;
+		default:
+			return null;
+		
+		
+		}
+	}
 	private int toInt(String s) {
 		return Integer.parseInt(s);
 	}
