@@ -11,6 +11,7 @@ import entities.Player;
 import main.MoveQueue;
 import main.MoveSet;
 import main.SoundPlayer;
+import sun.swing.text.html.FrameEditorPaneTag;
 
 public class Animations {
 	Player p1, p2;
@@ -34,35 +35,52 @@ public class Animations {
 		Thread.sleep(i);
 	}
 
-	public void exec(String input, int pid) throws InterruptedException {
-		if (pid == 0) {
-			try {
-				sp.play("/res/sfx/punch.wav");
-			} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
-				e1.printStackTrace();
-			}
-			Hitbox add = m1.retriveHitbox(input).reset();
-			hbc.addHitbox(add, pid + 1);
-
-			for (int i = 0; i <5; i++) {
-				p1.setT(i, 0);
-				p1.setX(p1.getX() + 5);
-				pause(30);
-
-			}
-
-			pause(m1.framedelay);
-			for (int i = m1.frames-1; i >= 0; i--) {
-				p1.setT(i, 0);
-				p1.setX(p1.getX() - 5);
-				pause(40);
-			}
-			moveQueue.remove(0);
+	private Player getPlayer(int i) {
+		if (i == 0)
+			return p1;
+		else {
+			return p2;
 		}
-		else{
-			
-			
-			
-		}
+
 	}
+
+	private MoveSet getMoveSet(int i) {
+		if (i == 0)
+			return m1;
+		else {
+			return m2;
+		}
+
+	}
+
+	public void exec(String input, int pid) throws InterruptedException {
+		try {
+			sp.play("/res/sfx/punch.wav");
+		} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
+			e1.printStackTrace();
+		}
+		Player pTemp = getPlayer(pid);
+		MoveSet mTemp = getMoveSet(pid);
+		Hitbox add = mTemp.retriveHitbox(input).reset();
+		int[] array = mTemp.retrieveArray(input);
+		int framedelay = array[mTemp.framedelay];
+		hbc.addHitbox(add, pid + 1);
+
+		for (int i = 0; i < array[m1.frames]; i++) {
+			pTemp.setT(i, array[mTemp.row]);
+			pTemp.setX(pTemp.getX() + 5);
+			pause(framedelay);
+
+		}
+
+		pause(framedelay);
+		for (int i = array[mTemp.frames] - 1; i >= 0; i--) {
+			pTemp.setT(i, array[mTemp.row]);
+			pTemp.setX(pTemp.getX() - 5);
+			pause(framedelay);
+		}
+		pause(framedelay);
+		moveQueue.remove(pid);
+	}
+
 }

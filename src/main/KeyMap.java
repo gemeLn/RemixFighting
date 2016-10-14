@@ -12,6 +12,7 @@ public class KeyMap {
 	public static int p1Right = KeyEvent.VK_D;
 	public static int p1Jab = KeyEvent.VK_E;
 	public static int p1Special = KeyEvent.VK_R;
+	public static int p1Kick = KeyEvent.VK_Q;
 	
 	public static int p2Up = KeyEvent.VK_UP;
 	public static int p2Down = KeyEvent.VK_DOWN;
@@ -36,12 +37,14 @@ public class KeyMap {
 		p1Keys.put("left", p1Left);
 		p1Keys.put("right", p1Right);
 		p1Keys.put("jab", p1Jab);
+		p1Keys.put("kick", p1Kick);
 
 		p2Keys.put("up", p2Up);
 		p2Keys.put("down", p2Down);
 		p2Keys.put("left", p2Left);
 		p2Keys.put("right", p2Right);
 		p2Keys.put("jab", p2Jab);
+		p2Keys.put("kick", p2Kick);
 	}
 
 	public static Map<String, Integer> getKeyMapping(int playerID) {

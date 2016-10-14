@@ -8,15 +8,16 @@ import utils.FileUtils;
 
 public class MoveSet {
 	final public int damage = 0;
-	final public int lag = 1;
+	final public int duration = 1;
 	final public int frames = 2;
 	final public int framedelay = 3;
 	final public int hitx = 4;
 	final public int hity = 5;
 	final public int hitw = 6;
 	final public int hith = 7;
+	final public int row = 8;
 
-	int size = 8;
+	int size = 9;
 	public int[] jab, punch, kick, jump, slide, walk;
 	public Hitbox jabh, punchh, kickh, jumph, slideh, walkh;
 	List<String> lines;
@@ -52,22 +53,25 @@ public class MoveSet {
 			}
 
 		}
-		
-		jabh = new Hitbox(jab[damage], jab[hitx], jab[hity], jab[hitw], jab[hith], 1, jab[lag],null);
-		punchh = new Hitbox(punch[damage], punch[hitx], punch[hity], punch[hitw], punch[hith], 1, punch[lag],null);
-		kickh = new Hitbox(kick[damage], kick[hitx], kick[hity], kick[hitw], kick[hith], 1, kick[lag],null);
-		slideh = new Hitbox(slide[damage], slide[hitx], slide[hity], slide[hitw], slide[hith], 1, slide[lag],null);
-		
-		
+
+		jabh = new Hitbox(jab[damage], jab[hitx], jab[hity], jab[hitw], jab[hith], 1, jab[duration], null);
+		punchh = new Hitbox(punch[damage], punch[hitx], punch[hity], punch[hitw], punch[hith], 1, punch[duration],
+				null);
+		kickh = new Hitbox(kick[damage], kick[hitx], kick[hity], kick[hitw], kick[hith], 1, kick[duration], null);
+		slideh = new Hitbox(slide[damage], slide[hitx], slide[hity], slide[hitw], slide[hith], 1, slide[duration],
+				null);
+
 	}
-	public void updatePlayer(Entity e){
-		System.out.println("Set hbox to:"+e);
+
+	public void updatePlayer(Entity e) {
+		System.out.println("Set hbox to:" + e);
 		jabh.setE(e);
 		punchh.setE(e);
 		kickh.setE(e);
 		slideh.setE(e);
-		
+
 	};
+
 	private int[] readNextI() {
 		int[] ret = new int[size];
 		for (int i = 0; i < size; i++) {
@@ -77,8 +81,27 @@ public class MoveSet {
 		return ret;
 
 	}
-	public Hitbox retriveHitbox(String s){
-		switch (s){
+
+	public int[] retrieveArray(String s) {
+		switch (s) {
+		case "jab":
+			return jab;
+		case "kick":
+			return kick;
+		case "punch":
+			return punch;
+		case "slide":
+			return slide;
+		case "jump":
+			return jump;
+		default:
+			return null;
+
+		}
+	}
+
+	public Hitbox retriveHitbox(String s) {
+		switch (s) {
 		case "jab":
 			return jabh;
 		case "kick":
@@ -86,13 +109,13 @@ public class MoveSet {
 		case "punch":
 			return punchh;
 		case "slide":
-			return kickh;
+			return slideh;
 		default:
 			return null;
-		
-		
+
 		}
 	}
+
 	private int toInt(String s) {
 		return Integer.parseInt(s);
 	}

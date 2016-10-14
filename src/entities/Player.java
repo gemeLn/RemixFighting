@@ -85,6 +85,7 @@ public class Player extends Entity {
 		}else {
 			setXvel(0);
 		}
+	
 		if (InputHandler.isKeyPressed(keys.get("up"))) {
 			if (moveQueue.isEmpty(playerID)){
 				moveQueue.add(playerID,"Jump");
@@ -105,10 +106,15 @@ public class Player extends Entity {
 			}
 		} 
 		*/
+		else if (InputHandler.isKeyPressed(keys.get("kick"))){
+			if (moveQueue.isEmpty(playerID))
+				moveQueue.add(playerID, "Kick");
+		}
+		
 		else if (InputHandler.isKeyPressed(keys.get("jab"))) {
-				if (moveQueue.isEmpty(playerID)){
+				if (moveQueue.isEmpty(playerID))
 					moveQueue.add(playerID,"Jab");
-				}
+				
 		}
 		
 

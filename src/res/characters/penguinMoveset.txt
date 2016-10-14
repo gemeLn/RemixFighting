@@ -1,14 +1,15 @@
 /Penguin Moveset
-/Damge . lag . frames . framedelay . hitx . hity . hitw . hith
+/Damge . duration . frames . framedelay . hitx . hity . hitw . hith. rows
 /jab 
-2
+5
 250
 5
-45
+35
 100
-60
+65
 40
-30
+25
+0
 /Punch
 5
 1000
@@ -18,15 +19,17 @@
 20
 50
 30
+-1
 /Kick
 5
-600
+450
 5
 45
--1
--1
--1
--1
+110
+52
+40
+63
+2
 /Jump
 2
 250
@@ -36,6 +39,7 @@
 -1
 -1
 -1
+1
 /Slide
 7
 1500
@@ -45,11 +49,14 @@
 0
 200
 100
+-1
 /Walk
 -1
 -1
 6
 45
+-1
+-1
 -1
 -1
 -1

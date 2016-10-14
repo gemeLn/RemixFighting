@@ -88,6 +88,9 @@ public class Main {
 		screen.drawTexture(0, 0, snowSheet.getTexture(timepass / 60, 0));
 		timepass++;
 		screen.drawTexture(0, 0, bg);
+
+		screen.drawTexture(p1.getX(), p1.getY(), p1.getTexture());
+		screen.drawTexture(p2.getX(), p2.getY(), p2.getTexture());
 		for (Hurtbox h : hbc.getHurtboxes(1)) {
 			screen.drawRect(h.x, h.y, h.width, h.height, 0x0000FF);
 		}
@@ -103,9 +106,6 @@ public class Main {
 
 		renderPlayerAssets(screen);
 
-		// screen.drawTexture(25, 25, p1.getHealthPx);
-		screen.drawTexture(p1.getX(), p1.getY(), p1.getTexture());
-		screen.drawTexture(p2.getX(), p2.getY(), p2.getTexture());
 
 		if (countDown.countDown(screen, 430, 50) == 1) {
 			isGameOn = false;
@@ -126,84 +126,80 @@ public class Main {
 	private void bufferInit() {
 		new Thread(new Runnable() {
 			public void run() {
-				bufferP1();
+				try {
+					bufferP1();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}, "Buffer Thread P1").start();
 
 		new Thread(new Runnable() {
 			public void run() {
-				bufferP2();
+				try {
+					bufferP2();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}, "Buffer Thread P2").start();
 	}
-
-	private void bufferP2() {
-		while (isGameOn) {
-			if (!(moveQueue.isEmpty(1))) {
-				System.out.println(moveQueue.see(1));
-				if (moveQueue.see(1).equals("Jab")) {
-					try {
-						anim.exec("jab", 1);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-
-				else if (moveQueue.see(1).equals("Jump")) {
-					p2.jump(9);
-					for (int i = 2; i >= 0; i--) {
-						p2.setT(i, 1);
-						pause(40);
-					}
-					for (int i = 0; i < 5; i++) {
-						p2.setT(i, 1);
-						pause(30);
-					}
-					moveQueue.p2Remove();
-					pause(50);
-					p2.setT(0, 0);
-					continue;
-
-				}
-			}
-			pause(15);
-		}
-	}
-
-	private void bufferP1() {
+	private void bufferP1() throws InterruptedException {
 		while (isGameOn) {
 			if (!(moveQueue.isEmpty(0))) {
 				System.out.println(moveQueue.see(0));
-				if (moveQueue.see(0).equals("Jab")) {
-					try {
-						anim.exec("jab", 0);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
 
-				else if (moveQueue.see(0).equals("Jump")) {
+				if (moveQueue.see(0).equals("Jump")) {
 					p1.jump(9);
 					for (int i = 2; i >= 0; i--) {
 						p1.setT(i, 1);
 						pause(40);
 					}
+					moveQueue.p1Remove();
 					for (int i = 0; i < 5; i++) {
 						p1.setT(i, 1);
 						pause(30);
 					}
-					moveQueue.p1Remove();
 					pause(50);
 					p1.setT(0, 0);
 					continue;
 
-				}
+				} else
+					anim.exec(moveQueue.see(0).toLowerCase(), 0);
 			}
 			pause(15);
 		}
 	}
+	private void bufferP2() throws InterruptedException {
+		while (isGameOn) {
+			if (!(moveQueue.isEmpty(1))) {
+				System.out.println(moveQueue.see(1));
+
+				if (moveQueue.see(1).equals("Jump")) {
+					p2.jump(9);
+					for (int i = 2; i >= 0; i--) {
+						p2.setT(i, 1);
+						pause(40);
+					}
+					moveQueue.p2Remove();
+					for (int i = 0; i < 5; i++) {
+						p2.setT(i, 1);
+						pause(30);
+					}
+					pause(50);
+					p2.setT(0, 0);
+					continue;
+
+				} else
+					anim.exec(moveQueue.see(1).toLowerCase(), 1);
+			}
+			pause(15);
+		}
+	}
+
+	
 
 	private void loop() throws InterruptedException {
 
