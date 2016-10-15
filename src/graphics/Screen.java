@@ -163,8 +163,14 @@ public class Screen {
 	public void drawString(String string, int x, int y, Font font, Color color) {
 		stringBuffer.add(new RenderableString(string, x, y, font, color));
 	}
+	
+	public void drawTexture(int x, int y, Texture texture){
+		drawTexture(x, y, texture, false);
+	}
+		
+		
 
-	public void drawTexture(int x, int y, Texture texture) {
+	public void drawTexture(int x, int y, Texture texture, boolean flipX) {
 		for (int yy = 0; yy < texture.getHeight(); yy++) {
 			int yo = y + yy;
 			for (int xx = 0; xx < texture.getWidth(); xx++) {
@@ -172,7 +178,13 @@ public class Screen {
 				// Bound checking goes here!
 				if (yo >= height || xo >= width || xo < 0 || yo < 0)
 					continue;
-				int color = texture.pixels[xx + yy * texture.getWidth()];
+				
+				//Flip x if needed
+				int xf = xx;
+				if(flipX)
+					xf = texture.getWidth() - xx - 1;
+				
+				int color = texture.pixels[xf + yy * texture.getWidth()];
 				if (color == 0xffff00ff)
 					continue;
 				pixels[xo + yo * this.width] = color;

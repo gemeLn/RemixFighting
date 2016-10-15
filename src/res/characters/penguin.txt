@@ -1,11 +1,11 @@
 /Character Name
 Penguin
 /Sheet Width
-800
+1040
 /Sheet Height
 800
 /Sheet Div X
-160
+208
 /Sheet Div Y
 160
 /Speed

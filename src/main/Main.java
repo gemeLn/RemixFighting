@@ -89,8 +89,8 @@ public class Main {
 		timepass++;
 		screen.drawTexture(0, 0, bg);
 
-		screen.drawTexture(p1.getX(), p1.getY(), p1.getTexture());
-		screen.drawTexture(p2.getX(), p2.getY(), p2.getTexture());
+		screen.drawTexture(p1.getX(), p1.getY(), p1.getTexture(), p1.getDir() == -1);
+		screen.drawTexture(p2.getX(), p2.getY(), p2.getTexture(), p2.getDir() == -1);
 		for (Hurtbox h : hbc.getHurtboxes(1)) {
 			screen.drawRect(h.x, h.y, h.width, h.height, 0x0000FF);
 		}
@@ -157,15 +157,15 @@ public class Main {
 						p1.setT(i, 1);
 						pause(40);
 					}
-					moveQueue.p1Remove();
+					pause(20);
 					for (int i = 0; i < 5; i++) {
 						p1.setT(i, 1);
 						pause(30);
 					}
 					pause(50);
 					p1.setT(0, 0);
+					moveQueue.p1Remove();
 					continue;
-
 				} else
 					anim.exec(moveQueue.see(0).toLowerCase(), 0);
 			}
@@ -183,13 +183,14 @@ public class Main {
 						p2.setT(i, 1);
 						pause(40);
 					}
-					moveQueue.p2Remove();
+					pause(20);
 					for (int i = 0; i < 5; i++) {
 						p2.setT(i, 1);
 						pause(30);
 					}
 					pause(50);
 					p2.setT(0, 0);
+					moveQueue.p2Remove();
 					continue;
 
 				} else

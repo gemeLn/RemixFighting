@@ -32,9 +32,9 @@ public class Player extends Entity {
 	public Player(int pid, int x, int y, GameCharacter gc) {
 		super(x, y, gc.width, gc.height, gc.sheet.getTexture(0, 0));
 		if (pid == 1) {
-			dir = 1;
-		} else {
 			dir = -1;
+		} else {
+			dir = 1;
 		}
 		playerID = pid;
 		character = gc;
@@ -59,8 +59,8 @@ public class Player extends Entity {
 		if (x < 0) {
 			x = 0;
 		}
-		if (x > 960 - w) {
-			x = 960 - w;
+		if (x > 900 - w) {
+			x = 900 - w;
 		}
 		x = x + xvel;
 		y = y + yvel;
