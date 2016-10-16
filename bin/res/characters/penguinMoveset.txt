@@ -1,12 +1,12 @@
 /Penguin Moveset
 /Damge . duration . frames . framedelay . hitx . hity . hitw . hith. rows
 /jab 
-5
+3
 250
 5
 35
-140
-70
+145
+83
 40
 25
 0
@@ -25,8 +25,8 @@
 450
 5
 45
-122
-52
+170
+75
 40
 63
 2

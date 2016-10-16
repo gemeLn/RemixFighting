@@ -56,8 +56,8 @@ public class Player extends Entity {
 	}
 
 	public void update() {
-		if (x < 0) {
-			x = 0;
+		if (x < -30) {
+			x = -30;
 		}
 		if (x > 900 - w) {
 			x = 900 - w;
