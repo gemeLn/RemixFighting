@@ -96,13 +96,13 @@ public class Main {
 		screen.drawTexture(p1.getX(), p1.getY(), p1.getTexture(), p1.getDir() == -1);
 		screen.drawTexture(p2.getX(), p2.getY(), p2.getTexture(), p2.getDir() == -1);
 		for (Hurtbox h : hbc.getHurtboxes(1)) {
-			screen.drawRect(h.x+47, h.y+10, h.width, h.height, 0x0000FF);
+			screen.drawRect(h.x, h.y, h.width, h.height, 0x0000FF);
 		}
 		for (Hitbox hit : hbc.getHitboxes(1)) {
 			screen.drawRect(hit.x, hit.y, hit.width, hit.height, 0xff0000);
 		}
 		for (Hurtbox h : hbc.getHurtboxes(2)) {
-			screen.drawRect(h.x+47, h.y+10, h.width, h.height, 0x0000FF);
+			screen.drawRect(h.x, h.y, h.width, h.height, 0x0000FF);
 		}
 		for (Hitbox hit : hbc.getHitboxes(2)) {
 			screen.drawRect(hit.x, hit.y, hit.width, hit.height, 0xff0000);
