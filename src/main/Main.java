@@ -167,7 +167,7 @@ public class Main {
 					moveQueue.p1Remove();
 					continue;
 				} else
-					anim.exec(moveQueue.see(0).toLowerCase(), 0);
+					anim.exec(moveQueue.see(0).toLowerCase(), 0, p1.getDir() + 1);
 			}
 			pause(15);
 		}
@@ -194,7 +194,7 @@ public class Main {
 					continue;
 
 				} else
-					anim.exec(moveQueue.see(1).toLowerCase(), 1);
+					anim.exec(moveQueue.see(1).toLowerCase(), 1, p2.getDir() + 1);
 			}
 			pause(15);
 		}

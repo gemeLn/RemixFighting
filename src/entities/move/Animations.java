@@ -19,7 +19,7 @@ public class Animations {
 	HitboxController hbc;
 	MoveQueue moveQueue;
 	SoundPlayer sp;
-	int div;
+	int[] div = new int[3];
 
 	public Animations(Player p1, Player p2, MoveSet m1, MoveSet m2, HitboxController hbc, MoveQueue moveQueue) {
 		this.p1 = p1;
@@ -29,6 +29,9 @@ public class Animations {
 		this.hbc = hbc;
 		this.moveQueue = moveQueue;
 		sp = new SoundPlayer();
+		div[0] = -5;
+		div[1] = 0;
+		div[2] = 5;
 
 	}
 
@@ -59,7 +62,7 @@ public class Animations {
 
 	}
 
-	public void exec(String input, int pid) throws InterruptedException {
+	public void exec(String input, int pid, int dir) throws InterruptedException {
 		try {
 			sp.play("/res/sfx/punch.wav");
 		} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
@@ -70,12 +73,11 @@ public class Animations {
 		Hitbox add = mTemp.retriveHitbox(input).reset();
 		int[] array = mTemp.retrieveArray(input);
 		int framedelay = array[mTemp.framedelay];
-		moveWhere(pid);
 		hbc.addHitbox(add, pid + 1);
 
 		for (int i = 0; i < array[m1.frames]; i++) {
 			pTemp.setT(i, array[mTemp.row]);
-			pTemp.setX(pTemp.getX() + div);
+			pTemp.setX(pTemp.getX() + div[dir]);
 			pause(framedelay);
 
 		}
@@ -83,28 +85,11 @@ public class Animations {
 		pause(framedelay);
 		for (int i = array[mTemp.frames] - 1; i >= 0; i--) {
 			pTemp.setT(i, array[mTemp.row]);
-			pTemp.setX(pTemp.getX() - div);
+			pTemp.setX(pTemp.getX() - div[dir]);
 			pause(framedelay);
 		}
 		pause(framedelay);
 		moveQueue.remove(pid);
-	}
-
-	private void moveWhere(int pid) {
-		if (pid == 0){
-			
-			if (p1.getDir() == -1)
-				div = -5;
-			else
-				div = 5;
-			
-		} else{
-			if (p2.getDir() == -1)
-				div = -5;
-			else
-				div = 5;
-		}
-		
 	}
 
 }
