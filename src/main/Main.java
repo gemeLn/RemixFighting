@@ -4,12 +4,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
 
 import entities.GameCharacter;
 import entities.Hitbox;
@@ -55,12 +51,12 @@ public class Main {
 	public int snowY = 0;
 	HitboxController hbc = new HitboxController();
 
-	public void pause(int time) {
-		try {
-			Thread.sleep(time);
-		} catch (InterruptedException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+	public void pause(int time) throws InterruptedException {
+		long timeNow = System.currentTimeMillis();
+		long timeLastRender = System.currentTimeMillis();
+		while(timeNow < timeLastRender + time){
+			Thread.sleep(1);
+			timeNow = System.currentTimeMillis();
 		}
 	}
 
@@ -233,13 +229,13 @@ public class Main {
 
 		// printCharacters();
 		hbc = new HitboxController();
-		p1 = new Player(0, 50, 0, characters.get(0));
+		p1 = new Player(0, 50, 0, 1, characters.get(0));
 		moves1 = p1.moveSet;
 		System.out.println(moves1);
 		// System.out.println("player 1"+p1);
 		moves1.updatePlayer(p1);
 
-		p2 = new Player(1, 250, 0, new GameCharacter("src/res/characters/penguin.txt"));
+		p2 = new Player(1, 250, 0, -1, new GameCharacter("src/res/characters/penguin.txt"));
 		moves2 = p2.moveSet;
 		System.out.println(moves2);
 		moves2.updatePlayer(p2);

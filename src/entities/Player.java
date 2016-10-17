@@ -29,15 +29,11 @@ public class Player extends Entity {
 	
 	private Map<String, Integer> keys;
 
-	public Player(int pid, int x, int y, GameCharacter gc) {
-		super(x, y, gc.width, gc.height, gc.sheet.getTexture(0, 0));
-		if (pid == 1) {
-			dir = -1;
-		} else {
-			dir = 1;
-		}
+	public Player(int pid, int x, int y, int dir, GameCharacter gc) {
+		super(x, y, gc.width, gc.height, dir, gc.sheet.getTexture(0, 0));
 		playerID = pid;
 		character = gc;
+		this.dir = dir;
 		this.totalJumps = 2;
 		jumps = totalJumps;
 		moveSet = character.moveSet;

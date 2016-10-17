@@ -5,6 +5,7 @@ import graphics.Texture;
 /** Any players, mobs, or simple entities with postion, speed and health */
 public class Entity {
 	public int x, y, xvel, yvel = 0;
+	public int dir = 1;
 	public Texture sprite;
 	public int w, h,health,jumps,totalJumps;
 	/**
@@ -22,12 +23,13 @@ public class Entity {
 	 * @param h
 	 *            Height of entity
 	 */
-	public Entity(int x, int y, int w, int h, Texture s) {
+	public Entity(int x, int y, int w, int h, int dir, Texture s) {
 		this.sprite = s;
 		this.x = x;
 		this.y = y;
 		this.w = w;
 		this.h = h;
+		this.dir = dir;
 
 	}
 
@@ -50,6 +52,14 @@ public class Entity {
 
 	public void setX(int x) {
 		this.x = x;
+	}
+	
+	public int getDir(){
+		return dir;
+	}
+	
+	public void setDir(int dir){
+		this.dir = dir;
 	}
 
 	public int getY() {

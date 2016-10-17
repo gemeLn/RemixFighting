@@ -19,6 +19,7 @@ public class Animations {
 	HitboxController hbc;
 	MoveQueue moveQueue;
 	SoundPlayer sp;
+	int div;
 
 	public Animations(Player p1, Player p2, MoveSet m1, MoveSet m2, HitboxController hbc, MoveQueue moveQueue) {
 		this.p1 = p1;
@@ -32,7 +33,12 @@ public class Animations {
 	}
 
 	private void pause(long i) throws InterruptedException {
-		Thread.sleep(i);
+		long timeNow = System.currentTimeMillis();
+		long timeLastRender = System.currentTimeMillis();
+		while(timeNow < timeLastRender + i){
+			Thread.sleep(1);
+			timeNow = System.currentTimeMillis();
+		}
 	}
 
 	private Player getPlayer(int i) {
@@ -64,11 +70,12 @@ public class Animations {
 		Hitbox add = mTemp.retriveHitbox(input).reset();
 		int[] array = mTemp.retrieveArray(input);
 		int framedelay = array[mTemp.framedelay];
+		moveWhere(pid);
 		hbc.addHitbox(add, pid + 1);
 
 		for (int i = 0; i < array[m1.frames]; i++) {
 			pTemp.setT(i, array[mTemp.row]);
-			pTemp.setX(pTemp.getX() + 5);
+			pTemp.setX(pTemp.getX() + div);
 			pause(framedelay);
 
 		}
@@ -76,11 +83,28 @@ public class Animations {
 		pause(framedelay);
 		for (int i = array[mTemp.frames] - 1; i >= 0; i--) {
 			pTemp.setT(i, array[mTemp.row]);
-			pTemp.setX(pTemp.getX() - 5);
+			pTemp.setX(pTemp.getX() - div);
 			pause(framedelay);
 		}
 		pause(framedelay);
 		moveQueue.remove(pid);
+	}
+
+	private void moveWhere(int pid) {
+		if (pid == 0){
+			
+			if (p1.getDir() == -1)
+				div = -5;
+			else
+				div = 5;
+			
+		} else{
+			if (p2.getDir() == -1)
+				div = -5;
+			else
+				div = 5;
+		}
+		
 	}
 
 }

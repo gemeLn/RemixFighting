@@ -44,9 +44,14 @@ public class Hitbox extends Rectangle {
 	public void setE(Entity in) {
 		e = in;
 	}
+	
 
 	public void update() {
-		x = e.x + xdif;
+		if (e.getDir() == -1) {
+			x = e.x - xdif+85;			
+		}else{
+			x = e.x + xdif+85;
+		}
 		y = e.y + ydif;
 	}
 
