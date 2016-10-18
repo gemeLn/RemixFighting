@@ -71,24 +71,25 @@ public class Animations {
 		Player pTemp = getPlayer(pid);
 		MoveSet mTemp = getMoveSet(pid);
 		Hitbox add = mTemp.retriveHitbox(input).reset();
-		int[] array = mTemp.retrieveArray(input);
-		int framedelay = array[mTemp.framedelay];
+		int[] hitboxInfo = mTemp.retrieveArray(input);
+		int framedelay = hitboxInfo[mTemp.framedelay];
 		hbc.addHitbox(add, pid + 1);
 
-		for (int i = 0; i < array[m1.frames]; i++) {
-			pTemp.setT(i, array[mTemp.row]);
+		for (int i = 0; i < hitboxInfo[m1.frames]; i++) {
+			pTemp.setT(i, hitboxInfo[mTemp.row]);
 			pTemp.setX(pTemp.getX() + div[dir]);
 			pause(framedelay);
 
 		}
 
 		pause(framedelay);
-		for (int i = array[mTemp.frames] - 1; i >= 0; i--) {
-			pTemp.setT(i, array[mTemp.row]);
+		for (int i = hitboxInfo[mTemp.frames] - 1; i >= 0; i--) {
+			pTemp.setT(i, hitboxInfo[mTemp.row]);
 			pTemp.setX(pTemp.getX() - div[dir]);
 			pause(framedelay);
 		}
 		pause(framedelay);
+		pause(hitboxInfo[mTemp.endlag]);
 		moveQueue.remove(pid);
 	}
 

@@ -16,8 +16,9 @@ public class MoveSet {
 	final public int hitw = 6;
 	final public int hith = 7;
 	final public int row = 8;
+	final public int endlag=9;
 
-	int size = 9;
+	int size = 10;
 	public int[] jab, punch, kick, jump, slide, walk;
 	public Hitbox jabh, punchh, kickh, jumph, slideh, walkh;
 	List<String> lines;

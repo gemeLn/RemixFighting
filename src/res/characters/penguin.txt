@@ -9,10 +9,10 @@ Penguin
 /Sheet Div Y
 160
 /Speed
-11
+15
 /Health
 100
 /Character width
-110
+85
 /Character Height
 140

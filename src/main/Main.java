@@ -67,6 +67,26 @@ public class Main {
 		screen.fillRect(620, 45, 300, 30, 0xFF0000);
 		screen.fillRect(40, 45, 3 * p1.health, 30, 0x0000FF);
 		screen.fillRect(620, 45, 3 * p2.health, 30, 0x0000FF);
+		
+		//Render the special bars
+		screen.fillRect(40, 80, 300, 30, 0xF8F800);
+		screen.fillRect(620, 80, 300, 30, 0xF8F800);
+		screen.fillRect(40, 80, 15 * p1.special, 30, 0x00FFFF);
+		screen.fillRect(620, 80, 15 * p2.special, 30, 0x00FFFF);
+		
+		//Render the rectangle divison p1
+		screen.drawRect(40, 80, 60, 30, 0x000000);
+		screen.drawRect(100, 80, 60, 30, 0x000000);
+		screen.drawRect(160, 80, 60, 30, 0x000000);
+		screen.drawRect(220, 80, 60, 30, 0x000000);
+		screen.drawRect(280, 80, 60, 30, 0x000000);
+		
+		//Render the rectangle divison p1
+		screen.drawRect(620, 80, 60, 30, 0x000000);
+		screen.drawRect(680, 80, 60, 30, 0x000000);
+		screen.drawRect(740, 80, 60, 30, 0x000000);
+		screen.drawRect(800, 80, 60, 30, 0x000000);
+		screen.drawRect(860, 80, 60, 30, 0x000000);		
 
 		// Render the player names
 		screen.drawString(p1.name, 50, 68, f, Color.black);
@@ -75,6 +95,7 @@ public class Main {
 		// Render the player labels
 		screen.drawString("p1", p1.x + 35, p1.y + 10, f, Color.black);
 		screen.drawString("p2", p2.x + 35, p2.y + 10, f, Color.black);
+		
 
 	}
 

@@ -20,13 +20,14 @@ public class Player extends Entity {
 	public int jumpLag;
 	public int kickLag;
 	public int moveSpeed;
+	public int special, lastHealth;
 	public String name;
 	public SpriteSheet sheet;
 	public MoveSet moveSet;
-	public MoveQueue moveQueue; 
-	
+	public MoveQueue moveQueue;
+
 	private Animations jab;
-	
+
 	private Map<String, Integer> keys;
 
 	public Player(int pid, int x, int y, int dir, GameCharacter gc) {
@@ -44,10 +45,15 @@ public class Player extends Entity {
 		h = gc.height;
 		health = gc.health;
 		
+		lastHealth = gc.health;
+		
+		special = 0;
+		
+
 		keys = KeyMap.getKeyMapping(playerID);
-		
+
 		moveQueue = new MoveQueue();
-		
+
 		// TODO Auto-generated constructor stub
 	}
 
@@ -60,7 +66,9 @@ public class Player extends Entity {
 		}
 		x = x + xvel;
 		y = y + yvel;
-
+		
+		specialBar();
+		
 		handleInput();
 	}
 
@@ -70,54 +78,51 @@ public class Player extends Entity {
 	 * }
 	 */
 	
-	private void handleInput(){
-		if (InputHandler.isKeyPressed(keys.get("right"))) {
-			setDir(1);
-			setXvel(moveSpeed);			
-		} 
-		else if (InputHandler.isKeyPressed(keys.get("left"))) {
-			setDir(-1);
-			setXvel(-moveSpeed);
-		}else {
-			setXvel(0);
+	public void specialBar(){
+		if (health < lastHealth && special < 20){
+			special++;
+			lastHealth = health;
+		} else if (special == 20 && lastHealth < -1) {
+			System.out.println("My ultimate is ready");
+			lastHealth = -1;
 		}
-	
+		
+	}
+
+	private void handleInput() {
+
 		if (InputHandler.isKeyPressed(keys.get("up"))) {
-			if (moveQueue.isEmpty(playerID)){
-				moveQueue.add(playerID,"Jump");
+			if (moveQueue.isEmpty(playerID)) {
+				moveQueue.add(playerID, "Jump");
 			}
-			
+
 		}
-		/*} else if (in == KeyMap.p1Kick) {
-				for (int i = 0; i < 5; i++) {
-					p1.setT(i, 2);
-					p1.setX(p1.getX() + 15 * p1.dir);
-					pause(50);
-				}
-				pause(50);
-				for (int i = 4; i >= 0; i--) {
-					p1.setT(i, 2);
-					pause(50);
-				
-			}
-		} 
-		*/
-		else if (InputHandler.isKeyPressed(keys.get("kick"))){
+		else if (InputHandler.isKeyPressed(keys.get("kick"))) {
 			if (moveQueue.isEmpty(playerID))
 				moveQueue.add(playerID, "Kick");
 		}
-		
-		else if (InputHandler.isKeyPressed(keys.get("jab"))) {
-				if (moveQueue.isEmpty(playerID))
-					moveQueue.add(playerID,"Jab");
-				
-		}
-		
 
-		
-		
+		else if (InputHandler.isKeyPressed(keys.get("jab"))) {
+			if (moveQueue.isEmpty(playerID))
+				moveQueue.add(playerID, "Jab");
+
+		}
+		if (InputHandler.isKeyPressed(keys.get("right"))) {
+			if (moveQueue.isEmpty(playerID) || moveQueue.isFirst(playerID, "Jump")) {
+				setDir(1);
+				setXvel(moveSpeed);
+			}
+		} else if (InputHandler.isKeyPressed(keys.get("left"))) {
+			if (moveQueue.isEmpty(playerID) || moveQueue.isFirst(playerID, "Jump")) {
+				setDir(-1);
+				setXvel(-moveSpeed);
+			}
+		} else {
+			setXvel(0);
+		}
+
 	}
-	
+
 	public void setT(int x, int y) {
 		sprite = sheet.getTexture(x, y);
 
@@ -129,7 +134,7 @@ public class Player extends Entity {
 
 	public void jump(int i) {
 		if (jumps > 0) {
-			y-=10;
+			y -= 10;
 			setYvel(-i);
 			jumps--;
 		}
@@ -162,5 +167,8 @@ public class Player extends Entity {
 	public int getJumpLength() {
 		return jumpLag;
 	}
-
+	
+	public int getSpecial(){
+		return special;
+	}
 }
