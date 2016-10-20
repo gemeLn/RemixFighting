@@ -12,6 +12,8 @@ import entities.Hitbox;
 import entities.HitboxController;
 import entities.Hurtbox;
 import entities.Player;
+import entities.Projectile;
+import entities.ProjectileController;
 import entities.move.Animations;
 import graphics.Screen;
 import graphics.SpriteSheet;
@@ -40,11 +42,12 @@ public class Main {
 	MoveQueue moveQueue;
 	Boolean walk;
 	Animations anim;
+	ProjectileController pc;
 	Font f = new Font("Comic Sans MS", Font.BOLD, 24);
 	Texture bg = new Texture("/res/sprites/stage1.png", 960, 540);
 	long tick;
 	private List<GameCharacter> characters = new ArrayList<GameCharacter>();
-	Texture healthPx = new Texture("/res/sprites/RedPixel.png", 350, 25);
+	Texture star = new Texture("/res/sprites/star.png", 350, 25);
 	int timepass = 0;
 	Texture snow = new Texture("/res/sprites/snowflakesheet.png", 14100, 540);
 	SpriteSheet snowSheet = new SpriteSheet(snow, 960, 540);
@@ -54,7 +57,7 @@ public class Main {
 	public void pause(int time) throws InterruptedException {
 		long timeNow = System.currentTimeMillis();
 		long timeLastRender = System.currentTimeMillis();
-		while(timeNow < timeLastRender + time){
+		while (timeNow < timeLastRender + time) {
 			Thread.sleep(1);
 			timeNow = System.currentTimeMillis();
 		}
@@ -67,26 +70,26 @@ public class Main {
 		screen.fillRect(620, 45, 300, 30, 0xFF0000);
 		screen.fillRect(40, 45, 3 * p1.health, 30, 0x0000FF);
 		screen.fillRect(620, 45, 3 * p2.health, 30, 0x0000FF);
-		
-		//Render the special bars
+
+		// Render the special bars
 		screen.fillRect(40, 80, 300, 30, 0xF8F800);
 		screen.fillRect(620, 80, 300, 30, 0xF8F800);
 		screen.fillRect(40, 80, 15 * p1.special, 30, 0x00FFFF);
 		screen.fillRect(620, 80, 15 * p2.special, 30, 0x00FFFF);
-		
-		//Render the rectangle divison p1
+
+		// Render the rectangle divison p1
 		screen.drawRect(40, 80, 60, 30, 0x000000);
 		screen.drawRect(100, 80, 60, 30, 0x000000);
 		screen.drawRect(160, 80, 60, 30, 0x000000);
 		screen.drawRect(220, 80, 60, 30, 0x000000);
 		screen.drawRect(280, 80, 60, 30, 0x000000);
-		
-		//Render the rectangle divison p1
+
+		// Render the rectangle divison p1
 		screen.drawRect(620, 80, 60, 30, 0x000000);
 		screen.drawRect(680, 80, 60, 30, 0x000000);
 		screen.drawRect(740, 80, 60, 30, 0x000000);
 		screen.drawRect(800, 80, 60, 30, 0x000000);
-		screen.drawRect(860, 80, 60, 30, 0x000000);		
+		screen.drawRect(860, 80, 60, 30, 0x000000);
 
 		// Render the player names
 		screen.drawString(p1.name, 50, 68, f, Color.black);
@@ -95,7 +98,6 @@ public class Main {
 		// Render the player labels
 		screen.drawString("p1", p1.x + 35, p1.y + 10, f, Color.black);
 		screen.drawString("p2", p2.x + 35, p2.y + 10, f, Color.black);
-		
 
 	}
 
@@ -104,14 +106,17 @@ public class Main {
 			timepass = 0;
 		screen.drawTexture(0, 0, snowSheet.getTexture(timepass / 60, 0));
 		timepass++;
-		
-		
+
 		screen.drawTexture(0, 0, bg);
-		
+
 		hbc.update();
-		
+
 		screen.drawTexture(p1.getX(), p1.getY(), p1.getTexture(), p1.getDir() == -1);
 		screen.drawTexture(p2.getX(), p2.getY(), p2.getTexture(), p2.getDir() == -1);
+		for(Projectile p:pc.list){
+			screen.drawTexture(p.x, p.y, p.sprite);
+		//	System.out.println(p.x+" , "+p.y);
+		}
 		for (Hurtbox h : hbc.getHurtboxes(1)) {
 			screen.drawRect(h.x, h.y, h.width, h.height, 0x0000FF);
 		}
@@ -126,7 +131,6 @@ public class Main {
 		}
 
 		renderPlayerAssets(screen);
-
 
 		if (countDown.countDown(screen, 430, 50) == 1) {
 			isGameOn = false;
@@ -167,6 +171,7 @@ public class Main {
 			}
 		}, "Buffer Thread P2").start();
 	}
+
 	private void bufferP1() throws InterruptedException {
 		while (isGameOn) {
 			if (!(moveQueue.isEmpty(0))) {
@@ -193,6 +198,7 @@ public class Main {
 			pause(15);
 		}
 	}
+
 	private void bufferP2() throws InterruptedException {
 		while (isGameOn) {
 			if (!(moveQueue.isEmpty(1))) {
@@ -221,8 +227,6 @@ public class Main {
 		}
 	}
 
-	
-
 	private void loop() throws InterruptedException {
 
 		long timeNow = System.currentTimeMillis();
@@ -248,17 +252,14 @@ public class Main {
 		Gravity g = new Gravity();
 		loadCharacters();
 
-		// printCharacters();
 		hbc = new HitboxController();
+		pc = new ProjectileController();
+		pc.add(new Projectile(50,50,50,50,15,0,10,1000,"star"));
 		p1 = new Player(0, 50, 0, 1, characters.get(0));
 		moves1 = p1.moveSet;
-		System.out.println(moves1);
-		// System.out.println("player 1"+p1);
 		moves1.updatePlayer(p1);
-
 		p2 = new Player(1, 250, 0, -1, new GameCharacter("src/res/characters/penguin.txt"));
 		moves2 = p2.moveSet;
-		System.out.println(moves2);
 		moves2.updatePlayer(p2);
 		moveQueue = new MoveQueue();
 		anim = new Animations(p1, p2, moves1, moves2, hbc, moveQueue);
@@ -285,7 +286,7 @@ public class Main {
 				p1.update();
 				p2.update();
 				hbc.update();
-
+				pc.update();
 				window.update();
 				screen.clear(0xffffff);
 				g.update();

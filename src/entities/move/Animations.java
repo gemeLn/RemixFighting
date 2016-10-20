@@ -8,6 +8,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import entities.Hitbox;
 import entities.HitboxController;
 import entities.Player;
+import entities.ProjectileController;
 import main.MoveQueue;
 import main.MoveSet;
 import main.SoundPlayer;

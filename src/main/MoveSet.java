@@ -65,7 +65,6 @@ public class MoveSet {
 	}
 
 	public void updatePlayer(Entity e) {
-		System.out.println("Set hbox to:" + e);
 		jabh.setE(e);
 		punchh.setE(e);
 		kickh.setE(e);
