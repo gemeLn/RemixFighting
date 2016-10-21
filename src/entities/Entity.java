@@ -7,7 +7,7 @@ public class Entity {
 	public int x, y, xvel, yvel = 0;
 	public int dir = 1;
 	public Texture sprite;
-	public int w, h,health,jumps,totalJumps;
+	public int w, h,health,jumps,totalJumps,radius;
 	/**
 	 * Constructor for entity
 	 * 

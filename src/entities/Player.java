@@ -16,17 +16,13 @@ public class Player extends Entity {
 	public int dir;
 	public GameCharacter character;
 	private int playerID;
-	public int jabLag;
-	public int jumpLag;
-	public int kickLag;
-	public int moveSpeed;
-	public int special, lastHealth;
+	public int moveSpeed,special, lastHealth;
 	public String name;
 	public SpriteSheet sheet;
 	public MoveSet moveSet;
 	public MoveQueue moveQueue;
-
-	private Animations jab;
+	
+	
 
 	private Map<String, Integer> keys;
 
@@ -44,11 +40,10 @@ public class Player extends Entity {
 		w = gc.width;
 		h = gc.height;
 		health = gc.health;
-		
+		radius=gc.radius;
 		lastHealth = gc.health;
-		
+
 		special = 0;
-		
 
 		keys = KeyMap.getKeyMapping(playerID);
 
@@ -66,9 +61,9 @@ public class Player extends Entity {
 		}
 		x = x + xvel;
 		y = y + yvel;
-		
+
 		specialBar();
-		
+
 		handleInput();
 	}
 
@@ -77,42 +72,43 @@ public class Player extends Entity {
 	 * -= xvel; } else if (Input.isKeyPressed(keys.get("right"))) { x += xvel; }
 	 * }
 	 */
-	
-	public void specialBar(){
-		if (health < lastHealth && special < 20){
+
+	public void specialBar() {
+		if (health < lastHealth && special < 20) {
 			special++;
 			lastHealth = health;
 		} else if (special == 20 && lastHealth < -1) {
 			System.out.println("My ultimate is ready");
 			lastHealth = -1;
 		}
-		
+
+	}
+
+	private boolean keyPress(String string) {
+		return InputHandler.isKeyPressed(keys.get(string));
 	}
 
 	private void handleInput() {
-
-		if (InputHandler.isKeyPressed(keys.get("up"))) {
-			if (moveQueue.isEmpty(playerID)) {
+		if (moveQueue.isEmpty(playerID)) {
+			if (keyPress("up")) {
 				moveQueue.add(playerID, "Jump");
-			}
 
-		}
-		else if (InputHandler.isKeyPressed(keys.get("kick"))) {
-			if (moveQueue.isEmpty(playerID))
+			} else if (keyPress("kick") && (keyPress("right") || keyPress("left"))) {
+				moveQueue.add(playerID, "Slide");
+			} else if (keyPress("kick")) {
 				moveQueue.add(playerID, "Kick");
-		}
-
-		else if (InputHandler.isKeyPressed(keys.get("jab"))) {
-			if (moveQueue.isEmpty(playerID))
+			}
+			else if (keyPress("jab")) {
 				moveQueue.add(playerID, "Jab");
-
+			}
+			
 		}
-		if (InputHandler.isKeyPressed(keys.get("right"))) {
+		if (keyPress("right")) {
 			if (moveQueue.isEmpty(playerID) || moveQueue.isFirst(playerID, "Jump")) {
 				setDir(1);
 				setXvel(moveSpeed);
 			}
-		} else if (InputHandler.isKeyPressed(keys.get("left"))) {
+		} else if (keyPress("left")) {
 			if (moveQueue.isEmpty(playerID) || moveQueue.isFirst(playerID, "Jump")) {
 				setDir(-1);
 				setXvel(-moveSpeed);
@@ -160,15 +156,8 @@ public class Player extends Entity {
 		this.jumps = jumps;
 	}
 
-	public int getJabLag() {
-		return jabLag;
-	}
 
-	public int getJumpLength() {
-		return jumpLag;
-	}
-	
-	public int getSpecial(){
+	public int getSpecial() {
 		return special;
 	}
 }

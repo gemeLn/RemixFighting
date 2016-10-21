@@ -16,7 +16,7 @@ public class MoveSet {
 	final public int hitw = 6;
 	final public int hith = 7;
 	final public int row = 8;
-	final public int endlag=9;
+	final public int endlag = 9;
 
 	int size = 10;
 	public int[] jab, punch, kick, jump, slide, walk;
@@ -55,12 +55,12 @@ public class MoveSet {
 
 		}
 
-		jabh = new Hitbox(jab[damage], jab[hitx], jab[hity], jab[hitw], jab[hith], 1, jab[duration], null);
-		punchh = new Hitbox(punch[damage], punch[hitx], punch[hity], punch[hitw], punch[hith], 1, punch[duration],
-				null);
-		kickh = new Hitbox(kick[damage], kick[hitx], kick[hity], kick[hitw], kick[hith], 1, kick[duration], null);
-		slideh = new Hitbox(slide[damage], slide[hitx], slide[hity], slide[hitw], slide[hith], 1, slide[duration],
-				null);
+		jabh = new Hitbox(jab[damage], jab[hitx], jab[hity], jab[hitw], jab[hith], 1, jab[duration], null, 0);
+		punchh = new Hitbox(punch[damage], punch[hitx], punch[hity], punch[hitw], punch[hith], 1, punch[duration], null,
+				0);
+		kickh = new Hitbox(kick[damage], kick[hitx], kick[hity], kick[hitw], kick[hith], 1, kick[duration], null, 0);
+		slideh = new Hitbox(slide[damage], slide[hitx], slide[hity], slide[hitw], slide[hith], 1, slide[duration], null,
+				0);
 
 	}
 

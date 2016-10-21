@@ -16,3 +16,5 @@ Penguin
 85
 /Character Height
 140
+/Radius (Center to edge length)
+85

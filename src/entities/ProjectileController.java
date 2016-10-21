@@ -5,11 +5,11 @@ import java.util.ArrayList;
 public class ProjectileController {
 	public ArrayList<Projectile> list;
 	public ArrayList<Projectile> remove;
-
 	public ProjectileController() {
 		list = new ArrayList<Projectile>();
 		remove = new ArrayList<Projectile>();
 	}
+	
 
 	public void update() {
 		for(Projectile p:list){

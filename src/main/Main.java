@@ -254,7 +254,9 @@ public class Main {
 
 		hbc = new HitboxController();
 		pc = new ProjectileController();
-		pc.add(new Projectile(50,50,50,50,15,0,10,1000,"star"));
+		Projectile pro = new Projectile(400,50,50,50,1,0,10,5000,"star");
+		pc.add(pro);
+		hbc.addHitbox(pro.hit,1);
 		p1 = new Player(0, 50, 0, 1, characters.get(0));
 		moves1 = p1.moveSet;
 		moves1.updatePlayer(p1);

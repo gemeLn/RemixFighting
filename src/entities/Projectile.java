@@ -4,9 +4,10 @@ import graphics.Texture;
 
 public class Projectile extends Entity {
 	public int damage;
-	public long dur;
-
-	public Projectile(int x, int y, int w, int h, int xvel, int yvel, int damage, long dur, String s) {
+	public int dur;
+	public long start;
+	public Hitbox hit;
+	public Projectile(int x, int y, int w, int h, int xvel, int yvel, int damage, int dur, String s) {
 		super(x, y, w, h, 0, new Texture("/res/sprites/" + s + ".png", w, h));
 		this.x = x;
 		this.y = y;
@@ -15,7 +16,7 @@ public class Projectile extends Entity {
 		this.xvel = xvel;
 		this.yvel = yvel;
 		System.out.println(xvel+","+yvel);
-
+		hit = new Hitbox(damage,0,0,w,h,0,dur,this,0);
 	}
 
 	public void update() {

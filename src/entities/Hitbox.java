@@ -11,7 +11,7 @@ public class Hitbox extends Rectangle {
 	public long duration;
 	public long timeStarted;
 	public Entity e;
-
+	private int RADIUS=85;
 	/**
 	 * Hitbox entity
 	 * 
@@ -24,7 +24,7 @@ public class Hitbox extends Rectangle {
 	 * @param duration
 	 *            Duration hitbox lasts till self-destruct
 	 */
-	public Hitbox(int dmg, int xdif, int ydif, int w, int h, int knockback, int duration, Entity e) {
+	public Hitbox(int dmg, int xdif, int ydif, int w, int h, int knockback, int duration, Entity e,int RADIUS) {
 		this.dmg = dmg;
 		this.width = w;
 		this.height = h;
@@ -34,7 +34,9 @@ public class Hitbox extends Rectangle {
 		this.ydif = ydif;
 		timeStarted = System.currentTimeMillis();
 		this.e = e;
+		this.RADIUS=RADIUS;
 	}
+
 	public Hitbox reset(){
 		timeStarted = System.currentTimeMillis();
 		return this;
@@ -43,14 +45,14 @@ public class Hitbox extends Rectangle {
 	}
 	public void setE(Entity in) {
 		e = in;
+		RADIUS=e.radius;
 	}
 	
-
 	public void update() {
 		if (e.getDir() == -1) {
-			x = e.x - xdif+85;			
+			x = e.x - xdif+RADIUS;			
 		}else{
-			x = e.x + xdif+85;
+			x = e.x + xdif+RADIUS;
 		}
 		y = e.y + ydif;
 	}
