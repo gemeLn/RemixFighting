@@ -13,6 +13,8 @@ public class KeyMap {
 	public static int p1Jab = KeyEvent.VK_E;
 	public static int p1Special = KeyEvent.VK_R;
 	public static int p1Kick = KeyEvent.VK_Q;
+	public static int p1Animation = KeyEvent.VK_T;
+	
 	
 	public static int p2Up = KeyEvent.VK_UP;
 	public static int p2Down = KeyEvent.VK_DOWN;
@@ -21,6 +23,8 @@ public class KeyMap {
 	public static int p2Jab = KeyEvent.VK_M;
 	public static int p2Special = KeyEvent.VK_COMMA;
 	public static int p2Kick = KeyEvent.VK_PERIOD;
+	public static int p2Animation = KeyEvent.VK_N;
+	
 
 
 	// private static int[] p1Keys = new int[] { p1Up, p1Down, p1Left, p1Right,
@@ -38,6 +42,7 @@ public class KeyMap {
 		p1Keys.put("right", p1Right);
 		p1Keys.put("jab", p1Jab);
 		p1Keys.put("kick", p1Kick);
+		p1Keys.put("animationTest", p1Animation);
 
 		p2Keys.put("up", p2Up);
 		p2Keys.put("down", p2Down);
@@ -45,6 +50,7 @@ public class KeyMap {
 		p2Keys.put("right", p2Right);
 		p2Keys.put("jab", p2Jab);
 		p2Keys.put("kick", p2Kick);
+		p2Keys.put("animationTest", p2Animation);
 	}
 
 	public static Map<String, Integer> getKeyMapping(int playerID) {

@@ -100,6 +100,8 @@ public class Player extends Entity {
 			}
 			else if (keyPress("jab")) {
 				moveQueue.add(playerID, "Jab");
+			} else if (keyPress("animationTest")) {
+				moveQueue.add(playerID, "AnimationTest");
 			}
 			
 		}

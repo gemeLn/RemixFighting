@@ -113,9 +113,9 @@ public class Main {
 
 		screen.drawTexture(p1.getX(), p1.getY(), p1.getTexture(), p1.getDir() == -1);
 		screen.drawTexture(p2.getX(), p2.getY(), p2.getTexture(), p2.getDir() == -1);
-		for(Projectile p:pc.list){
+		for (Projectile p : pc.list) {
 			screen.drawTexture(p.x, p.y, p.sprite);
-		//	System.out.println(p.x+" , "+p.y);
+			// System.out.println(p.x+" , "+p.y);
 		}
 		for (Hurtbox h : hbc.getHurtboxes(1)) {
 			screen.drawRect(h.x, h.y, h.width, h.height, 0x0000FF);
@@ -180,16 +180,30 @@ public class Main {
 				if (moveQueue.see(0).equals("Jump")) {
 					p1.jump(9);
 					for (int i = 2; i >= 0; i--) {
-						p1.setT(i, 1);
+						p1.setT(i, 4);
 						pause(40);
 					}
 					pause(20);
 					for (int i = 0; i < 5; i++) {
-						p1.setT(i, 1);
+						p1.setT(i, 4);
 						pause(30);
 					}
 					pause(50);
 					p1.setT(0, 0);
+					moveQueue.p1Remove();
+					continue;
+				}
+				if (moveQueue.see(0).equals("AnimationTest")) {
+					for (int i = 0; i < 5; i++) {
+						p1.setT(i, 9);
+						pause(100);
+					}
+					for (int i = 2; i >= 0; i--) {
+						p1.setT(i, 9);
+						pause(100);
+					}
+					pause(10);
+					pause(50);
 					moveQueue.p1Remove();
 					continue;
 				} else
@@ -254,10 +268,10 @@ public class Main {
 
 		hbc = new HitboxController();
 		pc = new ProjectileController();
-		Projectile pro = new Projectile(400,50,50,50,1,0,10,5000,"star");
+		Projectile pro = new Projectile(400, 50, 50, 50, 1, 0, 10, 5000, "star");
 		pc.add(pro);
-		hbc.addHitbox(pro.hit,1);
-		p1 = new Player(0, 50, 0, 1, characters.get(0));
+		hbc.addHitbox(pro.hit, 1);
+		p1 = new Player(0, 50, 0, 1, characters.get(1));
 		moves1 = p1.moveSet;
 		moves1.updatePlayer(p1);
 		p2 = new Player(1, 250, 0, -1, new GameCharacter("src/res/characters/penguin.txt"));
