@@ -195,11 +195,11 @@ public class Main {
 				}
 				if (moveQueue.see(0).equals("AnimationTest")) {
 					for (int i = 0; i < 5; i++) {
-						p1.setT(i, 9);
+						p1.setT(i, 6);
 						pause(100);
 					}
 					for (int i = 2; i >= 0; i--) {
-						p1.setT(i, 9);
+						p1.setT(i, 6);
 						pause(100);
 					}
 					pause(10);
