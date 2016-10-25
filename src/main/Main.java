@@ -268,9 +268,6 @@ public class Main {
 
 		hbc = new HitboxController();
 		pc = new ProjectileController();
-		Projectile pro = new Projectile(400, 50, 50, 50, 1, 0, 10, 5000, "star");
-		pc.add(pro);
-		hbc.addHitbox(pro.hit, 1);
 		p1 = new Player(0, 50, 0, 1, characters.get(1));
 		moves1 = p1.moveSet;
 		moves1.updatePlayer(p1);
@@ -278,7 +275,7 @@ public class Main {
 		moves2 = p2.moveSet;
 		moves2.updatePlayer(p2);
 		moveQueue = new MoveQueue();
-		anim = new Animations(p1, p2, moves1, moves2, hbc, moveQueue);
+		anim = new Animations(p1, p2, moves1, moves2, hbc, pc, moveQueue);
 		hb1 = new Hurtbox(p1);
 		hb2 = new Hurtbox(p2);
 		hbc.addhurtbox(hb1, 1);

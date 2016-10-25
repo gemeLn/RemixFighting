@@ -1,12 +1,12 @@
 /Character Name
 Penguin
-/Sheet Width
+/Sheet Width Scaled up by 4
 1040
-/Sheet Height
-800
-/Sheet Div X
+/Sheet Height Scaled up by 4
+960
+/Sheet Div X Scaled up by 4
 208
-/Sheet Div Y
+/Sheet Div Y Scaled up by 4
 160
 /Speed
 15

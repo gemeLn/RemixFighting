@@ -90,9 +90,12 @@ public class Player extends Entity {
 
 	private void handleInput() {
 		if (moveQueue.isEmpty(playerID)) {
-			if (keyPress("up")) {
+			if(keyPress("up")&&keyPress("jab")){
+				moveQueue.add(playerID, "Jab");
+				
+			}
+			else if (keyPress("up")) {
 				moveQueue.add(playerID, "Jump");
-
 			} else if (keyPress("kick") && (keyPress("right") || keyPress("left"))) {
 				moveQueue.add(playerID, "Slide");
 			} else if (keyPress("kick")) {

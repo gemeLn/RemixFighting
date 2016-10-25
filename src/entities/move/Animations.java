@@ -18,16 +18,19 @@ public class Animations {
 	Player p1, p2;
 	MoveSet m1, m2;
 	HitboxController hbc;
+	ProjectileController pc;
 	MoveQueue moveQueue;
 	SoundPlayer sp;
 	int[] div = new int[3];
 
-	public Animations(Player p1, Player p2, MoveSet m1, MoveSet m2, HitboxController hbc, MoveQueue moveQueue) {
+	public Animations(Player p1, Player p2, MoveSet m1, MoveSet m2, HitboxController hbc, ProjectileController pc,
+			MoveQueue moveQueue) {
 		this.p1 = p1;
 		this.p2 = p2;
 		this.m1 = m1;
 		this.m2 = m2;
 		this.hbc = hbc;
+		this.pc = pc;
 		this.moveQueue = moveQueue;
 		sp = new SoundPlayer();
 		div[0] = -5;
@@ -39,7 +42,7 @@ public class Animations {
 	private void pause(long i) throws InterruptedException {
 		long timeNow = System.currentTimeMillis();
 		long timeLastRender = System.currentTimeMillis();
-		while(timeNow < timeLastRender + i){
+		while (timeNow < timeLastRender + i) {
 			Thread.sleep(1);
 			timeNow = System.currentTimeMillis();
 		}
@@ -62,7 +65,7 @@ public class Animations {
 		}
 
 	}
-
+	 
 	public void exec(String input, int pid, int dir) throws InterruptedException {
 		try {
 			sp.play("/res/sfx/punch.wav");
