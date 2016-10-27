@@ -1,5 +1,6 @@
 package main;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import entities.Entity;
@@ -17,10 +18,22 @@ public class MoveSet {
 	final public int hith = 7;
 	final public int row = 8;
 	final public int endlag = 9;
+	int fileRows = 10;
 
-	int size = 10;
-	public int[] jab, punch, kick, jump, slide, walk;
-	public Hitbox jabh, punchh, kickh, jumph, slideh, walkh;
+	public enum Moves {
+
+		JAB(0), PUNCH(1), KICK(2), JUMP(3), SLIDE(4), WALK(5), HIGHPUNCH(6);
+		int i;
+
+		Moves(int i) {
+			this.i = i;
+		}
+
+	}
+
+	int numberOfMoves = 7;
+	public ArrayList<int[]> arrayA = new ArrayList<int[]>();
+	public ArrayList<Hitbox> hitA = new ArrayList<Hitbox>();
 	List<String> lines;
 	int currentLine = 0;
 
@@ -29,91 +42,37 @@ public class MoveSet {
 		String basePath = "src/res/characters/";
 		lines = new FileUtils().readLinesFromFile(basePath + name + "Moveset.txt");
 
-		for (int i = 1; i <= 6; i++) {
-			switch (i) {
-			case 1:
-				jab = readNextI();
-				break;
-			case 2:
-				punch = readNextI();
-				break;
-			case 3:
-				kick = readNextI();
-				break;
-			case 4:
-				jump = readNextI();
-				break;
-			case 5:
-				slide = readNextI();
-				break;
-			case 6:
-				walk = readNextI();
-				break;
-			case 7:
-				break;
-			}
-
+		for (int i = 0; i < numberOfMoves - 1; i++) {
+			arrayA.add(readNextI());
+			hitA.add(new Hitbox(arrayA.get(i)[damage], arrayA.get(i)[hitx], arrayA.get(i)[hity], arrayA.get(i)[hitw],
+					arrayA.get(i)[hith], 1, arrayA.get(i)[duration], null, i));
 		}
-
-		jabh = new Hitbox(jab[damage], jab[hitx], jab[hity], jab[hitw], jab[hith], 1, jab[duration], null, 0);
-		punchh = new Hitbox(punch[damage], punch[hitx], punch[hity], punch[hitw], punch[hith], 1, punch[duration], null,
-				0);
-		kickh = new Hitbox(kick[damage], kick[hitx], kick[hity], kick[hitw], kick[hith], 1, kick[duration], null, 0);
-		slideh = new Hitbox(slide[damage], slide[hitx], slide[hity], slide[hitw], slide[hith], 1, slide[duration], null,
-				0);
 
 	}
 
 	public void updatePlayer(Entity e) {
-		jabh.setE(e);
-		punchh.setE(e);
-		kickh.setE(e);
-		slideh.setE(e);
+		for (int i = 0; i < numberOfMoves-1; i++) {
+			hitA.get(i).setE(e);
 
+		}
 	};
 
 	private int[] readNextI() {
-		int[] ret = new int[size];
-		for (int i = 0; i < size; i++) {
+		int[] ret = new int[fileRows];
+		for (int i = 0; i < fileRows; i++) {
 			ret[i] = toInt(lines.get(i + currentLine));
 		}
-		currentLine += size;
+		currentLine += fileRows;
 		return ret;
 
 	}
 
 	public int[] retrieveArray(String s) {
-		switch (s) {
-		case "jab":
-			return jab;
-		case "kick":
-			return kick;
-		case "punch":
-			return punch;
-		case "slide":
-			return slide;
-		case "jump":
-			return jump;
-		default:
-			return null;
-
-		}
+		return arrayA.get(Moves.valueOf(s.toUpperCase()).i);
 	}
 
 	public Hitbox retriveHitbox(String s) {
-		switch (s) {
-		case "jab":
-			return jabh;
-		case "kick":
-			return kickh;
-		case "punch":
-			return punchh;
-		case "slide":
-			return slideh;
-		default:
-			return null;
-
-		}
+		return hitA.get(Moves.valueOf(s.toUpperCase()).i);
 	}
 
 	private int toInt(String s) {
