@@ -19,6 +19,8 @@ import graphics.Screen;
 import graphics.SpriteSheet;
 import graphics.Texture;
 import graphics.Window;
+import menu.CharacterSelectionMenu;
+import menu.Menu;
 import physics.Gravity;
 import utils.FileUtils;
 
@@ -31,6 +33,12 @@ public class Main {
 	static long currentTick;
 
 	static boolean isGameOn;
+
+	public enum State {
+		NONE, MENU, GAME
+	};
+
+	public static State STATE = State.MENU;
 
 	Player p1;
 	Player p2;
@@ -53,6 +61,8 @@ public class Main {
 	SpriteSheet snowSheet = new SpriteSheet(snow, 960, 540);
 	public int snowY = 0;
 	HitboxController hbc = new HitboxController();
+
+	private Menu menu;
 
 	public void pause(int time) throws InterruptedException {
 		long timeNow = System.currentTimeMillis();
@@ -102,42 +112,47 @@ public class Main {
 	}
 
 	private void render(Screen screen) {
-		if (timepass / 60 >= 14)
-			timepass = 0;
-		screen.drawTexture(0, 0, snowSheet.getTexture(timepass / 60, 0));
-		timepass++;
+		if (STATE == State.GAME) {
 
-		screen.drawTexture(0, 0, bg);
+			if (timepass / 60 >= 14)
+				timepass = 0;
+			screen.drawTexture(0, 0, snowSheet.getTexture(timepass / 60, 0));
+			timepass++;
 
-		hbc.update();
+			screen.drawTexture(0, 0, bg);
 
-		screen.drawTexture(p1.getX(), p1.getY(), p1.getTexture(), p1.getDir() == -1);
-		screen.drawTexture(p2.getX(), p2.getY(), p2.getTexture(), p2.getDir() == -1);
-		for (Projectile p : pc.list) {
-			screen.drawTexture(p.x, p.y, p.sprite);
-			// System.out.println(p.x+" , "+p.y);
+			hbc.update();
+
+			// TODO: Get this stuff into the player class!
+			screen.drawTexture(p1.getX(), p1.getY(), p1.getTexture(), p1.getDir() == -1);
+			screen.drawTexture(p2.getX(), p2.getY(), p2.getTexture(), p2.getDir() == -1);
+			for (Projectile p : pc.list) {
+				screen.drawTexture(p.x, p.y, p.sprite);
+				// System.out.println(p.x+" , "+p.y);
+			}
+			for (Hurtbox h : hbc.getHurtboxes(1)) {
+				screen.drawRect(h.x, h.y, h.width, h.height, 0x0000FF);
+			}
+			for (Hitbox hit : hbc.getHitboxes(1)) {
+				screen.drawRect(hit.x, hit.y, hit.width, hit.height, 0xff0000);
+			}
+			for (Hurtbox h : hbc.getHurtboxes(2)) {
+				screen.drawRect(h.x, h.y, h.width, h.height, 0x0000FF);
+			}
+			for (Hitbox hit : hbc.getHitboxes(2)) {
+				screen.drawRect(hit.x, hit.y, hit.width, hit.height, 0xff0000);
+			}
+
+			renderPlayerAssets(screen);
+
+			if (countDown.countDown(screen, 430, 50) == 1) {
+				isGameOn = false;
+			}
+
+			tick++;
+		} else if (STATE == State.MENU) {
+			menu.render(screen);
 		}
-		for (Hurtbox h : hbc.getHurtboxes(1)) {
-			screen.drawRect(h.x, h.y, h.width, h.height, 0x0000FF);
-		}
-		for (Hitbox hit : hbc.getHitboxes(1)) {
-			screen.drawRect(hit.x, hit.y, hit.width, hit.height, 0xff0000);
-		}
-		for (Hurtbox h : hbc.getHurtboxes(2)) {
-			screen.drawRect(h.x, h.y, h.width, h.height, 0x0000FF);
-		}
-		for (Hitbox hit : hbc.getHitboxes(2)) {
-			screen.drawRect(hit.x, hit.y, hit.width, hit.height, 0xff0000);
-		}
-
-		renderPlayerAssets(screen);
-
-		if (countDown.countDown(screen, 430, 50) == 1) {
-			isGameOn = false;
-		}
-
-		tick++;
-
 	}
 
 	private void loadCharacters() {
@@ -265,6 +280,7 @@ public class Main {
 		Screen screen = window.getScreen();
 		Gravity g = new Gravity();
 		loadCharacters();
+		menu = new CharacterSelectionMenu(characters);
 
 		hbc = new HitboxController();
 		pc = new ProjectileController();
@@ -296,19 +312,22 @@ public class Main {
 			lag += (timeNow - timeLastRender) / fps;
 
 			if (lag >= 1) {
-				p1.update();
-				p2.update();
-				hbc.update();
-				pc.update();
-				window.update();
+				if (STATE == State.GAME) {
+					p1.update();
+					p2.update();
+					hbc.update();
+					pc.update();
+					g.update();
+				} else if (STATE == State.MENU) {
+					menu.update();
+				}
 				screen.clear(0xffffff);
-				g.update();
-
 				this.render(screen);
+				window.update();
+				
 				lag--;
 				timeLastRender = System.currentTimeMillis();
 				currentTick++;
-
 			}
 
 		}
