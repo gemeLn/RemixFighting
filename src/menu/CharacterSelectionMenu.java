@@ -23,7 +23,7 @@ public class CharacterSelectionMenu extends Menu {
 
 	public CharacterSelectionMenu(List<GameCharacter> characters) {
 		this.characters = characters;
-		selectedCharacter = new int[] { 0, 0 };
+		selectedCharacter = new int[] { 1, 1 };
 		font = new Font("Verdana", Font.PLAIN, 32);
 		arrowFont = new Font("Comic Sans MS", Font.PLAIN, 128);
 		
@@ -34,14 +34,19 @@ public class CharacterSelectionMenu extends Menu {
 
 	public void update() {
 		for (int i = 0; i < 2; i++) {
-			if (InputHandler.isKeyPressed(keys.get(i).get("left")))
+			if (InputHandler.isKeyTyped(keys.get(i).get("left")))
 				selectedCharacter[i] = Math.max(0, selectedCharacter[i] - 1);
-			else if (InputHandler.isKeyPressed(keys.get(i).get("right")))
+			else if (InputHandler.isKeyTyped(keys.get(i).get("right")))
 				selectedCharacter[i] = Math.min(characters.size() - 1, selectedCharacter[i] + 1);
 		}
 	
-		if (InputHandler.isKeyPressed(KeyEvent.VK_SPACE))
-			Main.STATE = Main.State.GAME;
+		if (InputHandler.isKeyPressed(KeyEvent.VK_SPACE)){
+			Main.STATE = Main.State.INIT;
+			for(int i = 1; i >= 0; i--){
+				Main.character[i] = selectedCharacter[i];
+				System.out.println(Main.character[i]);
+			}
+		}
 	}
 
 	public void render(Screen screen) {

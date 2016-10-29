@@ -35,13 +35,14 @@ public class Main {
 	static boolean isGameOn;
 
 	public enum State {
-		NONE, MENU, GAME
+		NONE, MENU, GAME, INIT
 	};
 
 	public static State STATE = State.MENU;
 
 	Player p1;
 	Player p2;
+	public static int[] character;
 	MoveSet moves1;
 	MoveSet moves2;
 	CountDown countDown;
@@ -161,6 +162,9 @@ public class Main {
 		for (String line : filer.readLinesFromFile(basePath + "characters.txt")) {
 			characters.add(new GameCharacter(basePath + line + ".txt"));
 		}
+		for (String line : filer.readLinesFromFile(basePath + "characters.txt")) {
+			characters.add(new GameCharacter(basePath + line + ".txt"));
+		}
 	}
 
 	private void bufferInit() {
@@ -194,14 +198,14 @@ public class Main {
 
 				if (moveQueue.see(0).equals("Jump")) {
 					p1.jump(9);
-					for (int i = 2; i >= 0; i--) {
-						p1.setT(i, 4);
-						pause(40);
+					for (int i = 4; i >= 0; i--) {
+						p1.setT(i, 1);
+						pause(15);
 					}
 					pause(20);
 					for (int i = 0; i < 5; i++) {
-						p1.setT(i, 4);
-						pause(30);
+						p1.setT(i, 1);
+						pause(10);
 					}
 					pause(50);
 					p1.setT(0, 0);
@@ -235,14 +239,14 @@ public class Main {
 
 				if (moveQueue.see(1).equals("Jump")) {
 					p2.jump(9);
-					for (int i = 2; i >= 0; i--) {
+					for (int i = 4; i >= 0; i--) {
 						p2.setT(i, 1);
-						pause(40);
+						pause(15);
 					}
 					pause(20);
 					for (int i = 0; i < 5; i++) {
 						p2.setT(i, 1);
-						pause(30);
+						pause(10);
 					}
 					pause(50);
 					p2.setT(0, 0);
@@ -281,25 +285,14 @@ public class Main {
 		Gravity g = new Gravity();
 		loadCharacters();
 		menu = new CharacterSelectionMenu(characters);
-
 		hbc = new HitboxController();
+		character = new int[2];
 		pc = new ProjectileController();
-		p1 = new Player(0, 50, 0, 1, characters.get(1));
-		moves1 = p1.moveSet;
-		moves1.updatePlayer(p1);
-		p2 = new Player(1, 250, 0, -1, new GameCharacter("src/res/characters/penguin.txt"));
-		moves2 = p2.moveSet;
-		moves2.updatePlayer(p2);
+		
 		moveQueue = new MoveQueue();
-		anim = new Animations(p1, p2, moves1, moves2, hbc, pc, moveQueue);
-		hb1 = new Hurtbox(p1);
-		hb2 = new Hurtbox(p2);
-		hbc.addhurtbox(hb1, 1);
-		hbc.addhurtbox(hb2, 2);
-
-		g.addEntity(p1);
-		g.addEntity(p2);
-
+		
+		
+		
 		countDown.countDownInit(240);
 
 		isGameOn = true;
@@ -320,6 +313,21 @@ public class Main {
 					g.update();
 				} else if (STATE == State.MENU) {
 					menu.update();
+				} else if (STATE == State.INIT){
+					p1 = new Player(0, 50, 0, 1, characters.get(character[0]));
+					p2 = new Player(1, 250, 0, -1, characters.get(character[1]));
+					moves1 = p1.moveSet;
+					moves1.updatePlayer(p1);
+					moves2 = p2.moveSet;
+					moves2.updatePlayer(p2);
+					anim = new Animations(p1, p2, moves1, moves2, hbc, pc, moveQueue);
+					hb1 = new Hurtbox(p1);
+					hb2 = new Hurtbox(p2);
+					hbc.addhurtbox(hb1, 1);
+					hbc.addhurtbox(hb2, 2);
+					g.addEntity(p1);
+					g.addEntity(p2);
+					STATE = State.GAME;
 				}
 				screen.clear(0xffffff);
 				this.render(screen);
