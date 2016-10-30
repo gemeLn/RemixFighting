@@ -2,7 +2,6 @@ package entities;
 
 import java.util.Map;
 
-import entities.move.Animations;
 import graphics.SpriteSheet;
 import graphics.Texture;
 import main.InputHandler;

@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+import entities.MoveHandler;
 import entities.GameCharacter;
 import entities.Hitbox;
 import entities.HitboxController;
@@ -14,7 +15,6 @@ import entities.Hurtbox;
 import entities.Player;
 import entities.Projectile;
 import entities.ProjectileController;
-import entities.move.Animations;
 import graphics.Screen;
 import graphics.SpriteSheet;
 import graphics.Texture;
@@ -38,7 +38,7 @@ public class Main {
 		NONE, MENU, GAME, INIT
 	};
 
-	public static State STATE = State.MENU;
+	public static State STATE = State.INIT;
 
 	Player p1;
 	Player p2;
@@ -50,7 +50,7 @@ public class Main {
 	Hurtbox hb2;
 	MoveQueue moveQueue;
 	Boolean walk;
-	Animations anim;
+	MoveHandler anim;
 	ProjectileController pc;
 	Font f = new Font("Comic Sans MS", Font.BOLD, 24);
 	Texture bg = new Texture("/res/sprites/stage1.png", 960, 540);
@@ -235,28 +235,11 @@ public class Main {
 	private void bufferP2() throws InterruptedException {
 		while (isGameOn) {
 			if (!(moveQueue.isEmpty(1))) {
-				System.out.println(moveQueue.see(1));
+				System.out.println(moveQueue.see(1)+"k");
 
-				if (moveQueue.see(1).equals("Jump")) {
-					p2.jump(9);
-					for (int i = 4; i >= 0; i--) {
-						p2.setT(i, 1);
-						pause(15);
-					}
-					pause(20);
-					for (int i = 0; i < 5; i++) {
-						p2.setT(i, 1);
-						pause(10);
-					}
-					pause(50);
-					p2.setT(0, 0);
-					moveQueue.p2Remove();
-					continue;
-
-				} else
-					anim.exec(moveQueue.see(1).toLowerCase(), 1, p2.getDir() + 1);
+				anim.exec(moveQueue.see(1).toLowerCase(), 1, p2.getDir() + 1);
+				pause(15);
 			}
-			pause(15);
 		}
 	}
 
@@ -288,11 +271,9 @@ public class Main {
 		hbc = new HitboxController();
 		character = new int[2];
 		pc = new ProjectileController();
-		
+
 		moveQueue = new MoveQueue();
-		
-		
-		
+
 		countDown.countDownInit(240);
 
 		isGameOn = true;
@@ -313,14 +294,14 @@ public class Main {
 					g.update();
 				} else if (STATE == State.MENU) {
 					menu.update();
-				} else if (STATE == State.INIT){
+				} else if (STATE == State.INIT) {
 					p1 = new Player(0, 50, 0, 1, characters.get(character[0]));
 					p2 = new Player(1, 250, 0, -1, characters.get(character[1]));
 					moves1 = p1.moveSet;
 					moves1.updatePlayer(p1);
 					moves2 = p2.moveSet;
 					moves2.updatePlayer(p2);
-					anim = new Animations(p1, p2, moves1, moves2, hbc, pc, moveQueue);
+					anim = new MoveHandler(p1, p2, moves1, moves2, hbc, pc, moveQueue);
 					hb1 = new Hurtbox(p1);
 					hb2 = new Hurtbox(p2);
 					hbc.addhurtbox(hb1, 1);
@@ -332,7 +313,7 @@ public class Main {
 				screen.clear(0xffffff);
 				this.render(screen);
 				window.update();
-				
+
 				lag--;
 				timeLastRender = System.currentTimeMillis();
 				currentTick++;

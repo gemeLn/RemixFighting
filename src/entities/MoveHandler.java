@@ -1,20 +1,16 @@
-package entities.move;
+package entities;
 
 import java.io.IOException;
 
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
-import entities.Hitbox;
-import entities.HitboxController;
-import entities.Player;
-import entities.ProjectileController;
 import main.MoveQueue;
 import main.MoveSet;
 import main.SoundPlayer;
 import sun.swing.text.html.FrameEditorPaneTag;
 
-public class Animations {
+public class MoveHandler {
 	Player p1, p2;
 	MoveSet m1, m2;
 	HitboxController hbc;
@@ -23,7 +19,7 @@ public class Animations {
 	SoundPlayer sp;
 	int[] div = new int[3];
 
-	public Animations(Player p1, Player p2, MoveSet m1, MoveSet m2, HitboxController hbc, ProjectileController pc,
+	public MoveHandler(Player p1, Player p2, MoveSet m1, MoveSet m2, HitboxController hbc, ProjectileController pc,
 			MoveQueue moveQueue) {
 		this.p1 = p1;
 		this.p2 = p2;
@@ -65,36 +61,53 @@ public class Animations {
 		}
 
 	}
-	 
+
 	public void exec(String input, int pid, int dir) throws InterruptedException {
-		try {
-			sp.play("/res/sfx/punch.wav");
-		} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
-			e1.printStackTrace();
-		}
 		Player pTemp = getPlayer(pid);
 		MoveSet mTemp = getMoveSet(pid);
-		Hitbox add = mTemp.retriveHitbox(input).reset();
-		int[] hitboxInfo = mTemp.retrieveArray(input);
-		int framedelay = hitboxInfo[mTemp.framedelay];
-		hbc.addHitbox(add, pid + 1);
+		if (input.equals("jump")) {
+			pTemp.jump(9);
+			for (int i = 4; i >= 0; i--) {
+				pTemp.setT(i, 1);
+				pause(15);
+			}
+			pause(20);
+			for (int i = 0; i < 5; i++) {
+				pTemp.setT(i, 1);
+				pause(10);
+			}
+			pause(50);
+			pTemp.setT(0, 0);
+			moveQueue.remove(pid);
+		} else {
+			try {
+				sp.play("/res/sfx/punch.wav");
+			} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
+				e1.printStackTrace();
+			}
 
-		for (int i = 0; i < hitboxInfo[m1.frames]; i++) {
-			pTemp.setT(i, hitboxInfo[mTemp.row]);
-			pTemp.setX(pTemp.getX() + div[dir]);
+			Hitbox add = mTemp.retriveHitbox(input).reset();
+			int[] hitboxInfo = mTemp.retrieveArray(input);
+			int framedelay = hitboxInfo[mTemp.framedelay];
+			hbc.addHitbox(add, pid + 1);
+
+			for (int i = 0; i < hitboxInfo[m1.frames]; i++) {
+				pTemp.setT(i, hitboxInfo[mTemp.row]);
+				pTemp.setX(pTemp.getX() + div[dir]);
+				pause(framedelay);
+
+			}
+
 			pause(framedelay);
-
+			for (int i = hitboxInfo[mTemp.frames] - 1; i >= 0; i--) {
+				pTemp.setT(i, hitboxInfo[mTemp.row]);
+				pTemp.setX(pTemp.getX() - div[dir]);
+				pause(framedelay);
+			}
+			pause(framedelay);
+			pause(hitboxInfo[mTemp.endlag]);
+			moveQueue.remove(pid);
 		}
 
-		pause(framedelay);
-		for (int i = hitboxInfo[mTemp.frames] - 1; i >= 0; i--) {
-			pTemp.setT(i, hitboxInfo[mTemp.row]);
-			pTemp.setX(pTemp.getX() - div[dir]);
-			pause(framedelay);
-		}
-		pause(framedelay);
-		pause(hitboxInfo[mTemp.endlag]);
-		moveQueue.remove(pid);
 	}
-
 }
