@@ -22,7 +22,7 @@ public class MoveSet {
 
 	public enum Moves {
 
-		JAB(0), PUNCH(1), KICK(2), JUMP(3), SLIDE(4), WALK(5), HIGHPUNCH(6);
+		JAB(0), PUNCH(1), KICK(2), JUMP(3), SLIDE(4), WALK(5), HIGHP(6),PROJECTILE(7);
 		int i;
 
 		Moves(int i) {
@@ -31,7 +31,7 @@ public class MoveSet {
 
 	}
 
-	int numberOfMoves = 7;
+	int numberOfMoves = Moves.values().length;
 	public ArrayList<int[]> arrayA = new ArrayList<int[]>();
 	public ArrayList<Hitbox> hitA = new ArrayList<Hitbox>();
 	List<String> lines;
@@ -41,17 +41,16 @@ public class MoveSet {
 		name = name.toLowerCase();
 		String basePath = "src/res/characters/";
 		lines = new FileUtils().readLinesFromFile(basePath + name + "Moveset.txt");
-
-		for (int i = 0; i < numberOfMoves - 1; i++) {
+		for (int i = 0; i < numberOfMoves; i++) {
 			arrayA.add(readNextI());
-			hitA.add(new Hitbox(arrayA.get(i)[damage], arrayA.get(i)[hitx], arrayA.get(i)[hity], arrayA.get(i)[hitw],
-					arrayA.get(i)[hith], 1, arrayA.get(i)[duration], null, i));
+			int[] tmp = arrayA.get(i);
+			hitA.add(new Hitbox(tmp[damage], tmp[hitx], tmp[hity], tmp[hitw], tmp[hith], 1, tmp[duration], null, i));
 		}
 
 	}
 
 	public void updatePlayer(Entity e) {
-		for (int i = 0; i < numberOfMoves-1; i++) {
+		for (int i = 0; i < numberOfMoves; i++) {
 			hitA.get(i).setE(e);
 
 		}

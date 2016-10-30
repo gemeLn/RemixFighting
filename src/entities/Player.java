@@ -3,7 +3,6 @@ package entities;
 import java.util.Map;
 
 import graphics.SpriteSheet;
-import graphics.Texture;
 import main.InputHandler;
 import main.KeyMap;
 import main.MoveQueue;
@@ -15,13 +14,11 @@ public class Player extends Entity {
 	public int dir;
 	public GameCharacter character;
 	private int playerID;
-	public int moveSpeed,special, lastHealth;
+	public int moveSpeed, special, lastHealth;
 	public String name;
 	public SpriteSheet sheet;
 	public MoveSet moveSet;
 	public MoveQueue moveQueue;
-	
-	
 
 	private Map<String, Integer> keys;
 
@@ -39,7 +36,7 @@ public class Player extends Entity {
 		w = gc.width;
 		h = gc.height;
 		health = gc.health;
-		radius=gc.radius;
+		radius = gc.radius;
 		lastHealth = gc.health;
 
 		special = 0;
@@ -89,23 +86,22 @@ public class Player extends Entity {
 
 	private void handleInput() {
 		if (moveQueue.isEmpty(playerID)) {
-			if(keyPress("up")&&keyPress("jab")){
-				moveQueue.add(playerID, "Jab");
-				
-			}
-			else if (keyPress("up")) {
+			if (keyPress("up") && keyPress("jab")) {
+				moveQueue.add(playerID, "HighP");
+			} else if (keyPress("up")) {
 				moveQueue.add(playerID, "Jump");
 			} else if (keyPress("kick") && (keyPress("right") || keyPress("left"))) {
 				moveQueue.add(playerID, "Slide");
 			} else if (keyPress("kick")) {
 				moveQueue.add(playerID, "Kick");
-			}
-			else if (keyPress("jab")) {
+			} else if (keyPress("jab")) {
 				moveQueue.add(playerID, "Jab");
 			} else if (keyPress("animationTest")) {
 				moveQueue.add(playerID, "AnimationTest");
+			} else if (keyPress("projectile")) {
+				moveQueue.add(playerID, "Projectile");
 			}
-			
+
 		}
 		if (keyPress("right")) {
 			if (moveQueue.isEmpty(playerID) || moveQueue.isFirst(playerID, "Jump")) {
@@ -159,7 +155,6 @@ public class Player extends Entity {
 	public void setJumps(int jumps) {
 		this.jumps = jumps;
 	}
-
 
 	public int getSpecial() {
 		return special;

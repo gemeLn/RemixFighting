@@ -33,11 +33,11 @@
 63
 2
 400
-/Jump
-2
+/Jump Damage = Height
+9
 250
 5
-45
+20
 -1
 -1
 -1
@@ -66,4 +66,25 @@
 -1
 -1
 -1
-/HighPunch
+/HighPunch Damge . duration . frames . framedelay . hitx . hity . hitw . hith. rows. end lag
+7
+100
+5
+45
+10
+10
+10
+30
+5
+700
+/Projectile
+1
+1000
+5
+45
+10
+75
+36
+36
+0
+50

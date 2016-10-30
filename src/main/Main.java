@@ -7,11 +7,11 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-import entities.MoveHandler;
 import entities.GameCharacter;
 import entities.Hitbox;
 import entities.HitboxController;
 import entities.Hurtbox;
+import entities.MoveHandler;
 import entities.Player;
 import entities.Projectile;
 import entities.ProjectileController;
@@ -50,18 +50,18 @@ public class Main {
 	Hurtbox hb2;
 	MoveQueue moveQueue;
 	Boolean walk;
-	MoveHandler anim;
+	MoveHandler moveHandle;
 	ProjectileController pc;
 	Font f = new Font("Comic Sans MS", Font.BOLD, 24);
 	Texture bg = new Texture("/res/sprites/stage1.png", 960, 540);
 	long tick;
-	private List<GameCharacter> characters = new ArrayList<GameCharacter>();
-	Texture star = new Texture("/res/sprites/star.png", 350, 25);
+	private List<GameCharacter> characters1 = new ArrayList<GameCharacter>();
+	private List<GameCharacter> characters2 = new ArrayList<GameCharacter>();
 	int timepass = 0;
 	Texture snow = new Texture("/res/sprites/snowflakesheet.png", 14100, 540);
 	SpriteSheet snowSheet = new SpriteSheet(snow, 960, 540);
 	public int snowY = 0;
-	HitboxController hbc = new HitboxController();
+	HitboxController hbc;
 
 	private Menu menu;
 
@@ -127,20 +127,20 @@ public class Main {
 			// TODO: Get this stuff into the player class!
 			screen.drawTexture(p1.getX(), p1.getY(), p1.getTexture(), p1.getDir() == -1);
 			screen.drawTexture(p2.getX(), p2.getY(), p2.getTexture(), p2.getDir() == -1);
-			for (Projectile p : pc.list) {
+			for (Projectile p : pc.active) {
 				screen.drawTexture(p.x, p.y, p.sprite);
 				// System.out.println(p.x+" , "+p.y);
+			}
+			for (Hurtbox h : hbc.getHurtboxes(0)) {
+				screen.drawRect(h.x, h.y, h.width, h.height, 0x0000FF);
+			}
+			for (Hitbox hit : hbc.getHitboxes(0)) {
+				screen.drawRect(hit.x, hit.y, hit.width, hit.height, 0xff0000);
 			}
 			for (Hurtbox h : hbc.getHurtboxes(1)) {
 				screen.drawRect(h.x, h.y, h.width, h.height, 0x0000FF);
 			}
 			for (Hitbox hit : hbc.getHitboxes(1)) {
-				screen.drawRect(hit.x, hit.y, hit.width, hit.height, 0xff0000);
-			}
-			for (Hurtbox h : hbc.getHurtboxes(2)) {
-				screen.drawRect(h.x, h.y, h.width, h.height, 0x0000FF);
-			}
-			for (Hitbox hit : hbc.getHitboxes(2)) {
 				screen.drawRect(hit.x, hit.y, hit.width, hit.height, 0xff0000);
 			}
 
@@ -160,10 +160,10 @@ public class Main {
 		FileUtils filer = new FileUtils();
 		String basePath = "src/res/characters/";
 		for (String line : filer.readLinesFromFile(basePath + "characters.txt")) {
-			characters.add(new GameCharacter(basePath + line + ".txt"));
+			characters1.add(new GameCharacter(basePath + line + ".txt"));
 		}
 		for (String line : filer.readLinesFromFile(basePath + "characters.txt")) {
-			characters.add(new GameCharacter(basePath + line + ".txt"));
+			characters2.add(new GameCharacter(basePath + line + ".txt"));
 		}
 	}
 
@@ -194,39 +194,13 @@ public class Main {
 	private void bufferP1() throws InterruptedException {
 		while (isGameOn) {
 			if (!(moveQueue.isEmpty(0))) {
-				System.out.println(moveQueue.see(0));
-
-				if (moveQueue.see(0).equals("Jump")) {
-					p1.jump(9);
-					for (int i = 4; i >= 0; i--) {
-						p1.setT(i, 1);
-						pause(15);
-					}
-					pause(20);
-					for (int i = 0; i < 5; i++) {
-						p1.setT(i, 1);
-						pause(10);
-					}
-					pause(50);
-					p1.setT(0, 0);
-					moveQueue.p1Remove();
-					continue;
-				}
-				if (moveQueue.see(0).equals("AnimationTest")) {
-					for (int i = 0; i < 5; i++) {
-						p1.setT(i, 6);
-						pause(100);
-					}
-					for (int i = 2; i >= 0; i--) {
-						p1.setT(i, 6);
-						pause(100);
-					}
-					pause(10);
-					pause(50);
-					moveQueue.p1Remove();
-					continue;
-				} else
-					anim.exec(moveQueue.see(0).toLowerCase(), 0, p1.getDir() + 1);
+				/*
+				 * if (moveQueue.see(0).equals("AnimationTest")) { for (int i =
+				 * 0; i < 5; i++) { p1.setT(i, 6); pause(100); } for (int i = 2;
+				 * i >= 0; i--) { p1.setT(i, 6); pause(100); } pause(10);
+				 * pause(50); moveQueue.p1Remove(); continue; } else
+				 */
+				moveHandle.exec(moveQueue.see(0).toLowerCase(), 0, p1.getDir() + 1);
 			}
 			pause(15);
 		}
@@ -235,11 +209,9 @@ public class Main {
 	private void bufferP2() throws InterruptedException {
 		while (isGameOn) {
 			if (!(moveQueue.isEmpty(1))) {
-				System.out.println(moveQueue.see(1)+"k");
-
-				anim.exec(moveQueue.see(1).toLowerCase(), 1, p2.getDir() + 1);
-				pause(15);
+				moveHandle.exec(moveQueue.see(1).toLowerCase(), 1, p2.getDir() + 1);
 			}
+			pause(15);
 		}
 	}
 
@@ -267,13 +239,11 @@ public class Main {
 		Screen screen = window.getScreen();
 		Gravity g = new Gravity();
 		loadCharacters();
-		menu = new CharacterSelectionMenu(characters);
-		hbc = new HitboxController();
-		character = new int[2];
+		menu = new CharacterSelectionMenu(characters1);
 		pc = new ProjectileController();
-
+		hbc = new HitboxController(pc);
+		character = new int[2];
 		moveQueue = new MoveQueue();
-
 		countDown.countDownInit(240);
 
 		isGameOn = true;
@@ -295,17 +265,17 @@ public class Main {
 				} else if (STATE == State.MENU) {
 					menu.update();
 				} else if (STATE == State.INIT) {
-					p1 = new Player(0, 50, 0, 1, characters.get(character[0]));
-					p2 = new Player(1, 250, 0, -1, characters.get(character[1]));
+					p1 = new Player(0, 50, 0, 1, characters1.get(0));
+					p2 = new Player(1, 250, 0, -1, characters2.get(0));
 					moves1 = p1.moveSet;
 					moves1.updatePlayer(p1);
 					moves2 = p2.moveSet;
 					moves2.updatePlayer(p2);
-					anim = new MoveHandler(p1, p2, moves1, moves2, hbc, pc, moveQueue);
+					moveHandle = new MoveHandler(p1, p2, moves1, moves2, hbc, pc, moveQueue);
 					hb1 = new Hurtbox(p1);
 					hb2 = new Hurtbox(p2);
-					hbc.addhurtbox(hb1, 1);
-					hbc.addhurtbox(hb2, 2);
+					hbc.addhurtbox(hb1, 0);
+					hbc.addhurtbox(hb2, 1);
 					g.addEntity(p1);
 					g.addEntity(p2);
 					STATE = State.GAME;

@@ -8,7 +8,6 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import main.MoveQueue;
 import main.MoveSet;
 import main.SoundPlayer;
-import sun.swing.text.html.FrameEditorPaneTag;
 
 public class MoveHandler {
 	Player p1, p2;
@@ -65,19 +64,44 @@ public class MoveHandler {
 	public void exec(String input, int pid, int dir) throws InterruptedException {
 		Player pTemp = getPlayer(pid);
 		MoveSet mTemp = getMoveSet(pid);
+		int[] hitInfo = mTemp.retrieveArray(input);
+		int framedelay = hitInfo[mTemp.framedelay];
 		if (input.equals("jump")) {
-			pTemp.jump(9);
+			pTemp.jump(hitInfo[mTemp.damage]);
 			for (int i = 4; i >= 0; i--) {
 				pTemp.setT(i, 1);
-				pause(15);
+				pause(framedelay);
 			}
 			pause(20);
 			for (int i = 0; i < 5; i++) {
 				pTemp.setT(i, 1);
-				pause(10);
+				pause(framedelay);
 			}
 			pause(50);
 			pTemp.setT(0, 0);
+			moveQueue.remove(pid);
+		} else if (input.equals("projectile")) {
+
+			for (int i = 0; i < hitInfo[m1.frames]; i++) {
+				pTemp.setT(i, hitInfo[mTemp.row]);
+				pTemp.setX(pTemp.getX() + div[dir]);
+				pause(framedelay);
+
+			}
+			int damage = hitInfo[mTemp.damage];
+			Projectile add = new Projectile(pTemp.x + hitInfo[mTemp.hitx], pTemp.y + hitInfo[mTemp.hity],
+					hitInfo[mTemp.hitw], hitInfo[mTemp.hith], (int) ((20 / damage) * pTemp.dir), 0, damage,
+					hitInfo[mTemp.duration], pTemp.name + "Projectile");
+			pc.add(add);
+			hbc.addHitbox(add.hit, pid);
+			pause(framedelay);
+			for (int i = hitInfo[mTemp.frames] - 1; i >= 0; i--) {
+				pTemp.setT(i, hitInfo[mTemp.row]);
+				pTemp.setX(pTemp.getX() - div[dir]);
+				pause(framedelay);
+			}
+			pause(framedelay);
+			pause(hitInfo[mTemp.endlag]);
 			moveQueue.remove(pid);
 		} else {
 			try {
@@ -87,25 +111,23 @@ public class MoveHandler {
 			}
 
 			Hitbox add = mTemp.retriveHitbox(input).reset();
-			int[] hitboxInfo = mTemp.retrieveArray(input);
-			int framedelay = hitboxInfo[mTemp.framedelay];
-			hbc.addHitbox(add, pid + 1);
+			hbc.addHitbox(add, pid);
 
-			for (int i = 0; i < hitboxInfo[m1.frames]; i++) {
-				pTemp.setT(i, hitboxInfo[mTemp.row]);
+			for (int i = 0; i < hitInfo[m1.frames]; i++) {
+				pTemp.setT(i, hitInfo[mTemp.row]);
 				pTemp.setX(pTemp.getX() + div[dir]);
 				pause(framedelay);
 
 			}
 
 			pause(framedelay);
-			for (int i = hitboxInfo[mTemp.frames] - 1; i >= 0; i--) {
-				pTemp.setT(i, hitboxInfo[mTemp.row]);
+			for (int i = hitInfo[mTemp.frames] - 1; i >= 0; i--) {
+				pTemp.setT(i, hitInfo[mTemp.row]);
 				pTemp.setX(pTemp.getX() - div[dir]);
 				pause(framedelay);
 			}
 			pause(framedelay);
-			pause(hitboxInfo[mTemp.endlag]);
+			pause(hitInfo[mTemp.endlag]);
 			moveQueue.remove(pid);
 		}
 
