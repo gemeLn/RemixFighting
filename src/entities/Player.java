@@ -86,10 +86,22 @@ public class Player extends Entity {
 
 	private void handleInput() {
 		if (moveQueue.isEmpty(playerID)) {
-			if (keyPress("up") && keyPress("jab")) {
+			/*if (keyPress("jab") && keyPress("up")) {
 				moveQueue.add(playerID, "HighP");
-			} else if (keyPress("up")) {
-				moveQueue.add(playerID, "Jump");
+			} else*/
+			
+			if (keyPress("up")) {
+				try {
+					Thread.sleep(20);
+					if(keyPress("jab")){
+						moveQueue.add(playerID, "HighP");
+					}
+					else{	moveQueue.add(playerID, "Jump");}
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			
 			} else if (keyPress("kick") && (keyPress("right") || keyPress("left"))) {
 				moveQueue.add(playerID, "Slide");
 			} else if (keyPress("kick")) {

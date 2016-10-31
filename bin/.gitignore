@@ -1,7 +1,8 @@
 /.DS_Store
-/character_screen/
 /entities/
 /graphics/
 /main/
+/menu/
 /physics/
 /res/
+/utils/

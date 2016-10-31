@@ -38,11 +38,11 @@ public class Main {
 		NONE, MENU, GAME, INIT
 	};
 
-	public static State STATE = State.INIT;
+	public static State STATE = State.MENU;
+	public static int[] character;
 
 	Player p1;
 	Player p2;
-	public static int[] character;
 	MoveSet moves1;
 	MoveSet moves2;
 	CountDown countDown;
@@ -265,8 +265,8 @@ public class Main {
 				} else if (STATE == State.MENU) {
 					menu.update();
 				} else if (STATE == State.INIT) {
-					p1 = new Player(0, 50, 0, 1, characters1.get(0));
-					p2 = new Player(1, 250, 0, -1, characters2.get(0));
+					p1 = new Player(0, 50, 0, 1, characters1.get(character[0]));
+					p2 = new Player(1, 250, 0, -1, characters2.get(character[1]));
 					moves1 = p1.moveSet;
 					moves1.updatePlayer(p1);
 					moves2 = p2.moveSet;
