@@ -37,7 +37,6 @@ public class Hitbox extends Rectangle {
 		this.ydif = ydif;
 		timeStarted = System.currentTimeMillis();
 		this.e = e;
-		this.RADIUS = RADIUS;
 	}
 
 	public Hitbox(int dmg, int xdif, int ydif, int w, int h, int knockX, int knockY, int duration, Entity e,
@@ -54,7 +53,7 @@ public class Hitbox extends Rectangle {
 
 	public void setE(Entity in) {
 		e = in;
-		RADIUS = e.radius;
+
 	}
 
 	public Entity getE() {
@@ -63,7 +62,7 @@ public class Hitbox extends Rectangle {
 
 	public void update() {
 		if (e.getDir() == -1) {
-			x = e.getMidpoint() - width - xdif;
+			x = (e.getMidpoint()) - xdif-width;
 		} else {
 			x = e.getMidpoint() + xdif;
 		}

@@ -41,7 +41,7 @@ public class HitboxController {
 					p1.changeHealth(-1 * hit.dmg);
 					p1.setXvel(hit.knockX * p2.dir);
 					p1.setYvel(-hit.knockY);
-					p1.freezeInputs(50 * hit.knockX);
+					p1.freezeInputs(15 * hit.knockX);
 					removeThese.add(hit);
 					if (hit.projectile) {
 						pc.remove(hit);
@@ -61,7 +61,7 @@ public class HitboxController {
 					p2.changeHealth(-1 * hit.dmg);
 					p2.setXvel(hit.knockX * p1.dir);
 					p2.setYvel(-hit.knockY);
-					p2.freezeInputs(50 * hit.knockX);
+					p2.freezeInputs(15 * hit.knockX);
 					removeThese.add(hit);
 					if (hit.projectile) {
 						pc.remove(hit);

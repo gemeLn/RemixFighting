@@ -253,7 +253,7 @@ public class Main {
 					System.out.println("Initiall: " + xi + " , " + yi);
 				} else {
 					System.out.println(
-							"Second Relative to Player: " + (xi-p1.x) + " , " + (yi - p1.getY()));
+							"Second Relative to Player: " + (xi - p1.getMidpoint()) + " , " + (yi - p1.getY()));
 					System.out.println("Width: " + (e.getX() - xi) + "," + (e.getY() - yi));
 				}
 			}

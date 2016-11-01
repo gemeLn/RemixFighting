@@ -68,7 +68,7 @@ public class MoveHandler {
 		MoveSet mTemp = getMoveSet(pid);
 		int[] hitInfo = mTemp.retrieveArray(input);
 		int framedelay = hitInfo[mTemp.framedelay];
-		framedelay=500;
+		//framedelay = 500;
 		if (input.equals("jump")) {
 			System.out.println(hitInfo[mTemp.damage]);
 			pTemp.jump(hitInfo[mTemp.damage]);
@@ -114,10 +114,11 @@ public class MoveHandler {
 				e1.printStackTrace();
 			}
 
-			Hitbox add = mTemp.retriveHitbox(input).reset();
-			hbc.addHitbox(add, pid);
-
 			for (int i = 0; i < hitInfo[m1.frames]; i++) {
+				if (i == hitInfo[mTemp.startFrame]) {
+					Hitbox add = mTemp.retriveHitbox(input).reset();
+					hbc.addHitbox(add, pid);
+				}
 				pTemp.setT(i, hitInfo[mTemp.row]);
 				pTemp.setX(pTemp.getX() + div[dir]);
 				pause(framedelay);

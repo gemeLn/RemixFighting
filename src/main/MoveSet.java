@@ -20,7 +20,8 @@ public class MoveSet {
 	final public int endlag = 9;
 	final public int knockX = 10;
 	final public int knockY = 11;
-	int fileRows = 12;
+	final public int startFrame = 12;
+	int fileRows = 13;
 
 	public enum Moves {
 

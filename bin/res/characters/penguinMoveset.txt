@@ -1,18 +1,19 @@
 /Penguin Moveset
-/Damge . duration . frames . framedelay . hitx . hity . hitw . hith. rows. end lag
+/Damge . duration . frames . framedelay . hitx . hity . hitw . hith. rows. end lag . knockX,knockY, startFrame
 /jab 
 2
 250
 5
 35
-65
-83
+41
+85
 40
 25
 0
 50
 20
 5
+0
 /Punch
 5
 1000
@@ -26,6 +27,7 @@
 0
 5
 5
+0
 /Kick
 5
 450
@@ -37,10 +39,11 @@
 63
 2
 400
+40
 5
-5
+0
 /Jump Damage = Height
-9
+12
 250
 5
 20
@@ -49,6 +52,7 @@
 -1
 -1
 1
+0
 0
 0
 0
@@ -65,6 +69,7 @@
 500
 5
 5
+0
 /Walk
 -1
 -1
@@ -78,19 +83,21 @@
 -1
 0
 0
-/HighPunch Damge . duration . frames . framedelay . hitx . hity . hitw . hith. rows. end lag . knockx,knock y
-7
+0
+/HighPunch Damge . duration . frames . framedelay . hitx . hity . hitw . hith. rows. end lag . knockx,knock y,startFrmae
+5
 100
 5
 45
-140
-48
+37
+40
 20
 41
 5
-700
+150
 5
-5
+15
+1
 /Projectile
 1
 1000
@@ -104,3 +111,4 @@
 50
 1
 1
+0
