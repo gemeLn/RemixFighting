@@ -11,7 +11,6 @@ import entities.GameCharacter;
 import entities.Hitbox;
 import entities.HitboxController;
 import entities.Hurtbox;
-import entities.MoveHandler;
 import entities.Player;
 import entities.Projectile;
 import entities.ProjectileController;
@@ -240,11 +239,23 @@ public class Main {
 		Window window = new Window("Game", 960, 540);
 		window.addKeyListener(new InputHandler());
 		window.addMouseListener(new MouseAdapter() {
+			int xi = 0;
+			int yi = 0;
+
 			@Override
 			public void mousePressed(MouseEvent e) {
 				// TODO Auto-generated method stub
+
 				super.mousePressed(e);
-				System.out.println(e.getX() + " , " + e.getY());
+				if (e.getButton() == MouseEvent.BUTTON1) {
+					xi = e.getX();
+					yi = e.getY();
+					System.out.println("Initiall: " + xi + " , " + yi);
+				} else {
+					System.out.println(
+							"Second Relative to Player: " + (xi-p1.x) + " , " + (yi - p1.getY()));
+					System.out.println("Width: " + (e.getX() - xi) + "," + (e.getY() - yi));
+				}
 			}
 		});
 		window.show();

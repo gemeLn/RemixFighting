@@ -26,8 +26,7 @@ public class Hitbox extends Rectangle {
 	 * @param duration
 	 *            Duration hitbox lasts till self-destruct
 	 */
-	public Hitbox(int dmg, int xdif, int ydif, int w, int h, int knockX, int knockY, int duration, Entity e,
-			int RADIUS) {
+	public Hitbox(int dmg, int xdif, int ydif, int w, int h, int knockX, int knockY, int duration, Entity e) {
 		this.dmg = dmg;
 		this.width = w;
 		this.height = h;
@@ -41,9 +40,9 @@ public class Hitbox extends Rectangle {
 		this.RADIUS = RADIUS;
 	}
 
-	public Hitbox(int dmg, int xdif, int ydif, int w, int h, int knockX, int knockY, int duration, Entity e, int RADIUS,
+	public Hitbox(int dmg, int xdif, int ydif, int w, int h, int knockX, int knockY, int duration, Entity e,
 			boolean Projectile) {
-		this(dmg, xdif, ydif, w, h, knockX, knockY, duration, e, RADIUS);
+		this(dmg, xdif, ydif, w, h, knockX, knockY, duration, e);
 		projectile = Projectile;
 	}
 
@@ -64,9 +63,9 @@ public class Hitbox extends Rectangle {
 
 	public void update() {
 		if (e.getDir() == -1) {
-			x = e.x - xdif + RADIUS;
+			x = e.getMidpoint() - width - xdif;
 		} else {
-			x = e.x + xdif + RADIUS;
+			x = e.getMidpoint() + xdif;
 		}
 		y = e.y + ydif;
 	}

@@ -1,13 +1,15 @@
-package entities;
+package main;
 
 import java.io.IOException;
 
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
-import main.MoveQueue;
-import main.MoveSet;
-import main.SoundPlayer;
+import entities.Hitbox;
+import entities.HitboxController;
+import entities.Player;
+import entities.Projectile;
+import entities.ProjectileController;
 
 public class MoveHandler {
 	Player p1, p2;
@@ -66,6 +68,7 @@ public class MoveHandler {
 		MoveSet mTemp = getMoveSet(pid);
 		int[] hitInfo = mTemp.retrieveArray(input);
 		int framedelay = hitInfo[mTemp.framedelay];
+		framedelay=500;
 		if (input.equals("jump")) {
 			System.out.println(hitInfo[mTemp.damage]);
 			pTemp.jump(hitInfo[mTemp.damage]);

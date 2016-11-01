@@ -78,15 +78,15 @@
 -1
 0
 0
-/HighPunch Damge . duration . frames . framedelay . hitx . hity . hitw . hith. rows. end lag
+/HighPunch Damge . duration . frames . framedelay . hitx . hity . hitw . hith. rows. end lag . knockx,knock y
 7
 100
 5
 45
-10
-10
-10
-30
+140
+48
+20
+41
 5
 700
 5

@@ -42,11 +42,13 @@ public class Player extends Entity {
 		special = 0;
 		playern = pid;
 		keys = KeyMap.getKeyMapping(playerID);
-
+		radius = gc.radius;
 		moveQueue = new MoveQueue();
 
 		// TODO Auto-generated constructor stub
 	}
+
+	
 
 	public void update() {
 		if (frozen) {

@@ -37,6 +37,10 @@ public class Entity {
 
 	}
 
+	public int getMidpoint() {
+		return x + radius;
+	}
+
 	public void freezeInputs(int i) {
 		frozen = true;
 		freezeUntil = System.currentTimeMillis() + i;

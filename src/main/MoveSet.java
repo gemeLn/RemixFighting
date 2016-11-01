@@ -47,7 +47,7 @@ public class MoveSet {
 			arrayA.add(readNextI());
 			int[] tmp = arrayA.get(i);
 			hitA.add(new Hitbox(tmp[damage], tmp[hitx], tmp[hity], tmp[hitw], tmp[hith], tmp[knockX], tmp[knockY],
-					tmp[duration], null, i));
+					tmp[duration], null));
 		}
 
 	}

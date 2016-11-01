@@ -16,7 +16,7 @@ public class Projectile extends Entity {
 		this.dur = dur;
 		this.xvel = xvel;
 		this.yvel = yvel;
-		hit = new Hitbox(damage, 0, 0, w, h, 0, 0, dur, this, 0, true);
+		hit = new Hitbox(damage, 0, 0, w, h, 0, 0, dur, this, true);
 		start = System.currentTimeMillis();
 	}
 
