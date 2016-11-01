@@ -35,13 +35,7 @@ public class HitboxController {
 				if (now > hit.duration + hit.timeStarted) {
 					removeThese.add(hit);
 				} else if (hit.intersects(hurt)) {
-
-					hurt.getEntity().changeHealth(-1 * hit.dmg);
-					System.out.println("Player 1 H: " + hurt.getEntity().health);
-					removeThese.add(hit);
-					if (hit.projectile) {
-						pc.remove(hit);
-					}
+					hit(hurt, hit);
 				}
 
 			}
@@ -54,19 +48,23 @@ public class HitboxController {
 				if (now > hit.duration + hit.timeStarted) {
 					removeThese.add(hit);
 				} else if (hit.intersects(hurt)) {
-
-					hurt.getEntity().changeHealth(-1 * hit.dmg);
-					System.out.println("Player 2 H: " + hurt.getEntity().health);
-					removeThese.add(hit);
-					if (hit.projectile) {
-						pc.remove(hit);
-					}
+					hit(hurt, hit);
 				}
 
 			}
 
 		}
 
+	}
+
+	public void hit(Hurtbox hurt, Hitbox hit) {
+		hurt.getEntity().changeHealth(-1 * hit.dmg);
+		hurt.getEntity().setXvel(hit.knockX * hit.getE().dir);
+		hurt.getEntity().freezeInputs(50 * hit.knockX);
+		removeThese.add(hit);
+		if (hit.projectile) {
+			pc.remove(hit);
+		}
 	}
 
 	public void addHitbox(Hitbox b, int i) {

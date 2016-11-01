@@ -200,7 +200,12 @@ public class Main {
 				 * i >= 0; i--) { p1.setT(i, 6); pause(100); } pause(10);
 				 * pause(50); moveQueue.p1Remove(); continue; } else
 				 */
-				moveHandle.exec(moveQueue.see(0).toLowerCase(), 0, p1.getDir() + 1);
+				try {
+					moveHandle.exec(moveQueue.see(0).toLowerCase(), 0, p1.getDir() + 1);
+				} catch (IllegalArgumentException e) {
+					System.out.println("Move missing");
+					moveQueue.remove(0);
+				}
 			}
 			pause(15);
 		}
@@ -208,9 +213,16 @@ public class Main {
 
 	private void bufferP2() throws InterruptedException {
 		while (isGameOn) {
+
 			if (!(moveQueue.isEmpty(1))) {
-				moveHandle.exec(moveQueue.see(1).toLowerCase(), 1, p2.getDir() + 1);
+				try {
+					moveHandle.exec(moveQueue.see(1).toLowerCase(), 1, p2.getDir() + 1);
+				} catch (IllegalArgumentException e) {
+					System.out.println("Move missing");
+					moveQueue.remove(1);
+				}
 			}
+
 			pause(15);
 		}
 	}
@@ -247,7 +259,6 @@ public class Main {
 		countDown.countDownInit(240);
 
 		isGameOn = true;
-		bufferInit();
 
 		while (isGameOn) {
 
@@ -256,6 +267,7 @@ public class Main {
 			lag += (timeNow - timeLastRender) / fps;
 
 			if (lag >= 1) {
+
 				if (STATE == State.GAME) {
 					p1.update();
 					p2.update();
@@ -278,6 +290,7 @@ public class Main {
 					hbc.addhurtbox(hb2, 1);
 					g.addEntity(p1);
 					g.addEntity(p2);
+					bufferInit();
 					STATE = State.GAME;
 				}
 				screen.clear(0xffffff);

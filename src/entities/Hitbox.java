@@ -7,7 +7,7 @@ public class Hitbox extends Rectangle {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	public int dmg, knockback, xdif, ydif;
+	public int dmg, knockX, knockY, xdif, ydif, dir;
 	public long duration;
 	public long timeStarted;
 	public Entity e;
@@ -26,11 +26,13 @@ public class Hitbox extends Rectangle {
 	 * @param duration
 	 *            Duration hitbox lasts till self-destruct
 	 */
-	public Hitbox(int dmg, int xdif, int ydif, int w, int h, int knockback, int duration, Entity e, int RADIUS) {
+	public Hitbox(int dmg, int xdif, int ydif, int w, int h, int knockX, int knockY, int duration, Entity e,
+			int RADIUS) {
 		this.dmg = dmg;
 		this.width = w;
 		this.height = h;
-		this.knockback = knockback;
+		this.knockX = knockX;
+		this.knockY = knockY;
 		this.duration = duration;
 		this.xdif = xdif;
 		this.ydif = ydif;
@@ -39,9 +41,9 @@ public class Hitbox extends Rectangle {
 		this.RADIUS = RADIUS;
 	}
 
-	public Hitbox(int dmg, int xdif, int ydif, int w, int h, int knockback, int duration, Entity e, int RADIUS,
+	public Hitbox(int dmg, int xdif, int ydif, int w, int h, int knockX, int knockY, int duration, Entity e, int RADIUS,
 			boolean Projectile) {
-		this(dmg, xdif, ydif, w, h, knockback, duration, e, RADIUS);
+		this(dmg, xdif, ydif, w, h, knockX, knockY, duration, e, RADIUS);
 		projectile = Projectile;
 	}
 
@@ -54,6 +56,10 @@ public class Hitbox extends Rectangle {
 	public void setE(Entity in) {
 		e = in;
 		RADIUS = e.radius;
+	}
+
+	public Entity getE() {
+		return e;
 	}
 
 	public void update() {

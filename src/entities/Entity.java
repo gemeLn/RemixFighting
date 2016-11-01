@@ -7,7 +7,10 @@ public class Entity {
 	public int x, y, xvel, yvel = 0;
 	public int dir = 1;
 	public Texture sprite;
-	public int w, h,health,jumps,totalJumps,radius;
+	public int w, h, health, jumps, totalJumps, radius;
+	public boolean frozen = false;
+	public long freezeUntil;
+
 	/**
 	 * Constructor for entity
 	 * 
@@ -33,6 +36,12 @@ public class Entity {
 
 	}
 
+	public void freezeInputs(int i) {
+		frozen = true;
+		freezeUntil = System.currentTimeMillis() + i;
+
+	};
+
 	/**
 	 * Adds or removes health from entity
 	 * 
@@ -40,8 +49,7 @@ public class Entity {
 	 *            Amount added: can be negative.
 	 * 
 	 */
-	
-	
+
 	public Texture getTexture() {
 		return sprite;
 	}
@@ -53,12 +61,12 @@ public class Entity {
 	public void setX(int x) {
 		this.x = x;
 	}
-	
-	public int getDir(){
+
+	public int getDir() {
 		return dir;
 	}
-	
-	public void setDir(int dir){
+
+	public void setDir(int dir) {
 		this.dir = dir;
 	}
 
@@ -135,17 +143,18 @@ public class Entity {
 	public void setT(Texture t) {
 		this.sprite = t;
 	}
-	public void replinish(){
-		
-		jumps=totalJumps;
+
+	public void replinish() {
+
+		jumps = totalJumps;
 	}
 
 	public void changeHealth(int i) {
-		health+=i;
-		if(health<=0){
+		health += i;
+		if (health <= 0) {
 			System.out.println("DEIDED");
-			
+
 		}
-		
+
 	}
 }

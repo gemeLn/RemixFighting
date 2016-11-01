@@ -18,11 +18,13 @@ public class MoveSet {
 	final public int hith = 7;
 	final public int row = 8;
 	final public int endlag = 9;
-	int fileRows = 10;
+	final public int knockX = 10;
+	final public int knockY = 11;
+	int fileRows = 12;
 
 	public enum Moves {
 
-		JAB(0), PUNCH(1), KICK(2), JUMP(3), SLIDE(4), WALK(5), HIGHP(6),PROJECTILE(7);
+		JAB(0), PUNCH(1), KICK(2), JUMP(3), SLIDE(4), WALK(5), HIGHP(6), PROJECTILE(7);
 		int i;
 
 		Moves(int i) {
@@ -44,7 +46,8 @@ public class MoveSet {
 		for (int i = 0; i < numberOfMoves; i++) {
 			arrayA.add(readNextI());
 			int[] tmp = arrayA.get(i);
-			hitA.add(new Hitbox(tmp[damage], tmp[hitx], tmp[hity], tmp[hitw], tmp[hith], 1, tmp[duration], null, i));
+			hitA.add(new Hitbox(tmp[damage], tmp[hitx], tmp[hity], tmp[hitw], tmp[hith], tmp[knockX], tmp[knockY],
+					tmp[duration], null, i));
 		}
 
 	}

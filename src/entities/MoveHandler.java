@@ -67,6 +67,7 @@ public class MoveHandler {
 		int[] hitInfo = mTemp.retrieveArray(input);
 		int framedelay = hitInfo[mTemp.framedelay];
 		if (input.equals("jump")) {
+			System.out.println(hitInfo[mTemp.damage]);
 			pTemp.jump(hitInfo[mTemp.damage]);
 			for (int i = 4; i >= 0; i--) {
 				pTemp.setT(i, 1);

@@ -15,6 +15,7 @@ public class Player extends Entity {
 	public GameCharacter character;
 	private int playerID;
 	public int moveSpeed, special, lastHealth;
+	public int traction = 1;
 	public String name;
 	public SpriteSheet sheet;
 	public MoveSet moveSet;
@@ -38,7 +39,6 @@ public class Player extends Entity {
 		health = gc.health;
 		radius = gc.radius;
 		lastHealth = gc.health;
-
 		special = 0;
 
 		keys = KeyMap.getKeyMapping(playerID);
@@ -49,14 +49,24 @@ public class Player extends Entity {
 	}
 
 	public void update() {
+		if (frozen) {
+			if (System.currentTimeMillis() > freezeUntil) {
+				frozen = false;
+			}
+		}
 		if (x < -30) {
 			x = -30;
 		}
 		if (x > 900 - w) {
 			x = 900 - w;
 		}
-		x = x + xvel;
+		x = x + xvel * dir;
 		y = y + yvel;
+		if (xvel - traction > 0) {
+			xvel -= traction;
+		} else {
+			xvel = 0;
+		}
 
 		specialBar();
 
@@ -81,52 +91,45 @@ public class Player extends Entity {
 	}
 
 	private boolean keyPress(String string) {
+		// return
+		// InputHandler.isKeyPressed(KeyMap.p1Set.valueOf(string.toUpperCase()).key);
 		return InputHandler.isKeyPressed(keys.get(string));
 	}
 
 	private void handleInput() {
-		if (moveQueue.isEmpty(playerID)) {
-			/*if (keyPress("jab") && keyPress("up")) {
-				moveQueue.add(playerID, "HighP");
-			} else*/
-			
-			if (keyPress("up")) {
-				try {
-					Thread.sleep(20);
-					if(keyPress("jab")){
-						moveQueue.add(playerID, "HighP");
-					}
-					else{	moveQueue.add(playerID, "Jump");}
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			
-			} else if (keyPress("kick") && (keyPress("right") || keyPress("left"))) {
-				moveQueue.add(playerID, "Slide");
-			} else if (keyPress("kick")) {
-				moveQueue.add(playerID, "Kick");
-			} else if (keyPress("jab")) {
-				moveQueue.add(playerID, "Jab");
-			} else if (keyPress("animationTest")) {
-				moveQueue.add(playerID, "AnimationTest");
-			} else if (keyPress("projectile")) {
-				moveQueue.add(playerID, "Projectile");
-			}
+		if (!frozen) {
+			if (moveQueue.isEmpty(playerID)) {
+				/*
+				 * if (keyPress("jab") && keyPress("up")) {
+				 * moveQueue.add(playerID, "HighP"); } else
+				 */
 
-		}
-		if (keyPress("right")) {
-			if (moveQueue.isEmpty(playerID) || moveQueue.isFirst(playerID, "Jump")) {
-				setDir(1);
-				setXvel(moveSpeed);
+				if (keyPress("up") && keyPress("jab")) {
+					moveQueue.add(playerID, "HighP");
+				} else if (keyPress("jump")) {
+					moveQueue.add(playerID, "Jump");
+				} else if (keyPress("kick") && (keyPress("right") || keyPress("left"))) {
+					moveQueue.add(playerID, "Slide");
+				} else if (keyPress("kick")) {
+					moveQueue.add(playerID, "Kick");
+				} else if (keyPress("jab")) {
+					moveQueue.add(playerID, "Jab");
+				} else if (keyPress("projectile")) {
+					moveQueue.add(playerID, "Projectile");
+				}
+
 			}
-		} else if (keyPress("left")) {
-			if (moveQueue.isEmpty(playerID) || moveQueue.isFirst(playerID, "Jump")) {
-				setDir(-1);
-				setXvel(-moveSpeed);
+			if (keyPress("right")) {
+				if (moveQueue.isEmpty(playerID) || moveQueue.isFirst(playerID, "Jump")) {
+					setDir(1);
+					setXvel(moveSpeed);
+				}
+			} else if (keyPress("left")) {
+				if (moveQueue.isEmpty(playerID) || moveQueue.isFirst(playerID, "Jump")) {
+					setDir(-1);
+					setXvel(moveSpeed);
+				}
 			}
-		} else {
-			setXvel(0);
 		}
 
 	}
