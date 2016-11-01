@@ -55,7 +55,6 @@ public class MoveSet {
 	public void updatePlayer(Entity e) {
 		for (int i = 0; i < numberOfMoves; i++) {
 			hitA.get(i).setE(e);
-
 		}
 	};
 

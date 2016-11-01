@@ -10,6 +10,7 @@ public class Entity {
 	public int w, h, health, jumps, totalJumps, radius;
 	public boolean frozen = false;
 	public long freezeUntil;
+	public int playern;
 
 	/**
 	 * Constructor for entity

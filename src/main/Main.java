@@ -253,7 +253,7 @@ public class Main {
 		loadCharacters();
 		menu = new CharacterSelectionMenu(characters1);
 		pc = new ProjectileController();
-		hbc = new HitboxController(pc);
+
 		character = new int[2];
 		moveQueue = new MoveQueue();
 		countDown.countDownInit(240);
@@ -283,6 +283,7 @@ public class Main {
 					moves1.updatePlayer(p1);
 					moves2 = p2.moveSet;
 					moves2.updatePlayer(p2);
+					hbc = new HitboxController(pc, p1, p2);
 					moveHandle = new MoveHandler(p1, p2, moves1, moves2, hbc, pc, moveQueue);
 					hb1 = new Hurtbox(p1);
 					hb2 = new Hurtbox(p2);

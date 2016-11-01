@@ -15,7 +15,7 @@ public class Player extends Entity {
 	public GameCharacter character;
 	private int playerID;
 	public int moveSpeed, special, lastHealth;
-	public int traction = 1;
+	public int traction = 4;
 	public String name;
 	public SpriteSheet sheet;
 	public MoveSet moveSet;
@@ -40,7 +40,7 @@ public class Player extends Entity {
 		radius = gc.radius;
 		lastHealth = gc.health;
 		special = 0;
-
+		playern = pid;
 		keys = KeyMap.getKeyMapping(playerID);
 
 		moveQueue = new MoveQueue();
@@ -60,10 +60,15 @@ public class Player extends Entity {
 		if (x > 900 - w) {
 			x = 900 - w;
 		}
-		x = x + xvel * dir;
+		x = x + xvel;
 		y = y + yvel;
-		if (xvel - traction > 0) {
-			xvel -= traction;
+		if (Math.abs(xvel) - traction > 0) {
+			if (xvel > 0) {
+				xvel -= traction;
+			} else {
+				xvel += traction;
+			}
+
 		} else {
 			xvel = 0;
 		}
@@ -121,13 +126,13 @@ public class Player extends Entity {
 			}
 			if (keyPress("right")) {
 				if (moveQueue.isEmpty(playerID) || moveQueue.isFirst(playerID, "Jump")) {
-					setDir(1);
+					dir = 1;
 					setXvel(moveSpeed);
 				}
 			} else if (keyPress("left")) {
 				if (moveQueue.isEmpty(playerID) || moveQueue.isFirst(playerID, "Jump")) {
-					setDir(-1);
-					setXvel(moveSpeed);
+					dir = -1;
+					setXvel(-moveSpeed);
 				}
 			}
 		}

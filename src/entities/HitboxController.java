@@ -15,9 +15,12 @@ public class HitboxController {
 	 */
 	int removeSize;
 	long now;
+	Player p1, p2;
 
-	public HitboxController(ProjectileController pc) {
+	public HitboxController(ProjectileController pc, Player p1, Player p2) {
 		this.pc = pc;
+		this.p1 = p1;
+		this.p2 = p2;
 	}
 
 	public void update() {
@@ -35,7 +38,14 @@ public class HitboxController {
 				if (now > hit.duration + hit.timeStarted) {
 					removeThese.add(hit);
 				} else if (hit.intersects(hurt)) {
-					hit(hurt, hit);
+					p1.changeHealth(-1 * hit.dmg);
+					p1.setXvel(hit.knockX * p2.dir);
+					p1.setYvel(-hit.knockY);
+					p1.freezeInputs(50 * hit.knockX);
+					removeThese.add(hit);
+					if (hit.projectile) {
+						pc.remove(hit);
+					}
 				}
 
 			}
@@ -48,7 +58,14 @@ public class HitboxController {
 				if (now > hit.duration + hit.timeStarted) {
 					removeThese.add(hit);
 				} else if (hit.intersects(hurt)) {
-					hit(hurt, hit);
+					p2.changeHealth(-1 * hit.dmg);
+					p2.setXvel(hit.knockX * p1.dir);
+					p2.setYvel(-hit.knockY);
+					p2.freezeInputs(50 * hit.knockX);
+					removeThese.add(hit);
+					if (hit.projectile) {
+						pc.remove(hit);
+					}
 				}
 
 			}
@@ -58,13 +75,7 @@ public class HitboxController {
 	}
 
 	public void hit(Hurtbox hurt, Hitbox hit) {
-		hurt.getEntity().changeHealth(-1 * hit.dmg);
-		hurt.getEntity().setXvel(hit.knockX * hit.getE().dir);
-		hurt.getEntity().freezeInputs(50 * hit.knockX);
-		removeThese.add(hit);
-		if (hit.projectile) {
-			pc.remove(hit);
-		}
+
 	}
 
 	public void addHitbox(Hitbox b, int i) {
