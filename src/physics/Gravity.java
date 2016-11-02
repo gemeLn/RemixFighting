@@ -14,8 +14,8 @@ public class Gravity {
 
 	public void update() {
 		for (Entity e : entities) {
-			if (e.getY() + e.getYvel() + e.getH() >= ground_y) {
-				e.setY(ground_y - e.getH());
+			if (e.getY() + e.getYvel() + e.getH() + e.marginY >= ground_y) {
+				e.setY(ground_y - e.getH() - e.marginY);
 				e.replinish();
 
 			} else {

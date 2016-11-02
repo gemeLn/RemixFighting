@@ -17,6 +17,8 @@ Polarbear
 /Character Height
 200
 /RAIDUS
-5
-/Margin
+130
+/MarginX
 10
+/Margin Y
+0

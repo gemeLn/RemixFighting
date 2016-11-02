@@ -45,6 +45,7 @@ public class Player extends Entity {
 		radius = gc.radius;
 		moveQueue = new MoveQueue();
 		marginX=gc.marginX;
+		marginY=gc.marginY;
 
 		// TODO Auto-generated constructor stub
 	}

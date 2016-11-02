@@ -34,7 +34,7 @@ public class Hurtbox extends Rectangle {
 	public void update() {
 		x = e.getX() + e.marginX;
 		;
-		y = e.getY() + 18;
+		y = e.getY() +e.marginY;
 
 	}
 }
