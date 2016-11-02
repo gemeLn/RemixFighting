@@ -8,17 +8,6 @@ enum p2Set {
 }
 
 public class KeyMap {
-	public enum p1Set {
-
-		UP(KeyEvent.VK_W), DOWN(KeyEvent.VK_S), LEFT(KeyEvent.VK_A), RIGHT(KeyEvent.VK_D), JAB(KeyEvent.VK_E), KICK(
-				KeyEvent.VK_Q), PROJECTILE(KeyEvent.VK_R);
-		public int key;
-
-		p1Set(int i) {
-			key = i;
-
-		}
-	}
 
 	public static int p1Up = KeyEvent.VK_W;
 	public static int p1Down = KeyEvent.VK_S;

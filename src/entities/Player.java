@@ -113,6 +113,8 @@ public class Player extends Entity {
 
 				if (keyPress("up") && keyPress("jab")) {
 					moveQueue.add(playerID, "HighP");
+				} else if (keyPress("projectile") && keyPress("jab")){ 
+					moveQueue.add(playerID, "Special");
 				} else if (keyPress("jump")) {
 					moveQueue.add(playerID, "Jump");
 				} else if (keyPress("kick") && (keyPress("right") || keyPress("left"))) {

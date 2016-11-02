@@ -39,7 +39,8 @@ public class Main {
 
 	public static State STATE = State.MENU;
 	public static int[] character;
-
+	public Gravity g;
+	
 	Player p1;
 	Player p2;
 	MoveSet moves1;
@@ -260,7 +261,7 @@ public class Main {
 		});
 		window.show();
 		Screen screen = window.getScreen();
-		Gravity g = new Gravity();
+		g = new Gravity();
 		loadCharacters();
 		menu = new CharacterSelectionMenu(characters1);
 		pc = new ProjectileController();
