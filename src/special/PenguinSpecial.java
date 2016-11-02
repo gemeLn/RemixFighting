@@ -21,8 +21,8 @@ public class PenguinSpecial {
 	public static boolean drawShade = false;
 
 	public void init() {
-		icicles = new Projectile[6];
-		iciclesX = new int[6];
+		icicles = new Projectile[7];
+		iciclesX = new int[7];
 	}
 
 	private void pause(long i) throws InterruptedException {
@@ -36,7 +36,7 @@ public class PenguinSpecial {
 
 	public void specialMove(HitboxController hbc, ProjectileController pc, int pid) throws InterruptedException {
 		for (int j = 0; j < 3; j++) {
-			for (int i = 0; i < 6; i++) {
+			for (int i = 0; i < 7; i++) {
 				iciclesX[i] = ThreadLocalRandom.current().nextInt(50, 900);
 				System.out.println("works");
 				icicles[i] = new Projectile(iciclesX[i], -500, 100, 125, 0, 0, 0, 2000, "penguinIcicle");
@@ -44,7 +44,7 @@ public class PenguinSpecial {
 				hbc.addHitbox(new Hitbox(8, 0, 0, 100, 125, 0, 0, 1500, icicles[i], true), pid);
 			}
 			pause(500);
-			for (int i = 0; i < 6; i++)
+			for (int i = 0; i < 7; i++)
 				Main.g.addEntity(icicles[i]);
 			drawShade = true;
 			pause(2500);

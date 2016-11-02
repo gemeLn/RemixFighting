@@ -16,7 +16,7 @@ public class ProjectileController {
 	public void update() {
 		removeSize = remove.size();
 		for (int i = 0; i < removeSize; i++) {
-			active.remove(0);
+			active.remove(remove.get(0));
 			remove.remove(0);
 
 		}
