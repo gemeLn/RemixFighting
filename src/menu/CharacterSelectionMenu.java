@@ -57,9 +57,9 @@ public class CharacterSelectionMenu extends Menu {
 		screen.drawString("P2", WINDOWX/2 + 210, 50, font, Color.BLACK);
 		
 		screen.fillRect(90, 80, 300, 250, 0x3f30df);
-		screen.drawTexture(70, 100, characters.get(selectedCharacter[0]).sheet.getTexture(0, 0));
+		screen.drawTexture(100, 100, characters.get(selectedCharacter[0]).sheet.getTexture(0, 0));
 		screen.fillRect(WINDOWX/2 + 90, 80, 300, 250, 0x3f30df);
-		screen.drawTexture(WINDOWX/2 + 70, 100, characters.get(selectedCharacter[1]).sheet.getTexture(0, 0));
+		screen.drawTexture(WINDOWX/2 + 100, 100, characters.get(selectedCharacter[1]).sheet.getTexture(0, 0));
 		
 		screen.fillRect(90, 350, 300, 100, 0xff00ff);
 		screen.fillRect(WINDOWX/2 + 90, 350, 300, 100, 0xff00ff);

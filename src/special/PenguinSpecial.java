@@ -41,7 +41,7 @@ public class PenguinSpecial {
 				System.out.println("works");
 				icicles[i] = new Projectile(iciclesX[i], -500, 100, 125, 0, 0, 0, 2000, "penguinIcicle");
 				pc.add(icicles[i]);
-				hbc.addHitbox(new Hitbox(8, 0, 0, 100, 125, 0, 0, 1500, icicles[i], true), pid);
+				hbc.addHitbox(new Hitbox(8, 0, 0, 140, 175, 0, 0, 1500, icicles[i], true), pid);
 			}
 			pause(500);
 			for (int i = 0; i < 7; i++)

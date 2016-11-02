@@ -3,7 +3,7 @@ Polarbear
 /Sheet Width
 1300
 /Sheet Height
-2200
+2000
 /Sheet Div X
 260
 /Sheet Div Y
