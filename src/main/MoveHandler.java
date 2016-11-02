@@ -10,6 +10,7 @@ import entities.HitboxController;
 import entities.Player;
 import entities.Projectile;
 import entities.ProjectileController;
+import special.Special;
 
 public class MoveHandler {
 	Player p1, p2;
@@ -18,6 +19,7 @@ public class MoveHandler {
 	ProjectileController pc;
 	MoveQueue moveQueue;
 	SoundPlayer sp;
+	Special special;
 	int[] div = new int[3];
 
 	public MoveHandler(Player p1, Player p2, MoveSet m1, MoveSet m2, HitboxController hbc, ProjectileController pc,
@@ -29,6 +31,7 @@ public class MoveHandler {
 		this.hbc = hbc;
 		this.pc = pc;
 		this.moveQueue = moveQueue;
+		special = new Special();
 		sp = new SoundPlayer();
 		div[0] = -5;
 		div[1] = 0;
@@ -68,7 +71,7 @@ public class MoveHandler {
 		MoveSet mTemp = getMoveSet(pid);
 		int[] hitInfo = mTemp.retrieveArray(input);
 		int framedelay = hitInfo[mTemp.framedelay];
-		//framedelay = 500;
+		// framedelay = 500;
 		if (input.equals("jump")) {
 			System.out.println(hitInfo[mTemp.damage]);
 			pTemp.jump(hitInfo[mTemp.damage]);
@@ -107,7 +110,9 @@ public class MoveHandler {
 			pause(framedelay);
 			pause(hitInfo[mTemp.endlag]);
 			moveQueue.remove(pid);
-		} else {
+		} 
+		else {
+
 			try {
 				sp.play("/res/sfx/punch.wav");
 			} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {

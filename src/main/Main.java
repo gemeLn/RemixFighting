@@ -21,6 +21,8 @@ import graphics.Window;
 import menu.CharacterSelectionMenu;
 import menu.Menu;
 import physics.Gravity;
+import special.PenguinSpecial;
+import special.Special;
 import utils.FileUtils;
 
 public class Main {
@@ -39,8 +41,8 @@ public class Main {
 
 	public static State STATE = State.MENU;
 	public static int[] character;
-	public Gravity g;
-	
+	public static Gravity g;
+	Special special;
 	Player p1;
 	Player p2;
 	MoveSet moves1;
@@ -131,6 +133,11 @@ public class Main {
 				screen.drawTexture(p.x, p.y, p.sprite);
 				// System.out.println(p.x+" , "+p.y);
 			}
+			if (PenguinSpecial.drawShade) {
+				for (int x : PenguinSpecial.iciclesX) {
+					screen.fillRect(x, 500, 100, 15, 0x000000);
+				}
+			}
 			for (Hurtbox h : hbc.getHurtboxes(0)) {
 				screen.drawRect(h.x, h.y, h.width, h.height, 0x0000FF);
 			}
@@ -200,12 +207,19 @@ public class Main {
 				 * i >= 0; i--) { p1.setT(i, 6); pause(100); } pause(10);
 				 * pause(50); moveQueue.p1Remove(); continue; } else
 				 */
-				try {
-					moveHandle.exec(moveQueue.see(0).toLowerCase(), 0, p1.getDir() + 1);
-				} catch (IllegalArgumentException e) {
-					System.out.println("Move missing");
+				if (moveQueue.see(0).equals("Special")) {
+					special.specialHandler(0, hbc, pc, 0);
 					moveQueue.remove(0);
+				} else {
+					try {
+						System.out.println(moveQueue.see(0).toLowerCase());
+						moveHandle.exec(moveQueue.see(0).toLowerCase(), 0, p1.getDir() + 1);
+					} catch (IllegalArgumentException e) {
+						System.out.println("Move missing");
+						moveQueue.remove(0);
+					}
 				}
+
 			}
 			pause(15);
 		}
@@ -215,11 +229,16 @@ public class Main {
 		while (isGameOn) {
 
 			if (!(moveQueue.isEmpty(1))) {
-				try {
-					moveHandle.exec(moveQueue.see(1).toLowerCase(), 1, p2.getDir() + 1);
-				} catch (IllegalArgumentException e) {
-					System.out.println("Move missing");
+				if (moveQueue.see(1).equals("Special")) {
+					special.specialHandler(0, hbc, pc, 1);
 					moveQueue.remove(1);
+				} else {
+					try {
+						moveHandle.exec(moveQueue.see(1).toLowerCase(), 1, p2.getDir() + 1);
+					} catch (IllegalArgumentException e) {
+						System.out.println("Move missing");
+						moveQueue.remove(1);
+					}
 				}
 			}
 
@@ -266,6 +285,8 @@ public class Main {
 		menu = new CharacterSelectionMenu(characters1);
 		pc = new ProjectileController();
 
+		special = new Special();
+
 		character = new int[2];
 		moveQueue = new MoveQueue();
 		countDown.countDownInit(240);
@@ -304,6 +325,7 @@ public class Main {
 					g.addEntity(p1);
 					g.addEntity(p2);
 					bufferInit();
+					special.specialInit();
 					STATE = State.GAME;
 				}
 				screen.clear(0xffffff);
