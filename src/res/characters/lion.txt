@@ -18,3 +18,5 @@ Lion
 200
 /Radius (Center to edge length)
 100
+/Margin
+10

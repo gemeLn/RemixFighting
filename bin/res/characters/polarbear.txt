@@ -18,3 +18,5 @@ Polarbear
 200
 /RAIDUS
 5
+/Margin
+10

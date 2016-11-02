@@ -4,6 +4,7 @@ import graphics.Texture;
 
 /** Any players, mobs, or simple entities with postion, speed and health */
 public class Entity {
+	public int marginX,marginY;
 	public int x, y, xvel, yvel = 0;
 	public int dir = 1;
 	public Texture sprite;

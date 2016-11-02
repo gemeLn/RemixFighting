@@ -9,7 +9,7 @@ import main.MoveQueue;
 import main.MoveSet;
 
 public class Player extends Entity {
-
+	
 	public int specialbar = 0;
 	public int dir;
 	public GameCharacter character;
@@ -44,11 +44,10 @@ public class Player extends Entity {
 		keys = KeyMap.getKeyMapping(playerID);
 		radius = gc.radius;
 		moveQueue = new MoveQueue();
+		marginX=gc.marginX;
 
 		// TODO Auto-generated constructor stub
 	}
-
-	
 
 	public void update() {
 		if (frozen) {
@@ -113,7 +112,7 @@ public class Player extends Entity {
 
 				if (keyPress("up") && keyPress("jab")) {
 					moveQueue.add(playerID, "HighP");
-				} else if (keyPress("up") && keyPress("projectile") && special == 20){ 
+				} else if (keyPress("up") && keyPress("projectile") && special == 20) {
 					moveQueue.add(playerID, "Special");
 					special = 0;
 				} else if (keyPress("jump")) {
