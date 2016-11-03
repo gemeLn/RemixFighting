@@ -160,12 +160,5 @@ public class Entity {
 		jumps = totalJumps;
 	}
 
-	public void changeHealth(int i) {
-		health += i;
-		if (health <= 0) {
-			System.out.println("DEIDED");
 
-		}
-
-	}
 }

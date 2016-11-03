@@ -6,11 +6,12 @@ import controller.InputHandler;
 import graphics.Screen;
 import graphics.SpriteSheet;
 import main.KeyMap;
+import main.Main;
 import main.MoveQueue;
 import main.MoveSet;
 
 public class Player extends Entity {
-	
+
 	public int specialbar = 0;
 	public int dir;
 	public GameCharacter character;
@@ -45,8 +46,8 @@ public class Player extends Entity {
 		keys = KeyMap.getKeyMapping(playerID);
 		radius = gc.radius;
 		moveQueue = new MoveQueue();
-		marginX=gc.marginX;
-		marginY=gc.marginY;
+		marginX = gc.marginX;
+		marginY = gc.marginY;
 
 		// TODO Auto-generated constructor stub
 	}
@@ -81,12 +82,6 @@ public class Player extends Entity {
 		handleInput();
 	}
 
-	/*
-	 * private void handleInput() { if (Input.isKeyPressed(keys.get("left")) { x
-	 * -= xvel; } else if (Input.isKeyPressed(keys.get("right"))) { x += xvel; }
-	 * }
-	 */
-
 	public void specialBar() {
 		if (health < lastHealth && special < 20) {
 			special++;
@@ -103,8 +98,8 @@ public class Player extends Entity {
 		// InputHandler.isKeyPressed(KeyMap.p1Set.valueOf(string.toUpperCase()).key);
 		return InputHandler.isKeyPressed(keys.get(string));
 	}
-	
-	public void render(Screen screen){
+
+	public void render(Screen screen) {
 		screen.drawTexture(x, y, sprite, dir == -1);
 	}
 
@@ -188,5 +183,14 @@ public class Player extends Entity {
 
 	public int getSpecial() {
 		return special;
+	}
+
+	public void changeHealth(int i) {
+		health += i;
+		if (health <= 0) {
+			Main.winner = playerID;
+			Main.STATE = Main.State.END;
+		}
+
 	}
 }

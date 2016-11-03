@@ -38,7 +38,7 @@ public class Main {
 	static boolean isGameOn;
 
 	public enum State {
-		NONE, MENU, GAME, INIT
+		NONE, MENU, GAME, INIT, END;
 	};
 
 	public static State STATE = State.MENU;
@@ -59,6 +59,7 @@ public class Main {
 	Font f = new Font("Comic Sans MS", Font.BOLD, 24);
 	Texture bg = new Texture("/res/sprites/stage1.png", 960, 540);
 	long tick;
+	public static int winner;
 	private List<GameCharacter> characters1 = new ArrayList<GameCharacter>();
 	private List<GameCharacter> characters2 = new ArrayList<GameCharacter>();
 	int timepass = 0;
@@ -274,8 +275,7 @@ public class Main {
 					yi = e.getY();
 					System.out.println("Initiall: " + xi + " , " + yi);
 				} else {
-					System.out.println(
-							"Xdif YDif: " + (xi - p1.getMidpoint()) + " , " + (yi - p1.getY()));
+					System.out.println("Xdif YDif: " + (xi - p1.getMidpoint()) + " , " + (yi - p1.getY()));
 					System.out.println("Width: " + (e.getX() - xi) + "," + (e.getY() - yi));
 				}
 			}
@@ -313,7 +313,7 @@ public class Main {
 					menu.update();
 				} else if (STATE == State.INIT) {
 					p1 = new Player(0, 50, 0, 1, characters1.get(character[0]));
-					p2 = new Player(1, 250, 0, -1, characters2.get(character[1]));
+					p2 = new Player(1, 600, 0, -1, characters2.get(character[1]));
 					moves1 = p1.moveSet;
 					moves1.updatePlayer(p1);
 					moves2 = p2.moveSet;
@@ -329,6 +329,9 @@ public class Main {
 					bufferInit();
 					special.specialInit();
 					STATE = State.GAME;
+				} else {
+					
+
 				}
 				screen.clear(0xffffff);
 				this.render(screen);

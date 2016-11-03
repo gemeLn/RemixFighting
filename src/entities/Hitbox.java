@@ -11,7 +11,6 @@ public class Hitbox extends Rectangle {
 	public long duration;
 	public long timeStarted;
 	public Entity e;
-	private int RADIUS = 85;
 	public boolean projectile = false;;
 
 	/**
