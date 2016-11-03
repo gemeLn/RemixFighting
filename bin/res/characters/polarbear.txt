@@ -13,12 +13,12 @@ Polarbear
 /Health
 100
 /Character width
-245
+175
 /Character Height
 200
 /RAIDUS
 130
 /MarginX
-10
+33
 /Margin Y
 0
