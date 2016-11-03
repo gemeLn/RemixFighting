@@ -1,4 +1,4 @@
-package main;
+package controller;
 
 import java.io.IOException;
 
@@ -6,10 +6,11 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 import entities.Hitbox;
-import entities.HitboxController;
 import entities.Player;
 import entities.Projectile;
-import entities.ProjectileController;
+import main.MoveQueue;
+import main.MoveSet;
+import main.SoundPlayer;
 import special.Special;
 
 public class MoveHandler {

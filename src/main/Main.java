@@ -7,13 +7,15 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+import controller.HitboxController;
+import controller.InputHandler;
+import controller.MoveHandler;
+import controller.ProjectileController;
 import entities.GameCharacter;
 import entities.Hitbox;
-import entities.HitboxController;
 import entities.Hurtbox;
 import entities.Player;
 import entities.Projectile;
-import entities.ProjectileController;
 import graphics.Screen;
 import graphics.SpriteSheet;
 import graphics.Texture;

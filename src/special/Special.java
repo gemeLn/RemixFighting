@@ -1,7 +1,7 @@
 package special;
 
-import entities.HitboxController;
-import entities.ProjectileController;
+import controller.HitboxController;
+import controller.ProjectileController;
 
 public class Special {
 	PenguinSpecial penguinSpecial;

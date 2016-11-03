@@ -2,9 +2,9 @@ package entities;
 
 import java.util.Map;
 
+import controller.InputHandler;
 import graphics.Screen;
 import graphics.SpriteSheet;
-import main.InputHandler;
 import main.KeyMap;
 import main.MoveQueue;
 import main.MoveSet;

@@ -3,10 +3,10 @@ package special;
 import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 
+import controller.HitboxController;
+import controller.ProjectileController;
 import entities.Hitbox;
-import entities.HitboxController;
 import entities.Projectile;
-import entities.ProjectileController;
 import graphics.Texture;
 import main.Main;
 

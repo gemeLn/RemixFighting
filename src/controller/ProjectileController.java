@@ -1,6 +1,9 @@
-package entities;
+package controller;
 
 import java.util.ArrayList;
+
+import entities.Hitbox;
+import entities.Projectile;
 
 public class ProjectileController {
 	public ArrayList<Projectile> active;

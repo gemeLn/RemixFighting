@@ -8,9 +8,9 @@ import java.util.Map;
 
 import com.sun.glass.events.KeyEvent;
 
+import controller.InputHandler;
 import entities.GameCharacter;
 import graphics.Screen;
-import main.InputHandler;
 import main.KeyMap;
 import main.Main;
 

@@ -1,6 +1,10 @@
-package entities;
+package controller;
 
 import java.util.ArrayList;
+
+import entities.Hitbox;
+import entities.Hurtbox;
+import entities.Player;
 
 public class HitboxController {
 	private ArrayList<Hitbox> p1hitboxes = new ArrayList<>();
