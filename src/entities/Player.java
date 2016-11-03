@@ -2,6 +2,7 @@ package entities;
 
 import java.util.Map;
 
+import graphics.Screen;
 import graphics.SpriteSheet;
 import main.InputHandler;
 import main.KeyMap;
@@ -101,6 +102,10 @@ public class Player extends Entity {
 		// return
 		// InputHandler.isKeyPressed(KeyMap.p1Set.valueOf(string.toUpperCase()).key);
 		return InputHandler.isKeyPressed(keys.get(string));
+	}
+	
+	public void render(Screen screen){
+		screen.drawTexture(x, y, sprite, dir == -1);
 	}
 
 	private void handleInput() {

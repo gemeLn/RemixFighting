@@ -127,8 +127,8 @@ public class Main {
 			hbc.update();
 
 			// TODO: Get this stuff into the player class!
-			screen.drawTexture(p1.getX(), p1.getY(), p1.getTexture(), p1.getDir() == -1);
-			screen.drawTexture(p2.getX(), p2.getY(), p2.getTexture(), p2.getDir() == -1);
+			p1.render(screen);
+			p2.render(screen);
 			for (Projectile p : pc.active) {
 				screen.drawTexture(p.x, p.y, p.sprite);
 				// System.out.println(p.x+" , "+p.y);
