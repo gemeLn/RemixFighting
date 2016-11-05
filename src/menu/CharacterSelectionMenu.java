@@ -80,8 +80,8 @@ public class CharacterSelectionMenu extends Menu {
 		screen.fillRect(90, 350, 300, 100, 0xff00ff);
 		screen.fillRect(WINDOWX / 2 + 90, 350, 300, 100, 0xff00ff);
 
-		screen.drawString(p1Status, WINDOWX / 2 + 180, 500, font, Color.BLACK);
-		screen.drawString(p2Status, 180, 500, font, Color.BLACK);
+		screen.drawString(p2Status, WINDOWX / 2 + 180, 500, font, Color.BLACK);
+		screen.drawString(p1Status, 180, 500, font, Color.BLACK);
 
 		for (int i = 0; i < 2; i++) {
 			if (selectedCharacter[i] > 0)
