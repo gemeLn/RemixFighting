@@ -21,6 +21,7 @@ import graphics.SpriteSheet;
 import graphics.Texture;
 import graphics.Window;
 import menu.CharacterSelectionMenu;
+import menu.EndMenu;
 import menu.Menu;
 import physics.Gravity;
 import special.PenguinSpecial;
@@ -59,7 +60,6 @@ public class Main {
 	Font f = new Font("Comic Sans MS", Font.BOLD, 24);
 	Texture bg = new Texture("/res/sprites/stage1.png", 960, 540);
 	long tick;
-	public static int winner;
 	private List<GameCharacter> characters1 = new ArrayList<GameCharacter>();
 	private List<GameCharacter> characters2 = new ArrayList<GameCharacter>();
 	int timepass = 0;
@@ -69,6 +69,7 @@ public class Main {
 	HitboxController hbc;
 
 	private Menu menu;
+	public static EndMenu endMenu = new EndMenu();
 
 	public void pause(int time) throws InterruptedException {
 		long timeNow = System.currentTimeMillis();
@@ -330,7 +331,7 @@ public class Main {
 					special.specialInit();
 					STATE = State.GAME;
 				} else {
-					
+					endMenu.render(screen);
 
 				}
 				screen.clear(0xffffff);

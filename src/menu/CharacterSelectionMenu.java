@@ -22,6 +22,12 @@ public class CharacterSelectionMenu extends Menu {
 	private String p1Status, p2Status;
 	private List<Map<String, Integer>> keys;
 
+	public void reset() {
+		p1Ready = false;
+		p2Ready = false;
+
+	}
+
 	public CharacterSelectionMenu(List<GameCharacter> characters) {
 		this.characters = characters;
 		selectedCharacter = new int[] { 1, 1 };
@@ -35,12 +41,44 @@ public class CharacterSelectionMenu extends Menu {
 		p2Status = p1Status;
 	}
 
+	private long p1Pressed, p2Pressed = 0;
+	private int delay = 200;
+
+	private boolean isEligible(int i) {
+		if (i == 0) {
+			return System.currentTimeMillis() - p1Pressed > delay;
+		} else {
+			return System.currentTimeMillis() - p2Pressed > delay;
+		}
+	}
+
+	private void setLastPressed(int i) {
+		if (i == 0) {
+			p1Pressed = System.currentTimeMillis();
+		} else {
+			p2Pressed = System.currentTimeMillis();
+		}
+	}
+
+	private boolean getReady(int i) {
+		if (i == 0) {
+			return p1Ready;
+		} else {
+			return p2Ready;
+		}
+	}
+
 	public void update() {
 		for (int i = 0; i < 2; i++) {
-			if (InputHandler.isKeyPressed(keys.get(i).get("left")))
-				selectedCharacter[i] = Math.max(0, selectedCharacter[i] - 1);
-			else if (InputHandler.isKeyPressed(keys.get(i).get("right")))
-				selectedCharacter[i] = Math.min(characters.size() - 1, selectedCharacter[i] + 1);
+			if (isEligible(i) && !getReady(i)) {
+				if (InputHandler.isKeyPressed(keys.get(i).get("left"))) {
+					selectedCharacter[i] = Math.max(0, selectedCharacter[i] - 1);
+					setLastPressed(i);
+				} else if (InputHandler.isKeyPressed(keys.get(i).get("right"))) {
+					selectedCharacter[i] = Math.min(characters.size() - 1, selectedCharacter[i] + 1);
+					setLastPressed(i);
+				}
+			}
 		}
 		if (p1Ready && p2Ready) {
 			Main.STATE = Main.State.INIT;
@@ -80,8 +118,8 @@ public class CharacterSelectionMenu extends Menu {
 		screen.fillRect(90, 350, 300, 100, 0xff00ff);
 		screen.fillRect(WINDOWX / 2 + 90, 350, 300, 100, 0xff00ff);
 
-		screen.drawString(p1Status, WINDOWX / 2 + 180, 500, font, Color.BLACK);
-		screen.drawString(p2Status, 180, 500, font, Color.BLACK);
+		screen.drawString(p2Status, WINDOWX / 2 + 180, 500, font, Color.BLACK);
+		screen.drawString(p1Status, 180, 500, font, Color.BLACK);
 
 		for (int i = 0; i < 2; i++) {
 			if (selectedCharacter[i] > 0)

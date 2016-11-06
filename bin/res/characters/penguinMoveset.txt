@@ -1,7 +1,7 @@
 /Penguin Moveset
 /Damge . duration . frames . framedelay . hitx . hity . hitw . hith. rows. end lag . knockX,knockY, startFrame
 /jab 
-2
+200
 250
 5
 35
