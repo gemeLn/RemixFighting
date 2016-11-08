@@ -9,7 +9,7 @@ public class Projectile extends Entity {
 	public Hitbox hit;
 
 	public Projectile(int x, int y, int w, int h, int xvel, int yvel, int damage, int dur, String s, int dir) {
-		super(x, y, w, h, 0, new Texture("/res/sprites/" + s + ".png", w, h));
+		super(x, y, w, h, 0, new Texture("/res/sprites/" + s.toLowerCase() + ".png", w, h));
 		this.x = x;
 		this.dir = dir;
 		this.y = y;

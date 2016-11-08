@@ -134,7 +134,7 @@ public class Main {
 			p1.render(screen);
 			p2.render(screen);
 			for (Projectile p : pc.active) {
-				screen.drawTexture(p.x, p.y, p.sprite,p.dir==-1);
+				screen.drawTexture(p.x, p.y, p.sprite,p.dir==1);
 				// System.out.println(p.x+" , "+p.y);
 			}
 			if (PenguinSpecial.drawShade) {

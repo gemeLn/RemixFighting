@@ -1,5 +1,5 @@
 /Polar Bear Moveset
-/Damge . duration . frames . framedelay . hitx . hity . hitw . hith. rows .endLag.knockX .knockY
+/Damge . duration . frames . framedelay . hitx . hity . hitw . hith. rows .endLag.knockX .knockY . startframe
 /jab 
 3
 250
@@ -95,16 +95,16 @@
 5
 5
 0
-/Ground Punch
+/Projectile
 4
--1
+1000
 6
 45
--1
--1
--1
--1
--1
+96
+51
+57
+-141
+0
 7
 5
 5
@@ -114,11 +114,11 @@
 -1
 6
 45
--1
--1
--1
--1
--1
+96
+51
+57
+-141
+0
 8
 5
 5
@@ -128,24 +128,24 @@
 -1
 6
 45
--1
--1
--1
--1
+96
+51
+57
+-141
 -1
 9
 5
 5
 0
-/Special
+/Projectile
 0
 -1
 6
 45
--1
--1
--1
--1
+96
+51
+57
+-141
 -1
 10
 10
