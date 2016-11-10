@@ -97,9 +97,10 @@ public class MoveHandler {
 
 			}
 			int damage = hitInfo[mTemp.damage];
+			System.out.println(pTemp.name.toLowerCase());
 			Projectile add = new Projectile(pTemp.x + hitInfo[mTemp.hitx], pTemp.y + hitInfo[mTemp.hity],
 					hitInfo[mTemp.hitw], hitInfo[mTemp.hith], (int) ((20 / damage) * pTemp.dir), 0, damage,
-					hitInfo[mTemp.duration], pTemp.name + "Projectile",pTemp.dir);
+					hitInfo[mTemp.duration], pTemp.name.toLowerCase() + "Projectile", pTemp.dir);
 			pc.add(add);
 			hbc.addHitbox(add.hit, pid);
 			pause(framedelay);
@@ -111,8 +112,7 @@ public class MoveHandler {
 			pause(framedelay);
 			pause(hitInfo[mTemp.endlag]);
 			moveQueue.remove(pid);
-		} 
-		else {
+		} else {
 
 			try {
 				sp.play("/res/sfx/punch.wav");
