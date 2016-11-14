@@ -169,12 +169,12 @@ public class Main {
 
 	private void loadCharacters() {
 		FileUtils filer = new FileUtils();
-		String basePath = "src/res/characters/";
+		String basePath = "/res/characters/";
 		for (String line : filer.readLinesFromFile(basePath + "characters.txt")) {
-			characters1.add(new GameCharacter(basePath + line + ".txt"));
+			characters1.add(new GameCharacter(basePath + line.toLowerCase() + ".txt"));
 		}
 		for (String line : filer.readLinesFromFile(basePath + "characters.txt")) {
-			characters2.add(new GameCharacter(basePath + line + ".txt"));
+			characters2.add(new GameCharacter(basePath + line.toLowerCase() + ".txt"));
 		}
 	}
 

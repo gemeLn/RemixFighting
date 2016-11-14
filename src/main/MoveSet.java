@@ -42,7 +42,7 @@ public class MoveSet {
 
 	public MoveSet(String name) {
 		name = name.toLowerCase();
-		String basePath = "src/res/characters/";
+		String basePath = "/res/characters/";
 		lines = new FileUtils().readLinesFromFile(basePath + name + "Moveset.txt");
 		for (int i = 0; i < numberOfMoves; i++) {
 			arrayA.add(readNextI());

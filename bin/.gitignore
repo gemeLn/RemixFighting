@@ -1,2 +1,9 @@
-/res/
+/controller/
+/entities/
+/graphics/
+/main/
+/menu/
+/physics/
 /special/
+/utils/
+/res/
