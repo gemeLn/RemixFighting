@@ -315,6 +315,8 @@ public class Main {
 				} else if (STATE == State.INIT) {
 					p1 = new Player(0, 50, 0, 1, characters1.get(character[0]));
 					p2 = new Player(1, 600, 0, -1, characters2.get(character[1]));
+					p1.init();
+					p2.init();
 					moves1 = p1.moveSet;
 					moves1.updatePlayer(p1);
 					moves2 = p2.moveSet;
@@ -328,7 +330,7 @@ public class Main {
 					g.addEntity(p1);
 					g.addEntity(p2);
 					bufferInit();
-					special.specialInit();
+					special.specialInit();			
 					STATE = State.GAME;
 				} else {
 					endMenu.render(screen);

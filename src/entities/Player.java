@@ -3,6 +3,7 @@ package entities;
 import java.util.Map;
 
 import controller.InputHandler;
+import controller.PlayerAnimation;
 import graphics.Screen;
 import graphics.SpriteSheet;
 import main.KeyMap;
@@ -22,6 +23,8 @@ public class Player extends Entity {
 	public SpriteSheet sheet;
 	public MoveSet moveSet;
 	public MoveQueue moveQueue;
+	
+	PlayerAnimation playerAnimation;
 
 	private Map<String, Integer> keys;
 
@@ -48,11 +51,15 @@ public class Player extends Entity {
 		moveQueue = new MoveQueue();
 		marginX = gc.marginX;
 		marginY = gc.marginY;
-
 		// TODO Auto-generated constructor stub
+	}
+	
+	public void init() {
+		playerAnimation = new PlayerAnimation(this);
 	}
 
 	public void update() {
+		
 		if (frozen) {
 			if (System.currentTimeMillis() > freezeUntil) {
 				frozen = false;
@@ -78,7 +85,7 @@ public class Player extends Entity {
 		}
 
 		specialBar();
-
+		playerAnimation.updatePlayerFrames(this);
 		handleInput();
 	}
 
@@ -131,11 +138,13 @@ public class Player extends Entity {
 			}
 			if (keyPress("right")) {
 				if (moveQueue.isEmpty(playerID) || moveQueue.isFirst(playerID, "Jump")) {
+					playerAnimation.playerState = PlayerAnimation.State.WALK;
 					dir = 1;
 					setXvel(moveSpeed);
 				}
 			} else if (keyPress("left")) {
 				if (moveQueue.isEmpty(playerID) || moveQueue.isFirst(playerID, "Jump")) {
+					playerAnimation.playerState = PlayerAnimation.State.WALK;
 					dir = -1;
 					setXvel(-moveSpeed);
 				}
