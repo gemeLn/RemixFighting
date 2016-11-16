@@ -109,6 +109,11 @@ public class Player extends Entity {
 	public void render(Screen screen) {
 		screen.drawTexture(x, y, sprite, dir == -1);
 	}
+	
+	public void add(int playerID, String move){
+		moveQueue.add(playerID, move);
+		playerAnimation.playerState = PlayerAnimation.State.MOVE;
+	}
 
 	private void handleInput() {
 		if (!frozen) {
@@ -119,22 +124,21 @@ public class Player extends Entity {
 				 */
 
 				if (keyPress("up") && keyPress("jab")) {
-					moveQueue.add(playerID, "HighP");
+					add(playerID, "HighP");
 				} else if (keyPress("up") && keyPress("projectile") && special == 20) {
-					moveQueue.add(playerID, "Special");
+					add(playerID, "Special");
 					special = 0;
 				} else if (keyPress("jump")) {
-					moveQueue.add(playerID, "Jump");
+					add(playerID, "Jump");
 				} else if (keyPress("kick") && (keyPress("right") || keyPress("left"))) {
-					moveQueue.add(playerID, "Slide");
+					add(playerID, "Slide");
 				} else if (keyPress("kick")) {
-					moveQueue.add(playerID, "Kick");
+					add(playerID, "Kick");
 				} else if (keyPress("jab")) {
-					moveQueue.add(playerID, "Jab");
+					add(playerID, "Jab");
 				} else if (keyPress("projectile")) {
-					moveQueue.add(playerID, "Projectile");
+					add(playerID, "Projectile");
 				}
-
 			}
 			if (keyPress("right")) {
 				if (moveQueue.isEmpty(playerID) || moveQueue.isFirst(playerID, "Jump")) {
@@ -147,10 +151,9 @@ public class Player extends Entity {
 					playerAnimation.playerState = PlayerAnimation.State.WALK;
 					dir = -1;
 					setXvel(-moveSpeed);	
-				} else{
-						playerAnimation.playerState = PlayerAnimation.State.NONE;
-				}
-			}
+				} 
+			} else if (playerAnimation.playerState == PlayerAnimation.State.WALK)
+				playerAnimation.playerState = PlayerAnimation.State.NONE;
 		}
 
 	}

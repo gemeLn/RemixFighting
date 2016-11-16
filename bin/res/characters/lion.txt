@@ -1,0 +1,24 @@
+/Character Name
+Lion
+/Sheet Width Scaled up by 4
+1000
+/Sheet Height Scaled up by 4
+1000
+/Sheet Div X Scaled up by 4
+200
+/Sheet Div Y Scaled up by 4
+200
+/Speed
+15
+/Health
+100
+/Character width
+200
+/Character Height
+200
+/Radius (Center to edge length)
+100
+/Margin
+10
+/Margin
+10
