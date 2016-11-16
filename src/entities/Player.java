@@ -146,7 +146,9 @@ public class Player extends Entity {
 				if (moveQueue.isEmpty(playerID) || moveQueue.isFirst(playerID, "Jump")) {
 					playerAnimation.playerState = PlayerAnimation.State.WALK;
 					dir = -1;
-					setXvel(-moveSpeed);
+					setXvel(-moveSpeed);	
+				} else{
+						playerAnimation.playerState = PlayerAnimation.State.NONE;
 				}
 			}
 		}

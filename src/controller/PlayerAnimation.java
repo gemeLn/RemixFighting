@@ -8,7 +8,7 @@ public class PlayerAnimation {
 		NONE, WALK, JUMP, DEAD;
 	};	
 	
-	public static State playerState = State.NONE;
+	public State playerState = State.NONE;
 	MoveSet moves;
 	int walkRow;
 	long lastRender = 0;
@@ -23,9 +23,11 @@ public class PlayerAnimation {
 		if (playerState.equals(State.NONE)){
 			player.setT(0,0);
 		} else if (playerState.equals(State.WALK)){
+			System.out.println("walk");
 			if (System.currentTimeMillis() - 45 > lastRender){
 			lastRender = System.currentTimeMillis();
-			player.setT(0,walkX%5);
+			player.setT(walkX%4,walkRow);
+			walkX++;
 			}
 			
 		}
