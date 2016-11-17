@@ -205,12 +205,6 @@ public class Main {
 	private void bufferP1() throws InterruptedException {
 		while (isGameOn) {
 			if (!(moveQueue.isEmpty(0))) {
-				/*
-				 * if (moveQueue.see(0).equals("AnimationTest")) { for (int i =
-				 * 0; i < 5; i++) { p1.setT(i, 6); pause(100); } for (int i = 2;
-				 * i >= 0; i--) { p1.setT(i, 6); pause(100); } pause(10);
-				 * pause(50); moveQueue.p1Remove(); continue; } else
-				 */
 				if (moveQueue.see(0).equals("Special")) {
 					special.specialHandler(0, hbc, pc, 0);
 					moveQueue.remove(0);
@@ -223,7 +217,6 @@ public class Main {
 						moveQueue.remove(0);
 					}
 				}
-
 			}
 			pause(15);
 		}
@@ -231,7 +224,6 @@ public class Main {
 
 	private void bufferP2() throws InterruptedException {
 		while (isGameOn) {
-
 			if (!(moveQueue.isEmpty(1))) {
 				if (moveQueue.see(1).equals("Special")) {
 					special.specialHandler(0, hbc, pc, 1);
@@ -245,7 +237,6 @@ public class Main {
 					}
 				}
 			}
-
 			pause(15);
 		}
 	}

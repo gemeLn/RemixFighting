@@ -5,7 +5,7 @@ import main.MoveSet;
 
 public class PlayerAnimation {
 	public enum State {
-		NONE, MOVE, WALK, JUMP, DEAD;
+		NONE, MOVE, WALK, DEAD;
 	};
 
 	public State playerState = State.NONE;
@@ -28,10 +28,10 @@ public class PlayerAnimation {
 				player.setT(walkX % 5, walkRow);
 				walkX++;
 			}
-		} else if (playerState.equals(State.JUMP)){
-			return;
 		} else if (playerState.equals(State.MOVE)){
-			
+			return;
+		} else if (playerState.equals(State.DEAD)){
+			return;
 		}
 	}
 }
