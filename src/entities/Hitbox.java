@@ -61,10 +61,11 @@ public class Hitbox extends Rectangle {
 
 	public void update() {
 		if (e.getDir() == -1) {
-			x = (e.getMidpoint()) - xdif - e.radius;
+			x = (e.getMidpoint()) - xdif;
 		} else {
-			x = e.getMidpoint() + xdif-e.radius;
+			x = e.getMidpoint() + xdif;
 		}
+		System.out.println(e.radius);
 		y = e.y + ydif;
 	}
 

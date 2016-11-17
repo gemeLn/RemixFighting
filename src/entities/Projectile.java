@@ -12,6 +12,7 @@ public class Projectile extends Entity {
 		super(x, y, w, h, 0, new Texture("/res/sprites/" + s + ".png", w, h));
 		marginX = 0;
 		marginY = 0;
+		radius = 0;
 		System.out.println("/res/sprites/" + s + ".png");
 		this.x = x;
 		this.dir = dir;

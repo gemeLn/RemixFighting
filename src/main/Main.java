@@ -206,7 +206,7 @@ public class Main {
 		while (isGameOn) {
 			if (!(moveQueue.isEmpty(0))) {
 				if (moveQueue.see(0).equals("Special")) {
-					special.specialHandler(0, hbc, pc, 0);
+					special.specialHandler(0, hbc, pc, character[0]);
 					moveQueue.remove(0);
 				} else {
 					try {
@@ -226,7 +226,7 @@ public class Main {
 		while (isGameOn) {
 			if (!(moveQueue.isEmpty(1))) {
 				if (moveQueue.see(1).equals("Special")) {
-					special.specialHandler(0, hbc, pc, 1);
+					special.specialHandler(0, hbc, pc, character[1]);
 					moveQueue.remove(1);
 				} else {
 					try {
