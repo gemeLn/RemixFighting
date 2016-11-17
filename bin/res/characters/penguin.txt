@@ -22,3 +22,5 @@ Penguin
 60
 /MarginY
 18
+/Tolerance
+5

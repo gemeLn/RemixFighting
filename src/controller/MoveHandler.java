@@ -22,7 +22,8 @@ public class MoveHandler {
 	SoundPlayer sp;
 	Special special;
 	int[] div = new int[3];
-
+	int defaultMovement=5;
+	int slideMovement = 20;
 	public MoveHandler(Player p1, Player p2, MoveSet m1, MoveSet m2, HitboxController hbc, ProjectileController pc,
 			MoveQueue moveQueue) {
 		this.p1 = p1;
@@ -34,9 +35,10 @@ public class MoveHandler {
 		this.moveQueue = moveQueue;
 		special = new Special();
 		sp = new SoundPlayer();
-		div[0] = -5;
+		div[0] = -1;
 		div[1] = 0;
-		div[2] = 5;
+		div[2] = 1;
+		
 
 	}
 
@@ -97,7 +99,6 @@ public class MoveHandler {
 
 			}
 			int damage = hitInfo[mTemp.damage];
-			System.out.println(pTemp.name.toLowerCase());
 			Projectile add = new Projectile(pTemp.x + hitInfo[mTemp.hitx], pTemp.y + hitInfo[mTemp.hity],
 					hitInfo[mTemp.hitw], hitInfo[mTemp.hith], (int) ((20 / damage) * pTemp.dir), 0, damage,
 					hitInfo[mTemp.duration], pTemp.name.toLowerCase() + "Projectile", pTemp.dir);
@@ -113,7 +114,9 @@ public class MoveHandler {
 			pause(hitInfo[mTemp.endlag]);
 			moveQueue.remove(pid);
 		} else {
-
+			boolean slide = input.equals("slide");
+			if(slide)
+				defaultMovement=slideMovement;
 			try {
 				sp.play("/res/sfx/punch.wav");
 			} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
@@ -126,7 +129,8 @@ public class MoveHandler {
 					hbc.addHitbox(add, pid);
 				}
 				pTemp.setT(i, hitInfo[mTemp.row]);
-				pTemp.setX(pTemp.getX() + div[dir]);
+				//pTemp.setX(pTemp.getX() + movement*div[dir]);
+				pTemp.setXvel(defaultMovement*div[dir]);
 				pause(framedelay);
 
 			}
@@ -134,11 +138,16 @@ public class MoveHandler {
 			pause(framedelay);
 			for (int i = hitInfo[mTemp.frames] - 1; i >= 0; i--) {
 				pTemp.setT(i, hitInfo[mTemp.row]);
-				pTemp.setX(pTemp.getX() - div[dir]);
+				//pTemp.setX(pTemp.getX() - movement*div[dir]);
+				if (!slide)
+					pTemp.setXvel(-(defaultMovement*div[dir]));
+				else
+					pTemp.setXvel(defaultMovement*div[dir]);
 				pause(framedelay);
 			}
 			pause(framedelay);
 			pause(hitInfo[mTemp.endlag]);
+			defaultMovement = 5;
 			moveQueue.remove(pid);
 		}
 

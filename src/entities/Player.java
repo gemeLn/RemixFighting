@@ -17,7 +17,7 @@ public class Player extends Entity {
 	public int dir;
 	public GameCharacter character;
 	private int playerID;
-	public int moveSpeed, special, lastHealth;
+	public int moveSpeed, special, lastHealth,tolerance;
 	public int traction = 4;
 	public String name;
 	public SpriteSheet sheet;
@@ -51,6 +51,7 @@ public class Player extends Entity {
 		moveQueue = new MoveQueue();
 		marginX = gc.marginX;
 		marginY = gc.marginY;
+		tolerance = gc.tolerance;
 		// TODO Auto-generated constructor stub
 	}
 	
@@ -198,7 +199,9 @@ public class Player extends Entity {
 	public int getSpecial() {
 		return special;
 	}
-
+	public void cancelMove(){
+		playerAnimation.playerState = PlayerAnimation.State.NONE;
+	}
 	public void changeHealth(int i) {
 		health += i;
 		if (health <= 0) {

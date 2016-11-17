@@ -22,3 +22,5 @@ Lion
 10
 /Margin
 10
+/Tolerance
+5

@@ -10,7 +10,7 @@ import utils.FileUtils;
 public class GameCharacter {
 
 	public String name;
-	public int health, speed, sheetW, sheetH, sheetDivX, sheetDivY, width, height, radius, marginX, marginY;
+	public int health, speed, sheetW, sheetH, sheetDivX, sheetDivY, width, height, radius, marginX, marginY,tolerance;
 	public SpriteSheet sheet;
 	public Texture t;
 	public MoveSet moveSet;
@@ -46,6 +46,7 @@ public class GameCharacter {
 		radius = toInt(lines.get(9));
 		marginX = toInt(lines.get(10));
 		marginY = toInt(lines.get(11));
+		tolerance = toInt(lines.get(12));
 	}
 
 }

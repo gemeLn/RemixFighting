@@ -40,7 +40,7 @@ public class CountDown {
 			screen.drawString(minute + "M " + time, x, y, f, Color.black);
 		else if (time < 0) {
 			screen.drawString("K.O.", x + 10, y, f, Color.black);
-				if (time < -10){
+				if (time < -2){
 					return 1;
 				}
 		}

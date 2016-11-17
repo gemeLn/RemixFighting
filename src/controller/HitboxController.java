@@ -42,6 +42,9 @@ public class HitboxController {
 				if (now > hit.duration + hit.timeStarted) {
 					removeThese.add(hit);
 				} else if (hit.intersects(hurt)) {
+					p2.cancelMove();
+					if(hit.dmg>p1.tolerance)
+						cancel(0);
 					p1.changeHealth(-1 * hit.dmg);
 					p1.setXvel(hit.knockX * p2.dir);
 					p1.setYvel(-hit.knockY);
@@ -62,6 +65,10 @@ public class HitboxController {
 				if (now > hit.duration + hit.timeStarted) {
 					removeThese.add(hit);
 				} else if (hit.intersects(hurt)) {
+					p1.cancelMove();
+					if(hit.dmg>p2.tolerance)
+						cancel(1);
+					
 					p2.changeHealth(-1 * hit.dmg);
 					p2.setXvel(hit.knockX * p1.dir);
 					p2.setYvel(-hit.knockY);
@@ -77,9 +84,18 @@ public class HitboxController {
 		}
 
 	}
-
-	public void hit(Hurtbox hurt, Hitbox hit) {
-
+	
+	public void cancel(int i) {
+		if(i==0){
+			for(Hitbox e:p1hitboxes){
+				removeThese.add(e);
+			}
+		}
+		else{
+			for(Hitbox e: p2hitboxes){
+				removeThese.add(e);
+			}
+		}
 	}
 
 	public void addHitbox(Hitbox b, int i) {

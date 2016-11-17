@@ -22,3 +22,5 @@ Polarbear
 33
 /Margin Y
 0
+/Tolerance
+10

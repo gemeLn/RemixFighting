@@ -2,7 +2,7 @@
 /Damge . duration . frames . framedelay . hitx . hity . hitw . hith. rows .endLag.knockX .knockY . startframe
 /jab 
 3
-250
+2500
 5
 35
 65

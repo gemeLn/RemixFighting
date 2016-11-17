@@ -158,7 +158,11 @@ public class Main {
 			renderPlayerAssets(screen);
 
 			if (countDown.countDown(screen, 430, 50) == 1) {
-				isGameOn = false;
+				if (p1.h > p2.h)
+					endMenu.winner = 0;
+				else
+					endMenu.winner = 1;
+				Main.STATE = Main.State.END;
 			}
 
 			tick++;
