@@ -45,7 +45,9 @@ public class Entity {
 	}
 
 	public int getMidpoint() {
-		return x + radius;
+		System.out.println(x+marginX+(int)(w/2));
+		return x + marginX+(int)(w/2);
+		
 	}
 
 	public void freezeInputs(int i) {

@@ -2,10 +2,10 @@
 /Damge . duration . frames . framedelay . hitx . hity . hitw . hith. rows. end lag . knockX,knockY, startFrame
 /jab 
 5
-250
+200
 5
-35
-65
+40
+50
 85
 40
 25
@@ -29,7 +29,7 @@
 5
 0
 /Kick
-11
+5
 450
 5
 45
@@ -86,10 +86,10 @@
 0
 /HighPunch Damge . duration . frames . framedelay . hitx . hity . hitw . hith. rows. end lag . knockx,knock y,startFrmae
 5
-100
+225
 5
 45
-37
+40
 40
 20
 41
@@ -108,7 +108,7 @@
 36
 36
 0
-50
+500
 1
 1
 0

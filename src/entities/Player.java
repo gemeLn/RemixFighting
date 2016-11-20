@@ -205,12 +205,7 @@ public class Player extends Entity {
 	public void changeHealth(int i) {
 		health += i;
 		if (health <= 0) {
-			if (playerID == 0) {
-				Main.endMenu.winner = 1;
-			} else {
-				Main.endMenu.winner = 0;
-			}
-			Main.STATE = Main.State.END;
+			Main.getInstance().end(1 - playerID);
 		}
 
 	}

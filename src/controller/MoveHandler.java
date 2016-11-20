@@ -76,7 +76,6 @@ public class MoveHandler {
 		int framedelay = hitInfo[mTemp.framedelay];
 		// framedelay = 500;
 		if (input.equals("jump")) {
-			System.out.println(hitInfo[mTemp.damage]);
 			pTemp.jump(hitInfo[mTemp.damage]);
 			for (int i = 4; i >= 0; i--) {
 				pTemp.setT(i, 1);
@@ -94,7 +93,7 @@ public class MoveHandler {
 
 			for (int i = 0; i < hitInfo[m1.frames]; i++) {
 				pTemp.setT(i, hitInfo[mTemp.row]);
-				pTemp.setX(pTemp.getX() + div[dir]);
+				pTemp.setX(pTemp.getX() + div[dir]*defaultMovement);
 				pause(framedelay);
 
 			}
@@ -107,7 +106,7 @@ public class MoveHandler {
 			pause(framedelay);
 			for (int i = hitInfo[mTemp.frames] - 1; i >= 0; i--) {
 				pTemp.setT(i, hitInfo[mTemp.row]);
-				pTemp.setX(pTemp.getX() - div[dir]);
+				pTemp.setX(pTemp.getX() - div[dir]*defaultMovement);
 				pause(framedelay);
 			}
 			pause(framedelay);

@@ -31,7 +31,7 @@ import utils.FileUtils;
 public class Main {
 
 	public Main() throws Exception {
-
+		instance = this;
 	}
 
 	static long currentTick;
@@ -39,12 +39,14 @@ public class Main {
 	static boolean isGameOn;
 
 	public enum State {
-		NONE, MENU, GAME, INIT, END;
+		NONE, MENU, GAME, INIT, END, KO;
 	};
 
 	public static State STATE = State.MENU;
 	public static int[] character;
 	public static Gravity g;
+	final int WINDOWX = 940;
+	final int WINDOWY = 540;
 	Special special;
 	Player p1;
 	Player p2;
@@ -69,7 +71,13 @@ public class Main {
 	HitboxController hbc;
 
 	private Menu menu;
-	public static EndMenu endMenu = new EndMenu();
+	private EndMenu endMenu;
+	
+	public static Main instance;
+	
+	public static Main getInstance() {
+		return instance;
+	}
 
 	public void pause(int time) throws InterruptedException {
 		long timeNow = System.currentTimeMillis();
@@ -255,8 +263,9 @@ public class Main {
 
 		countDown = new CountDown();
 
-		Window window = new Window("Game", 960, 540);
+		Window window = new Window("Game", WINDOWX, WINDOWY);
 		window.addKeyListener(new InputHandler());
+		
 		window.addMouseListener(new MouseAdapter() {
 			int xi = 0;
 			int yi = 0;
@@ -288,6 +297,7 @@ public class Main {
 		character = new int[2];
 		moveQueue = new MoveQueue();
 		countDown.countDownInit(240);
+		endMenu = new EndMenu(characters1);
 
 		isGameOn = true;
 
@@ -327,9 +337,11 @@ public class Main {
 					bufferInit();
 					special.specialInit();			
 					STATE = State.GAME;
-				} else {
-					endMenu.render(screen);
-
+				} else if(STATE == State.KO){
+					screen.drawString("KO", WINDOWX/2, WINDOWY/2, f, Color.black);
+					if(currentTick > 60){
+						STATE = State.MENU;
+					}
 				}
 				screen.clear(0xffffff);
 				this.render(screen);
@@ -341,6 +353,18 @@ public class Main {
 			}
 
 		}
+	}
+	
+	public void restart(){
+		menu = new CharacterSelectionMenu(characters1);
+		STATE = State.MENU;
+	}
+	
+	public void end(int playerWon){
+		menu = new EndMenu(characters1);
+		endMenu.winner = playerWon;
+		currentTick = 0;
+		STATE = State.KO;
 	}
 
 	public static void main(String[] args) throws Exception {
