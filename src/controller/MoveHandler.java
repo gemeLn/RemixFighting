@@ -68,10 +68,21 @@ public class MoveHandler {
 		}
 
 	}
-
+	
 	public void exec(String input, int pid, int dir) throws InterruptedException {
 		Player pTemp = getPlayer(pid);
 		MoveSet mTemp = getMoveSet(pid);
+		if(input.equals("block")){
+			System.out.println("block");
+			int dirTemp = pTemp.dir;
+			hbc.getHurtboxes(pid).get(0).invuln=true;
+			pause(500);
+			hbc.getHurtboxes(pid).get(0).invuln=false;
+			pause(1000);
+			moveQueue.remove(pid);
+			
+			return;
+		}
 		int[] hitInfo = mTemp.retrieveArray(input);
 		int framedelay = hitInfo[mTemp.framedelay];
 		// framedelay = 500;

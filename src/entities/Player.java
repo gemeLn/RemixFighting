@@ -17,13 +17,13 @@ public class Player extends Entity {
 	public int dir;
 	public GameCharacter character;
 	private int playerID;
-	public int moveSpeed, special, lastHealth,tolerance;
+	public int moveSpeed, special, lastHealth, tolerance;
 	public int traction = 4;
 	public String name;
 	public SpriteSheet sheet;
 	public MoveSet moveSet;
 	public MoveQueue moveQueue;
-	
+
 	PlayerAnimation playerAnimation;
 
 	private Map<String, Integer> keys;
@@ -54,13 +54,13 @@ public class Player extends Entity {
 		tolerance = gc.tolerance;
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	public void init() {
 		playerAnimation = new PlayerAnimation(this);
 	}
 
 	public void update() {
-		
+
 		if (frozen) {
 			if (System.currentTimeMillis() > freezeUntil) {
 				frozen = false;
@@ -110,8 +110,8 @@ public class Player extends Entity {
 	public void render(Screen screen) {
 		screen.drawTexture(x, y, sprite, dir == -1);
 	}
-	
-	public void add(int playerID, String move){
+
+	public void add(int playerID, String move) {
 		moveQueue.add(playerID, move);
 		playerAnimation.playerState = PlayerAnimation.State.MOVE;
 	}
@@ -139,6 +139,8 @@ public class Player extends Entity {
 					add(playerID, "Jab");
 				} else if (keyPress("projectile")) {
 					add(playerID, "Projectile");
+				} else if (keyPress("block")) {
+					add(playerID, "Block");
 				}
 			}
 			if (keyPress("right")) {
@@ -151,8 +153,8 @@ public class Player extends Entity {
 				if (moveQueue.isEmpty(playerID) || moveQueue.isFirst(playerID, "Jump")) {
 					playerAnimation.playerState = PlayerAnimation.State.WALK;
 					dir = -1;
-					setXvel(-moveSpeed);	
-				} 
+					setXvel(-moveSpeed);
+				}
 			} else if (playerAnimation.playerState == PlayerAnimation.State.WALK)
 				playerAnimation.playerState = PlayerAnimation.State.NONE;
 		}
@@ -199,9 +201,11 @@ public class Player extends Entity {
 	public int getSpecial() {
 		return special;
 	}
-	public void cancelMove(){
+
+	public void cancelMove() {
 		playerAnimation.playerState = PlayerAnimation.State.NONE;
 	}
+
 	public void changeHealth(int i) {
 		health += i;
 		if (health <= 0) {

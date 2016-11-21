@@ -50,6 +50,7 @@ public class MoveSet {
 			hitA.add(new Hitbox(tmp[damage], tmp[hitx], tmp[hity], tmp[hitw], tmp[hith], tmp[knockX], tmp[knockY],
 					tmp[duration], null));
 		}
+		retriveHitbox("slide").cancellable=true;
 
 	}
 

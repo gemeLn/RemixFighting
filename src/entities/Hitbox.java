@@ -12,7 +12,7 @@ public class Hitbox extends Rectangle {
 	public long timeStarted;
 	public Entity e;
 	public boolean projectile = false;;
-
+	public boolean cancellable= false;
 	/**
 	 * Hitbox entity
 	 * 

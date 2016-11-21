@@ -9,7 +9,7 @@ public class Hurtbox extends Rectangle {
 	private static final long serialVersionUID = 1L;
 	public int knockback;
 	private Entity e;
-
+	public boolean invuln=false;
 	public Hurtbox(Entity e, int w, int h, int x, int y) {
 		width = w;
 		height = h;

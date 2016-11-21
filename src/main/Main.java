@@ -222,7 +222,6 @@ public class Main {
 					moveQueue.remove(0);
 				} else {
 					try {
-						System.out.println(moveQueue.see(0).toLowerCase());
 						moveHandle.exec(moveQueue.see(0).toLowerCase(), 0, p1.getDir() + 1);
 					} catch (IllegalArgumentException e) {
 						System.out.println("Move missing");
