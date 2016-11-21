@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import entities.Hitbox;
 import entities.Projectile;
+import main.Main;
 
 public class ProjectileController {
 	public ArrayList<Projectile> active;
@@ -25,7 +26,7 @@ public class ProjectileController {
 		}
 		for (Projectile p : active) {
 			p.update();
-			if (p.expired()) {
+			if (p.expired() || p.x > Main.getInstance().WINDOWX || p.x < -20) {
 				remove.add(p);
 			}
 		}

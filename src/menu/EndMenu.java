@@ -26,7 +26,7 @@ public class EndMenu extends Menu{
 
 	public void render(Screen screen) {
 		screen.drawString("Player " + (winner + 1) + " Wins!!", 100, 100, font, Color.black);
-		screen.drawString("Play again? Press y" , 0, 0);
+		screen.drawString("Play again? Press y" , 100, 400, font, Color.black);
 		screen.drawTexture(150, 150, characters.get(winner).sheet.getTexture(0, 0));
 
 	}

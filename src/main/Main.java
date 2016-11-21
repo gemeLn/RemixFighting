@@ -45,8 +45,8 @@ public class Main {
 	public static State STATE = State.MENU;
 	public static int[] character;
 	public static Gravity g;
-	final int WINDOWX = 940;
-	final int WINDOWY = 540;
+	public final int WINDOWX = 940;
+	public final int WINDOWY = 540;
 	Special special;
 	Player p1;
 	Player p2;
