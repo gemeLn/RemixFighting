@@ -22,8 +22,9 @@ public class MoveHandler {
 	SoundPlayer sp;
 	Special special;
 	int[] div = new int[3];
-	int defaultMovement=5;
+	int defaultMovement = 5;
 	int slideMovement = 20;
+
 	public MoveHandler(Player p1, Player p2, MoveSet m1, MoveSet m2, HitboxController hbc, ProjectileController pc,
 			MoveQueue moveQueue) {
 		this.p1 = p1;
@@ -38,8 +39,11 @@ public class MoveHandler {
 		div[0] = -1;
 		div[1] = 0;
 		div[2] = 1;
-		
 
+	}
+
+	public void removeQ(int i) {
+		moveQueue.remove(i);
 	}
 
 	private void pause(long i) throws InterruptedException {
@@ -68,19 +72,48 @@ public class MoveHandler {
 		}
 
 	}
-	
+
 	public void exec(String input, int pid, int dir) throws InterruptedException {
 		Player pTemp = getPlayer(pid);
 		MoveSet mTemp = getMoveSet(pid);
-		if(input.equals("block")){
+		if (input.equals("block")) {
+			int[] hitInfo = mTemp.retrieveArray("highp");
+			int row = hitInfo[mTemp.row];
 			System.out.println("block");
 			int dirTemp = pTemp.dir;
-			hbc.getHurtboxes(pid).get(0).invuln=true;
-			pause(500);
-			hbc.getHurtboxes(pid).get(0).invuln=false;
+			int framedelay = 50;
+			hbc.getHurtboxes(pid).get(0).invuln = true;
+			for (int i = 0; i < hitInfo[m1.frames]; i++) {
+				pTemp.setT(i, row);
+				pTemp.setX(pTemp.getX() + div[dir] * defaultMovement);
+				pause(45);
+				if (pTemp.isNone()) {
+					removeQ(pid);
+					return;
+				}
+			}
+			for (int i = 0; i < 10; i++) {
+				pTemp.setT(hitInfo[mTemp.frames] - 1, row);
+				pause(framedelay);
+				if (pTemp.isNone()) {
+					removeQ(pid);
+					return;
+				}
+			}
+			for (int i = hitInfo[mTemp.frames] - 1; i >= 0; i--) {
+				pTemp.setT(i, row);
+				pTemp.setX(pTemp.getX() - div[dir] * defaultMovement);
+				pause(45);
+				if (pTemp.isNone()) {
+					removeQ(pid);
+					return;
+				}
+
+			}
+			hbc.getHurtboxes(pid).get(0).invuln = false;
 			pause(1000);
-			moveQueue.remove(pid);
-			
+			removeQ(pid);
+
 			return;
 		}
 		int[] hitInfo = mTemp.retrieveArray(input);
@@ -89,12 +122,12 @@ public class MoveHandler {
 		if (input.equals("jump")) {
 			pTemp.jump(hitInfo[mTemp.damage]);
 			for (int i = 4; i >= 0; i--) {
-				pTemp.setT(i, 1);
+				pTemp.setT(i, hitInfo[mTemp.row]);
 				pause(framedelay);
 			}
 			pause(20);
 			for (int i = 0; i < 5; i++) {
-				pTemp.setT(i, 1);
+				pTemp.setT(i, hitInfo[mTemp.row]);
 				pause(framedelay);
 			}
 			pause(50);
@@ -104,7 +137,7 @@ public class MoveHandler {
 
 			for (int i = 0; i < hitInfo[m1.frames]; i++) {
 				pTemp.setT(i, hitInfo[mTemp.row]);
-				pTemp.setX(pTemp.getX() + div[dir]*defaultMovement);
+				pTemp.setX(pTemp.getX() + div[dir] * defaultMovement);
 				pause(framedelay);
 
 			}
@@ -117,7 +150,7 @@ public class MoveHandler {
 			pause(framedelay);
 			for (int i = hitInfo[mTemp.frames] - 1; i >= 0; i--) {
 				pTemp.setT(i, hitInfo[mTemp.row]);
-				pTemp.setX(pTemp.getX() - div[dir]*defaultMovement);
+				pTemp.setX(pTemp.getX() - div[dir] * defaultMovement);
 				pause(framedelay);
 			}
 			pause(framedelay);
@@ -125,8 +158,8 @@ public class MoveHandler {
 			moveQueue.remove(pid);
 		} else {
 			boolean slide = input.equals("slide");
-			if(slide)
-				defaultMovement=slideMovement;
+			if (slide)
+				defaultMovement = slideMovement;
 			try {
 				sp.play("/res/sfx/punch.wav");
 			} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
@@ -139,8 +172,8 @@ public class MoveHandler {
 					hbc.addHitbox(add, pid);
 				}
 				pTemp.setT(i, hitInfo[mTemp.row]);
-				//pTemp.setX(pTemp.getX() + movement*div[dir]);
-				pTemp.setXvel(defaultMovement*div[dir]);
+				// pTemp.setX(pTemp.getX() + movement*div[dir]);
+				pTemp.setXvel(defaultMovement * div[dir]);
 				pause(framedelay);
 
 			}
@@ -148,11 +181,11 @@ public class MoveHandler {
 			pause(framedelay);
 			for (int i = hitInfo[mTemp.frames] - 1; i >= 0; i--) {
 				pTemp.setT(i, hitInfo[mTemp.row]);
-				//pTemp.setX(pTemp.getX() - movement*div[dir]);
+				// pTemp.setX(pTemp.getX() - movement*div[dir]);
 				if (!slide)
-					pTemp.setXvel(-(defaultMovement*div[dir]));
+					pTemp.setXvel(-(defaultMovement * div[dir]));
 				else
-					pTemp.setXvel(defaultMovement*div[dir]);
+					pTemp.setXvel(defaultMovement * div[dir]);
 				pause(framedelay);
 			}
 			pause(framedelay);

@@ -45,7 +45,6 @@ public class Entity {
 	}
 
 	public int getMidpoint() {
-		System.out.println(x+marginX+(int)(w/2));
 		return x + marginX+(int)(w/2);
 		
 	}

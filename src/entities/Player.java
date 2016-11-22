@@ -170,6 +170,10 @@ public class Player extends Entity {
 		return specialbar;
 	}
 
+	public boolean isNone() {
+		return playerAnimation.playerState == PlayerAnimation.State.NONE;
+	}
+
 	public void jump(int i) {
 		if (jumps > 0) {
 			y -= 10;

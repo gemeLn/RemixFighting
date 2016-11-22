@@ -45,7 +45,9 @@ public class HitboxController {
 					if (hurt.invuln) {
 						System.out.println("blocked");
 						p1.cancelMove();
+						pc.remove(hit);
 						cancel(0);
+						p2.freezeInputs(750);
 					} else {
 						if (hit.cancellable)
 							p2.cancelMove();
@@ -74,7 +76,9 @@ public class HitboxController {
 					if (hurt.invuln) {
 						System.out.println("blocked");
 						p2.cancelMove();
+						pc.remove(hit);
 						cancel(1);
+						p1.freezeInputs(750);
 					} else {
 						if (hit.cancellable)
 							p1.cancelMove();
