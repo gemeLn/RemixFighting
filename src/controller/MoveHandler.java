@@ -79,7 +79,6 @@ public class MoveHandler {
 			int[] hitInfo = mTemp.retrieveArray("highp");
 			int row = hitInfo[mTemp.row];
 			System.out.println("block");
-			int dirTemp = pTemp.dir;
 			int framedelay = 50;
 			hbc.getHurtboxes(pid).get(0).invuln = true;
 			for (int i = 0; i < hitInfo[m1.frames]; i++) {
@@ -153,7 +152,7 @@ public class MoveHandler {
 				pause(framedelay, pTemp);
 			}
 			pause(framedelay, pTemp);
-			pause(hitInfo[mTemp.endlag],pTemp);
+			pause(hitInfo[mTemp.endlag], pTemp);
 			moveQueue.remove(pid);
 		} else {
 			boolean slide = input.equals("slide");
@@ -174,7 +173,7 @@ public class MoveHandler {
 				// pTemp.setX(pTemp.getX() + movement*div[dir]);
 				pTemp.setXvel(defaultMovement * div[dir]);
 				pause(framedelay, pTemp);
-				if(pTemp.isBlocked())
+				if (pTemp.isBlocked())
 					return;
 
 			}
@@ -188,7 +187,7 @@ public class MoveHandler {
 				else
 					pTemp.setXvel(defaultMovement * div[dir]);
 				pause(framedelay, pTemp);
-				if(pTemp.isBlocked())
+				if (pTemp.isBlocked())
 					return;
 			}
 			pause(framedelay, pTemp);
