@@ -27,6 +27,22 @@ public class HitboxController {
 		this.p2 = p2;
 	}
 
+	private boolean canBlock(int dir, int hx, int pX, boolean invlun) {
+		switch (dir) {
+		case -1:
+			if (hx < pX) {
+				return invlun;
+			}
+			break;
+		case 1:
+			if (hx > pX) {
+				return invlun;
+			}
+			break;
+		}
+		return false;
+	}
+
 	public void update() {
 		now = System.currentTimeMillis();
 		removeSize = removeThese.size();
@@ -42,7 +58,7 @@ public class HitboxController {
 				if (now > hit.duration + hit.timeStarted) {
 					removeThese.add(hit);
 				} else if (hit.intersects(hurt)) {
-					if (hurt.invuln) {
+					if (canBlock(p1.dir, hit.x, p1.x, hurt.invuln)) {
 						System.out.println("blocked");
 						p1.cancelMove();
 						pc.remove(hit);
@@ -73,7 +89,7 @@ public class HitboxController {
 				if (now > hit.duration + hit.timeStarted) {
 					removeThese.add(hit);
 				} else if (hit.intersects(hurt)) {
-					if (hurt.invuln) {
+					if (canBlock(p2.dir, hit.x, p2.x, hurt.invuln)) {
 						System.out.println("blocked");
 						p2.cancelMove();
 						pc.remove(hit);

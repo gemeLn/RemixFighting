@@ -46,11 +46,10 @@ public class MoveHandler {
 		moveQueue.remove(i);
 	}
 
-	private void pause(long i) throws InterruptedException {
+	private void pause(long i, Player pTemp) throws InterruptedException {
 		long timeNow = System.currentTimeMillis();
 		long timeLastRender = System.currentTimeMillis();
 		while (timeNow < timeLastRender + i) {
-			Thread.sleep(1);
 			timeNow = System.currentTimeMillis();
 		}
 	}
@@ -86,7 +85,7 @@ public class MoveHandler {
 			for (int i = 0; i < hitInfo[m1.frames]; i++) {
 				pTemp.setT(i, row);
 				pTemp.setX(pTemp.getX() + div[dir] * defaultMovement);
-				pause(45);
+				pause(45, pTemp);
 				if (pTemp.isNone()) {
 					removeQ(pid);
 					return;
@@ -94,7 +93,7 @@ public class MoveHandler {
 			}
 			for (int i = 0; i < 10; i++) {
 				pTemp.setT(hitInfo[mTemp.frames] - 1, row);
-				pause(framedelay);
+				pause(framedelay, pTemp);
 				if (pTemp.isNone()) {
 					removeQ(pid);
 					return;
@@ -103,7 +102,7 @@ public class MoveHandler {
 			for (int i = hitInfo[mTemp.frames] - 1; i >= 0; i--) {
 				pTemp.setT(i, row);
 				pTemp.setX(pTemp.getX() - div[dir] * defaultMovement);
-				pause(45);
+				pause(45, pTemp);
 				if (pTemp.isNone()) {
 					removeQ(pid);
 					return;
@@ -111,7 +110,7 @@ public class MoveHandler {
 
 			}
 			hbc.getHurtboxes(pid).get(0).invuln = false;
-			pause(1000);
+			pause(1000, pTemp);
 			removeQ(pid);
 
 			return;
@@ -123,14 +122,14 @@ public class MoveHandler {
 			pTemp.jump(hitInfo[mTemp.damage]);
 			for (int i = 4; i >= 0; i--) {
 				pTemp.setT(i, hitInfo[mTemp.row]);
-				pause(framedelay);
+				pause(framedelay, pTemp);
 			}
-			pause(20);
+			pause(20, pTemp);
 			for (int i = 0; i < 5; i++) {
 				pTemp.setT(i, hitInfo[mTemp.row]);
-				pause(framedelay);
+				pause(framedelay, pTemp);
 			}
-			pause(50);
+			pause(50, pTemp);
 			pTemp.setT(0, 0);
 			moveQueue.remove(pid);
 		} else if (input.equals("projectile")) {
@@ -138,7 +137,7 @@ public class MoveHandler {
 			for (int i = 0; i < hitInfo[m1.frames]; i++) {
 				pTemp.setT(i, hitInfo[mTemp.row]);
 				pTemp.setX(pTemp.getX() + div[dir] * defaultMovement);
-				pause(framedelay);
+				pause(framedelay, pTemp);
 
 			}
 			int damage = hitInfo[mTemp.damage];
@@ -147,14 +146,14 @@ public class MoveHandler {
 					hitInfo[mTemp.duration], pTemp.name.toLowerCase() + "Projectile", pTemp.dir);
 			pc.add(add);
 			hbc.addHitbox(add.hit, pid);
-			pause(framedelay);
+			pause(framedelay, pTemp);
 			for (int i = hitInfo[mTemp.frames] - 1; i >= 0; i--) {
 				pTemp.setT(i, hitInfo[mTemp.row]);
 				pTemp.setX(pTemp.getX() - div[dir] * defaultMovement);
-				pause(framedelay);
+				pause(framedelay, pTemp);
 			}
-			pause(framedelay);
-			pause(hitInfo[mTemp.endlag]);
+			pause(framedelay, pTemp);
+			pause(hitInfo[mTemp.endlag],pTemp);
 			moveQueue.remove(pid);
 		} else {
 			boolean slide = input.equals("slide");
@@ -174,11 +173,13 @@ public class MoveHandler {
 				pTemp.setT(i, hitInfo[mTemp.row]);
 				// pTemp.setX(pTemp.getX() + movement*div[dir]);
 				pTemp.setXvel(defaultMovement * div[dir]);
-				pause(framedelay);
+				pause(framedelay, pTemp);
+				if(pTemp.isBlocked())
+					return;
 
 			}
 
-			pause(framedelay);
+			pause(framedelay, pTemp);
 			for (int i = hitInfo[mTemp.frames] - 1; i >= 0; i--) {
 				pTemp.setT(i, hitInfo[mTemp.row]);
 				// pTemp.setX(pTemp.getX() - movement*div[dir]);
@@ -186,10 +187,12 @@ public class MoveHandler {
 					pTemp.setXvel(-(defaultMovement * div[dir]));
 				else
 					pTemp.setXvel(defaultMovement * div[dir]);
-				pause(framedelay);
+				pause(framedelay, pTemp);
+				if(pTemp.isBlocked())
+					return;
 			}
-			pause(framedelay);
-			pause(hitInfo[mTemp.endlag]);
+			pause(framedelay, pTemp);
+			pause(hitInfo[mTemp.endlag], pTemp);
 			defaultMovement = 5;
 			moveQueue.remove(pid);
 		}

@@ -39,10 +39,10 @@ public class Main {
 	static boolean isGameOn;
 
 	public enum State {
-		NONE, MENU, GAME, INIT, END, KO;
+		NONE, MENU, GAME, INIT, END, KO, LOGO;
 	};
 
-	public static State STATE = State.MENU;
+	public static State STATE = State.LOGO;
 	public static int[] character;
 	public static Gravity g;
 	public final int WINDOWX = 940;
@@ -67,6 +67,7 @@ public class Main {
 	int timepass = 0;
 	Texture snow = new Texture("/res/sprites/snowflakesheet.png", 14100, 540);
 	SpriteSheet snowSheet = new SpriteSheet(snow, 960, 540);
+	Texture logo;
 	public int snowY = 0;
 	HitboxController hbc;
 
@@ -176,6 +177,8 @@ public class Main {
 			tick++;
 		} else if (STATE == State.MENU) {
 			menu.render(screen);
+		} else if (STATE == State.LOGO) {
+			screen.drawTexture(WINDOWX/2 - 180, WINDOWY/2 - 108, logo);
 		}
 	}
 
@@ -297,6 +300,8 @@ public class Main {
 		moveQueue = new MoveQueue();
 		countDown.countDownInit(240);
 		endMenu = new EndMenu(characters1);
+		logo = new Texture("/res/sprites/logo.png", 360, 216);
+		//menu = endMenu;
 
 		isGameOn = true;
 
@@ -338,6 +343,10 @@ public class Main {
 					STATE = State.GAME;
 				} else if(STATE == State.KO){
 					screen.drawString("KO", WINDOWX/2, WINDOWY/2, f, Color.black);
+					if(currentTick > 60){
+						STATE = State.MENU;
+					}
+				} else if(STATE == State.LOGO) {
 					if(currentTick > 60){
 						STATE = State.MENU;
 					}

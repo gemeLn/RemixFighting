@@ -18,6 +18,7 @@ public class Player extends Entity {
 	public GameCharacter character;
 	private int playerID;
 	public int moveSpeed, special, lastHealth, tolerance;
+	public boolean isBlocked;
 	public int traction = 4;
 	public String name;
 	public SpriteSheet sheet;
@@ -39,6 +40,7 @@ public class Player extends Entity {
 		sheet = character.sheet;
 		moveSpeed = character.speed;
 		name = character.name;
+		isBlocked = false;
 		w = gc.width;
 		h = gc.height;
 		health = gc.health;
@@ -168,6 +170,14 @@ public class Player extends Entity {
 
 	public int getSpecialbar() {
 		return specialbar;
+	}
+	
+	public boolean isBlocked(){
+		return isBlocked;
+	}
+	
+	public void changeBlocked(boolean blocked){
+		isBlocked = blocked;
 	}
 
 	public boolean isNone() {
