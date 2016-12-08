@@ -20,7 +20,6 @@ public class MoveHandler {
 	ProjectileController pc;
 	MoveQueue moveQueue;
 	SoundPlayer sp;
-	Special special;
 	int[] div = new int[3];
 	int defaultMovement = 5;
 	int slideMovement = 20;
@@ -34,7 +33,6 @@ public class MoveHandler {
 		this.hbc = hbc;
 		this.pc = pc;
 		this.moveQueue = moveQueue;
-		special = new Special();
 		sp = new SoundPlayer();
 		div[0] = -1;
 		div[1] = 0;

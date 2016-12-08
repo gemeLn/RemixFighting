@@ -9,7 +9,7 @@ import entities.Projectile;
 import graphics.Texture;
 import main.Main;
 
-public class PenguinSpecial {
+public class PenguinSpecial extends Special{
 
 	boolean loadedTexture = false;
 	Texture icicle;
@@ -19,7 +19,7 @@ public class PenguinSpecial {
 	public static int[] iciclesX;
 	public static boolean drawShade = false;
 
-	public void init() {
+	public PenguinSpecial() {
 		icicles = new Projectile[7];
 		iciclesX = new int[7];
 	}
@@ -33,7 +33,7 @@ public class PenguinSpecial {
 		}
 	}
 
-	public void specialMove(HitboxController hbc, ProjectileController pc, int pid) throws InterruptedException {
+	public void specialMove(HitboxController hbc, ProjectileController pc, int pid) throws InterruptedException{
 		for (int j = 0; j < 3; j++) {
 			for (int i = 0; i < 7; i++) {
 				iciclesX[i] = ThreadLocalRandom.current().nextInt(50, 900);

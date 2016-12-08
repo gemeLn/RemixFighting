@@ -46,7 +46,7 @@ public class Player extends Entity {
 		health = gc.health;
 		radius = gc.radius;
 		lastHealth = gc.health;
-		special = 0;
+		special = 20;
 		playern = pid;
 		keys = KeyMap.getKeyMapping(playerID);
 		radius = gc.radius;

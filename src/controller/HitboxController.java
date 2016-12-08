@@ -1,6 +1,7 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 
 import entities.Hitbox;
 import entities.Hurtbox;
@@ -43,7 +44,7 @@ public class HitboxController {
 		return false;
 	}
 
-	public void update() {
+	public void update() throws ConcurrentModificationException{
 		now = System.currentTimeMillis();
 		removeSize = removeThese.size();
 		for (int i = 0; i < removeSize; i++) {

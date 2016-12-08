@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.List;
 
 import controller.HitboxController;
@@ -25,6 +26,7 @@ import menu.EndMenu;
 import menu.Menu;
 import physics.Gravity;
 import special.PenguinSpecial;
+import special.PolarbearSpecial;
 import special.Special;
 import utils.FileUtils;
 
@@ -151,6 +153,7 @@ public class Main {
 					screen.fillRect(x, 500, 100, 15, 0x000000);
 				}
 			}
+			/*
 			for (Hurtbox h : hbc.getHurtboxes(0)) {
 				screen.drawRect(h.x, h.y, h.width, h.height, 0x0000FF);
 			}
@@ -163,6 +166,7 @@ public class Main {
 			for (Hitbox hit : hbc.getHitboxes(1)) {
 				screen.drawRect(hit.x, hit.y, hit.width, hit.height, 0xff0000);
 			}
+			*/
 
 			renderPlayerAssets(screen);
 
@@ -221,7 +225,8 @@ public class Main {
 		while (isGameOn) {
 			if (!(moveQueue.isEmpty(0))) {
 				if (moveQueue.see(0).equals("Special")) {
-					special.specialHandler(0, hbc, pc, character[0]);
+					findCharacter(character[0]);
+					special.specialMove(hbc, pc, 0);
 					moveQueue.remove(0);
 				} else {
 					try {
@@ -240,7 +245,8 @@ public class Main {
 		while (isGameOn) {
 			if (!(moveQueue.isEmpty(1))) {
 				if (moveQueue.see(1).equals("Special")) {
-					special.specialHandler(0, hbc, pc, character[1]);
+					findCharacter(character[1]);
+					special.specialMove(hbc, pc, 1);
 					moveQueue.remove(1);
 				} else {
 					try {
@@ -252,6 +258,17 @@ public class Main {
 				}
 			}
 			pause(15);
+		}
+	}
+	
+	public void findCharacter(int id){
+		switch(id){
+		case 0:
+			special = new PenguinSpecial();
+			return;
+		case 1:
+			special = new PolarbearSpecial();
+			return;
 		}
 	}
 
@@ -290,12 +307,10 @@ public class Main {
 		window.show();
 		Screen screen = window.getScreen();
 		g = new Gravity();
+		special = new PenguinSpecial();
 		loadCharacters();
 		menu = new CharacterSelectionMenu(characters1);
 		pc = new ProjectileController();
-
-		special = new Special();
-
 		character = new int[2];
 		moveQueue = new MoveQueue();
 		countDown.countDownInit(240);
@@ -316,7 +331,11 @@ public class Main {
 				if (STATE == State.GAME) {
 					p1.update();
 					p2.update();
-					hbc.update();
+					try{
+						hbc.update();						
+					}catch(ConcurrentModificationException e){
+						System.out.println("bad");
+					}
 					pc.update();
 					g.update();
 				} else if (STATE == State.MENU) {
