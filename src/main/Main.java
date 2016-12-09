@@ -13,7 +13,6 @@ import controller.InputHandler;
 import controller.MoveHandler;
 import controller.ProjectileController;
 import entities.GameCharacter;
-import entities.Hitbox;
 import entities.Hurtbox;
 import entities.Player;
 import entities.Projectile;
@@ -75,9 +74,9 @@ public class Main {
 
 	private Menu menu;
 	private EndMenu endMenu;
-	
+
 	public static Main instance;
-	
+
 	public static Main getInstance() {
 		return instance;
 	}
@@ -145,7 +144,7 @@ public class Main {
 			p1.render(screen);
 			p2.render(screen);
 			for (Projectile p : pc.active) {
-				screen.drawTexture(p.x, p.y, p.sprite,p.dir==1);
+				screen.drawTexture(p.x, p.y, p.sprite, p.dir == 1);
 				// System.out.println(p.x+" , "+p.y);
 			}
 			if (PenguinSpecial.drawShade) {
@@ -154,19 +153,14 @@ public class Main {
 				}
 			}
 			/*
-			for (Hurtbox h : hbc.getHurtboxes(0)) {
-				screen.drawRect(h.x, h.y, h.width, h.height, 0x0000FF);
-			}
-			for (Hitbox hit : hbc.getHitboxes(0)) {
-				screen.drawRect(hit.x, hit.y, hit.width, hit.height, 0xff0000);
-			}
-			for (Hurtbox h : hbc.getHurtboxes(1)) {
-				screen.drawRect(h.x, h.y, h.width, h.height, 0x0000FF);
-			}
-			for (Hitbox hit : hbc.getHitboxes(1)) {
-				screen.drawRect(hit.x, hit.y, hit.width, hit.height, 0xff0000);
-			}
-			*/
+			 * for (Hurtbox h : hbc.getHurtboxes(0)) { screen.drawRect(h.x, h.y,
+			 * h.width, h.height, 0x0000FF); } for (Hitbox hit :
+			 * hbc.getHitboxes(0)) { screen.drawRect(hit.x, hit.y, hit.width,
+			 * hit.height, 0xff0000); } for (Hurtbox h : hbc.getHurtboxes(1)) {
+			 * screen.drawRect(h.x, h.y, h.width, h.height, 0x0000FF); } for
+			 * (Hitbox hit : hbc.getHitboxes(1)) { screen.drawRect(hit.x, hit.y,
+			 * hit.width, hit.height, 0xff0000); }
+			 */
 
 			renderPlayerAssets(screen);
 
@@ -182,7 +176,7 @@ public class Main {
 		} else if (STATE == State.MENU) {
 			menu.render(screen);
 		} else if (STATE == State.LOGO) {
-			screen.drawTexture(WINDOWX/2 - 180, WINDOWY/2 - 108, logo);
+			screen.drawTexture(WINDOWX / 2 - 180, WINDOWY / 2 - 108, logo);
 		}
 	}
 
@@ -260,9 +254,9 @@ public class Main {
 			pause(15);
 		}
 	}
-	
-	public void findCharacter(int id){
-		switch(id){
+
+	public void findCharacter(int id) {
+		switch (id) {
 		case 0:
 			special = new PenguinSpecial();
 			return;
@@ -284,7 +278,7 @@ public class Main {
 
 		Window window = new Window("Game", WINDOWX, WINDOWY);
 		window.addKeyListener(new InputHandler());
-		
+
 		window.addMouseListener(new MouseAdapter() {
 			int xi = 0;
 			int yi = 0;
@@ -316,7 +310,7 @@ public class Main {
 		countDown.countDownInit(240);
 		endMenu = new EndMenu(characters1);
 		logo = new Texture("/res/sprites/logo.png", 360, 216);
-		//menu = endMenu;
+		// menu = endMenu;
 
 		isGameOn = true;
 
@@ -331,9 +325,9 @@ public class Main {
 				if (STATE == State.GAME) {
 					p1.update();
 					p2.update();
-					try{
-						hbc.update();						
-					}catch(ConcurrentModificationException e){
+					try {
+						hbc.update();
+					} catch (ConcurrentModificationException e) {
 						System.out.println("bad");
 					}
 					pc.update();
@@ -358,15 +352,15 @@ public class Main {
 					g.addEntity(p1);
 					g.addEntity(p2);
 					bufferInit();
-					special.specialInit();			
+					special.specialInit();
 					STATE = State.GAME;
-				} else if(STATE == State.KO){
-					screen.drawString("KO", WINDOWX/2, WINDOWY/2, f, Color.black);
-					if(currentTick > 60){
+				} else if (STATE == State.KO) {
+					screen.drawString("KO", WINDOWX / 2, WINDOWY / 2, f, Color.black);
+					if (currentTick > 60) {
 						STATE = State.MENU;
 					}
-				} else if(STATE == State.LOGO) {
-					if(currentTick > 60){
+				} else if (STATE == State.LOGO) {
+					if (currentTick > 60) {
 						STATE = State.MENU;
 					}
 				}
@@ -381,13 +375,13 @@ public class Main {
 
 		}
 	}
-	
-	public void restart(){
+
+	public void restart() {
 		menu = new CharacterSelectionMenu(characters1);
 		STATE = State.MENU;
 	}
-	
-	public void end(int playerWon){
+
+	public void end(int playerWon) {
 		menu = new EndMenu(characters1);
 		endMenu.winner = playerWon;
 		currentTick = 0;

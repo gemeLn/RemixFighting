@@ -11,7 +11,6 @@ import entities.Projectile;
 import main.MoveQueue;
 import main.MoveSet;
 import main.SoundPlayer;
-import special.Special;
 
 public class MoveHandler {
 	Player p1, p2;
