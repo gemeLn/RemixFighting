@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title> Remix Fighting</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet" href="restyle.css">
+<style>
+.mySlides {display:none}
+table {
+    font-family: Times New Roman, sans-serif;
+    border-collapse: collapse;
+    width: 50%;
+	background-color:#b2e4e8;
+}
+
+td, th {
+    border: 1px solid #997e8c;
+    text-align: center;
+    padding: 6px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+</style>
+</head>
+<body>
+
+<<ul>
+  <li><a href="index.html">Home</a></li>
+  <li><a href="Play.html">How to Play</a></li>
+  <li><a href="penguin.html">Penguin</a></li>
+  <li><a href="bear.html">Polar Bear</a></li>
+  <li><a href="lion.html">Lion</a></li>
+  <li><a href="download.html">Download</a></li>
+</ul>
+
+<div style="padding:20px;margin-top:30px;background-color:#429ef4;height:1500px;">
+<h1><b><i> <font face =  " century gothic">Coming Soon! </h1></b></i></font>
+<h1><center> Lion</center></h1>
+The Lion grew up in Africa feeling that his life was missing something. He fought all the members of his pride and came out on top. The lion still was
+unsatisfied so he travelled around the world and challenged some of the strongest and powerful animals to a fight and won. One day the lion heard of
+the Ice House that was located in Antarctica. He heard that the greatest fighters were trained there so he spent years building endurance to the cold and finally
+set out to find the Ice House. After a journey of two and a half years he found the Ice House and challenged their two greatest fighters, the penguin and
+the polar bear. The lion brought a style of fighting never seen before to the Ice House. He was faster than the penguin and polar bear and was able to
+summon animals to help him fight. 
+<h1><center>The Moves </h1></center>
+&#8195; The lion is the 3rd character that we developed. This character is one of the shortest as all its feet touch the ground. 
+In addition, the lion's fighting style is the most unique of all three characters. 
+This character is the fastest character that we have and its special is a gazelle stampede.
+<p>
+<center>
+<table >
+<tr>
+	<th>Moves</th>
+	<th> Hurt Value</th>
+</tr>
+<tr>
+	<td>Jab
+	<td>3
+</tr><tr>
+	<td>Punch
+	<td>5
+</tr><tr>
+	<td>Kick
+	<td>5
+</tr><tr>
+	<td>High Punch
+	<td>7
+</tr><tr>
+	<td>Projectile
+	<td>4
+</tr><tr>
+	<td>Special
+	<td> depends how much the opponent gets hit
+</tr>
+</p>	
+	
+</table>
+</center>
+<p>
+
+<div class="w3-container" align = "center">
+  
+
+<div class="w3-content" style="max-width:800px">
+  <img class="mySlides" src="lion.jpg" style ="width:15%">
+  <img class="mySlides" src="lionpunch.jpg" style="width:15%">
+  <img class="mySlides" src="lionjump.jpg" style="width:15%">
+</div>
+
+<div class="w3-center">
+  <div class="w3-section">
+    <button class="w3-btn" onclick="plusDivs(-1)">Prev</button>
+    <button class="w3-btn" onclick="plusDivs(1)">Next</button>
+  </div>
+  <button class="w3-btn demo" onclick="currentDiv(1)">1</button>
+  <button class="w3-btn demo" onclick="currentDiv(2)">2</button>
+  <button class="w3-btn demo" onclick="currentDiv(3)">3</button>
+</div>
+</center>
+
+<script>
+var slideIndex = 1;
+showDivs(slideIndex);
+
+function plusDivs(n) {
+  showDivs(slideIndex += n);
+}
+
+function currentDiv(n) {
+  showDivs(slideIndex = n);
+}
+
+function showDivs(n) {
+  var i;
+  var x = document.getElementsByClassName("mySlides");
+  var dots = document.getElementsByClassName("demo");
+  if (n > x.length) {slideIndex = 1}
+  if (n < 1) {slideIndex = x.length}
+  for (i = 0; i < x.length; i++) {
+     x[i].style.display = "none";
+  }
+  for (i = 0; i < dots.length; i++) {
+     dots[i].className = dots[i].className.replace(" w3-red", "");
+  }
+  x[slideIndex-1].style.display = "block";
+  dots[slideIndex-1].className += " w3-red";
+}
+</script>
+
+
+</p>
+</div>
+
+</body>
+</html>
+

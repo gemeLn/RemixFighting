@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title> Remix Fighting</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet" href="restyle.css">
+<style>
+.mySlides {display:none}
+table{
+    font-family: Times New Roman, sans-serif;
+    border-collapse: collapse;
+    width: 50%;
+	background-color: #b2e4e8;
+}
+
+td, th {
+    border: 1px solid #997e8c;
+    text-align: center;
+    padding: 6px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+</style>
+</head>
+<body>
+
+<<ul>
+  <li><a href="index.html">Home</a></li>
+  <li><a href="Play.html">How to Play</a></li>
+  <li><a href="penguin.html">Penguin</a></li>
+  <li><a href="bear.html">Polar Bear</a></li>
+  <li><a href="lion.html">Lion</a></li>
+  <li><a href="download.html">Download</a></li>
+</ul>
+
+<div style="padding:20px;margin-top:30px;background-color:#429ef4;height:1500px;">
+<h1><center>Penguin</center></h1>
+<p> &#8195; Once upon a time there was a lost penguin in search of the meaning of life. He travelled across vast swatches of land and finally found the Ice House.
+In the Ice House the penguin learned many fighting techniques and became one of the most formidable fighters. One of his great talents is the ability
+to fight in the air.
+He also learned to rain down icicles upon the heads of his opponents. As the penguin ninja he became one of masters at the Ice House.</tr></table>
+<h2><center> The Moves </h2></center>
+ The penguin is the first character that we developed. This character's Hurtbox is smaller than the others as it is a small animal and
+it is the second fastest character available. It has nine moves including the special, which is the ability to throw down 7 icicles on their opponents.
+<p>
+<center>
+
+<table id="2">
+<tr>
+	<th>Moves</th>
+	<th> Hurt Value</th>
+	</tr>
+<tr>
+	<td>Jab
+	<td>2
+</tr><tr>
+	<td>Punch
+	<td>5
+</tr><tr>
+	<td>Kick
+	<td>5
+</tr><tr>
+	<td>Slide
+	<td>7
+</tr><tr>
+	<td>High Punch
+	<td>7
+</tr><tr>
+	<td>Projectile
+	<td>1
+</tr><tr>
+	<td>Special
+	<td> each icicle is worth 8
+</tr>
+</p>	
+	
+</table>
+</center>
+<p>
+
+<div class="w3-container" align = "center">
+  
+
+<div class="w3-content" style="max-width:800px">
+  <img class="mySlides" src="penguin.jpg" style ="width:15%">
+  <img class="mySlides" src="fall1.jpg" style="width:15%">
+  <img class="mySlides" src="jump.jpg" style="width:15%">
+</div>
+
+<div class="w3-center">
+  <div class="w3-section">
+    <button class="w3-btn" onclick="plusDivs(-1)">Prev</button>
+    <button class="w3-btn" onclick="plusDivs(1)">Next</button>
+  </div>
+  <button class="w3-btn demo" onclick="currentDiv(1)">1</button>
+  <button class="w3-btn demo" onclick="currentDiv(2)">2</button>
+  <button class="w3-btn demo" onclick="currentDiv(3)">3</button>
+</div>
+</center>
+
+<script>
+var slideIndex = 1;
+showDivs(slideIndex);
+
+function plusDivs(n) {
+  showDivs(slideIndex += n);
+}
+
+function currentDiv(n) {
+  showDivs(slideIndex = n);
+}
+
+function showDivs(n) {
+  var i;
+  var x = document.getElementsByClassName("mySlides");
+  var dots = document.getElementsByClassName("demo");
+  if (n > x.length) {slideIndex = 1}
+  if (n < 1) {slideIndex = x.length}
+  for (i = 0; i < x.length; i++) {
+     x[i].style.display = "none";
+  }
+  for (i = 0; i < dots.length; i++) {
+     dots[i].className = dots[i].className.replace(" w3-red", "");
+  }
+  x[slideIndex-1].style.display = "block";
+  dots[slideIndex-1].className += " w3-red";
+}
+</script>
+
+
+</p>
+</div>
+
+</body>
+</html>
+
